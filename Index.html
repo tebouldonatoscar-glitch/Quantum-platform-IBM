@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Banking · Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --blue-900: #061A3A;
+  --blue-800: #0A2856;
+  --blue-700: #0F3D7A;
+  --blue-600: #1254A8;
+  --blue-500: #1565C0;
+  --blue-400: #1976D2;
+  --blue-300: #42A5F5;
+  --blue-200: #90CAF9;
+  --blue-100: #BBDEFB;
+  --blue-50:  #E3F2FD;
+  --blue-10:  #F0F7FF;
+  --white:    #FFFFFF;
+  --ink:      #0A1628;
+  --ink-2:    #2C3E5C;
+  --ink-3:    #5B7090;
+  --ink-4:    #94A8C0;
+  --rule:     #DCE8F5;
+  --rule-2:   #EBF4FF;
+  --green:    #1B7A45;
+  --green-bg: #E8F5ED;
+  --red:      #C0392B;
+  --red-bg:   #FDECEA;
+  --gold:     #A0720A;
+  --gold-bg:  #FEF8E7;
+  --sidebar:  240px;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–white);
+color: var(–ink);
+font-family: ‘Geist’, sans-serif;
+font-size: 13.5px;
+line-height: 1.65;
+-webkit-font-smoothing: antialiased;
+display: flex;
+min-height: 100vh;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+position: fixed;
+left: 0; top: 0; bottom: 0;
+width: var(–sidebar);
+background: var(–white);
+display: flex;
+flex-direction: column;
+z-index: 100;
+overflow: hidden;
+}
+
+.sidebar::after {
+content: ‘’;
+position: absolute;
+right: 0; top: 0; bottom: 0;
+width: 1px;
+background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.08) 20%, rgba(255,255,255,0.08) 80%, transparent);
+}
+
+.sb-top {
+padding: 28px 24px 22px;
+border-bottom: 1px solid var(–rule);
+}
+
+.sb-wordmark {
+font-family: ‘Fraunces’, serif;
+font-size: 16px;
+font-weight: 600;
+color: var(–blue-900);
+letter-spacing: -0.3px;
+margin-bottom: 3px;
+}
+
+.sb-sub {
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 1.8px;
+text-transform: uppercase;
+color: var(–blue-500);
+opacity: 0.9;
+}
+
+.sb-badge {
+display: inline-block;
+margin-top: 10px;
+padding: 2px 8px;
+background: var(–blue-50);
+border: 1px solid var(–blue-100);
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: var(–blue-600);
+}
+
+.sb-nav {
+flex: 1;
+padding: 16px 0;
+overflow-y: auto;
+}
+
+.sb-section-label {
+padding: 14px 24px 5px;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–ink-4);
+}
+
+.sb-item {
+display: flex;
+align-items: center;
+gap: 11px;
+padding: 10px 24px;
+cursor: pointer;
+font-size: 13px;
+font-weight: 400;
+color: var(–ink-3);
+border-left: 2px solid transparent;
+transition: all 0.15s;
+user-select: none;
+}
+
+.sb-item:hover { color: var(–ink); background: var(–blue-10); }
+
+.sb-item.active {
+color: var(–blue-600);
+background: var(–blue-50);
+border-left-color: var(–blue-500);
+font-weight: 500;
+}
+
+.sb-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; opacity: 0.7; }
+.sb-item.active .sb-icon { opacity: 1; }
+
+.sb-chip {
+margin-left: auto;
+background: var(–blue-100);
+color: var(–blue-700);
+font-size: 9px;
+font-weight: 600;
+padding: 1px 6px;
+border-radius: 2px;
+}
+
+.sb-foot {
+padding: 16px 24px;
+border-top: 1px solid var(–rule);
+font-size: 10px;
+color: var(–ink-4);
+line-height: 1.7;
+}
+
+.sb-foot strong { color: var(–ink-2); font-weight: 500; }
+
+/* ─── MAIN ─── */
+.main {
+margin-left: var(–sidebar);
+flex: 1;
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+
+/* ─── TOPBAR ─── */
+.topbar {
+position: sticky;
+top: 0;
+z-index: 50;
+background: rgba(255,255,255,0.97);
+border-bottom: 1px solid var(–rule);
+backdrop-filter: blur(8px);
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 36px;
+height: 52px;
+}
+
+.tb-crumb {
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 12px;
+color: var(–ink-3);
+}
+
+.tb-crumb .sep { color: var(–rule); }
+.tb-crumb .cur { color: var(–ink); font-weight: 500; }
+
+.tb-right { display: flex; align-items: center; gap: 20px; }
+
+.tb-live {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 11px;
+font-weight: 500;
+color: var(–green);
+}
+
+.tb-live::before {
+content: ‘’;
+width: 6px; height: 6px;
+border-radius: 50%;
+background: var(–green);
+animation: blink 2s infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.tb-date { font-size: 11px; color: var(–ink-4); }
+
+/* ─── PAGES ─── */
+.page { display: none; padding: 36px; animation: fadeUp 0.25s ease; }
+.page.active { display: block; }
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(6px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── PAGE HEADER ─── */
+.ph {
+margin-bottom: 32px;
+}
+
+.ph-eye {
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–blue-500);
+margin-bottom: 8px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.ph-eye::after { content: ‘’; width: 40px; height: 1px; background: var(–blue-300); }
+
+.ph-title {
+font-family: ‘Fraunces’, serif;
+font-size: 34px;
+font-weight: 700;
+color: var(–ink);
+line-height: 1.1;
+margin-bottom: 10px;
+letter-spacing: -0.5px;
+}
+
+.ph-body {
+font-size: 14px;
+color: var(–ink-2);
+max-width: 580px;
+line-height: 1.65;
+font-weight: 300;
+}
+
+/* ─── KPI STRIP ─── */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+
+.kpi {
+background: var(–white);
+border: 1px solid var(–rule);
+border-top: 3px solid var(–blue-500);
+padding: 18px 20px;
+}
+
+.kpi.accent-green { border-top-color: var(–green); }
+.kpi.accent-red   { border-top-color: var(–red); }
+.kpi.accent-gold  { border-top-color: var(–gold); }
+
+.kpi-lbl {
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–ink-4);
+margin-bottom: 8px;
+}
+
+.kpi-val {
+font-family: ‘Fraunces’, serif;
+font-size: 30px;
+font-weight: 700;
+color: var(–blue-700);
+line-height: 1;
+margin-bottom: 6px;
+}
+
+.kpi.accent-green .kpi-val { color: var(–green); }
+.kpi.accent-red   .kpi-val { color: var(–red); }
+.kpi.accent-gold  .kpi-val { color: var(–gold); }
+
+.kpi-sub { font-size: 11px; color: var(–ink-3); line-height: 1.4; }
+
+/* ─── GRIDS ─── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.g31 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+.g13 { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-bottom: 16px; }
+.mb16 { margin-bottom: 16px; }
+.mb24 { margin-bottom: 24px; }
+.mb32 { margin-bottom: 32px; }
+.span2 { grid-column: span 2; }
+
+/* ─── CARD ─── */
+.card {
+background: var(–white);
+border: 1px solid var(–rule);
+padding: 24px;
+transition: border-color 0.15s;
+}
+
+.card:hover { border-color: var(–blue-600); }
+
+.card-hd {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+margin-bottom: 18px;
+gap: 12px;
+}
+
+.card-title {
+font-family: ‘Fraunces’, serif;
+font-size: 15px;
+font-weight: 600;
+color: var(–ink);
+line-height: 1.3;
+}
+
+.card-sub {
+font-size: 11px;
+color: var(–ink-4);
+margin-top: 2px;
+font-weight: 300;
+}
+
+.tag {
+display: inline-block;
+padding: 2px 8px;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+border: 1px solid;
+white-space: nowrap;
+flex-shrink: 0;
+}
+
+.tag-blue   { border-color: var(–blue-300); color: var(–blue-600); }
+.tag-green  { border-color: #81C995; color: var(–green); }
+.tag-red    { border-color: #F09090; color: var(–red); }
+.tag-gold   { border-color: #D4A017; color: var(–gold); }
+
+/* ─── HORIZONTAL BAR ─── */
+.hbar-row {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 9px;
+}
+
+.hbar-lbl {
+font-size: 12px;
+color: var(–ink-2);
+width: 190px;
+flex-shrink: 0;
+line-height: 1.3;
+}
+
+.hbar-lbl.wide { width: 230px; }
+
+.hbar-track {
+flex: 1;
+height: 5px;
+background: var(–blue-50);
+overflow: hidden;
+}
+
+.hbar-fill {
+height: 100%;
+background: var(–blue-500);
+}
+
+.hbar-fill.b2 { background: var(–blue-300); }
+.hbar-fill.b3 { background: var(–blue-200); }
+.hbar-fill.gr { background: var(–green); }
+.hbar-fill.rd { background: var(–red); }
+.hbar-fill.gd { background: var(–gold); }
+.hbar-fill.gy { background: var(–ink-4); }
+
+.hbar-pct {
+font-family: ‘Fraunces’, serif;
+font-size: 14px;
+font-weight: 600;
+color: var(–ink);
+width: 44px;
+text-align: right;
+flex-shrink: 0;
+}
+
+.hbar-n {
+font-size: 10px;
+color: var(–ink-4);
+width: 40px;
+flex-shrink: 0;
+}
+
+/* ─── DONUT ─── */
+.donut-wrap { display: flex; align-items: center; gap: 24px; }
+.donut-legend { flex: 1; }
+
+.leg-row {
+display: flex;
+align-items: flex-start;
+gap: 8px;
+margin-bottom: 7px;
+}
+
+.leg-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+flex-shrink: 0;
+margin-top: 4px;
+}
+
+.leg-lbl { font-size: 11.5px; color: var(–ink-2); flex: 1; line-height: 1.3; }
+
+.leg-pct {
+font-family: ‘Fraunces’, serif;
+font-size: 13px;
+font-weight: 600;
+color: var(–ink);
+flex-shrink: 0;
+}
+
+/* ─── INSIGHT ─── */
+.insight {
+background: var(–blue-50);
+border-left: 3px solid var(–blue-500);
+padding: 13px 16px;
+margin-top: 16px;
+}
+
+.insight-title {
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–blue-600);
+margin-bottom: 4px;
+}
+
+.insight-body {
+font-size: 12px;
+color: var(–ink-2);
+line-height: 1.6;
+}
+
+/* ─── MATRIX TABLE ─── */
+.mtable { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+.mtable th {
+background: var(–blue-600);
+color: #ffffff;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+padding: 8px 12px;
+text-align: left;
+border-right: 1px solid rgba(255,255,255,0.08);
+white-space: nowrap;
+}
+
+.mtable th:last-child { border-right: none; }
+
+.mtable td {
+padding: 10px 12px;
+border-bottom: 1px solid var(–rule-2);
+border-right: 1px solid var(–rule-2);
+vertical-align: middle;
+}
+
+.mtable td:last-child { border-right: none; }
+.mtable tr:last-child td { border-bottom: none; }
+.mtable tr:hover td { background: var(–blue-10); }
+
+.mtable .section-row td {
+background: var(–blue-50);
+color: var(–blue-700);
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+padding: 6px 12px;
+}
+
+/* ─── HEAT BADGE ─── */
+.hb {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 3px 8px;
+font-size: 10px;
+font-weight: 600;
+border: 1px solid;
+white-space: nowrap;
+}
+
+.hb-10,.hb-9 { background:#E8F5ED; color:var(–green); border-color:#A8D5B5; }
+.hb-8         { background:var(–blue-50); color:var(–blue-600); border-color:var(–blue-200); }
+.hb-7         { background:#EAF1FF; color:var(–blue-500); border-color:var(–blue-100); }
+.hb-6         { background:var(–gold-bg); color:var(–gold); border-color:#D4A017; }
+.hb-5,.hb-4   { background:#FFF3E0; color:#E65100; border-color:#FFB74D; }
+.hb-3,.hb-2   { background:var(–red-bg); color:var(–red); border-color:#F09090; }
+.hb-ibm       { background:var(–blue-500); color:#fff; border-color:var(–blue-400); }
+
+/* ─── ACTOR CARD ─── */
+.actor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.actor-card {
+background: var(–white);
+border: 1px solid var(–rule);
+padding: 16px;
+transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.actor-card:hover {
+border-color: var(–blue-300);
+box-shadow: 0 2px 12px rgba(21,101,192,0.08);
+}
+
+.actor-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.actor-flag { font-size: 18px; }
+.actor-name { font-family:‘Fraunces’,serif; font-size: 13px; font-weight: 600; color: var(–ink); }
+.actor-tier { font-size: 9px; font-weight: 600; color: var(–ink-4); text-transform: uppercase; letter-spacing: 0.5px; }
+.actor-score { margin-left: auto; font-family:‘Fraunces’,serif; font-size: 24px; font-weight: 700; color: var(–blue-600); }
+.actor-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.actor-tag { font-size: 9px; font-weight: 500; padding: 2px 6px; background: var(–blue-10); color: var(–blue-600); border: 1px solid var(–blue-100); }
+.prog-wrap { margin-top: 6px; }
+.prog-lbl { display: flex; justify-content: space-between; font-size: 10px; color: var(–ink-4); margin-bottom: 3px; }
+.prog-track { height: 3px; background: var(–blue-50); }
+.prog-fill { height: 100%; background: linear-gradient(to right, var(–blue-600), var(–blue-300)); }
+
+/* ─── POSITIONING MAP ─── */
+.pos-map {
+position: relative;
+background: var(–white);
+border: 1px solid var(–rule);
+aspect-ratio: 4/3;
+overflow: hidden;
+}
+
+.pos-ax-x { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(–rule); }
+.pos-ax-y { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(–rule); }
+
+.pm-qlbl {
+position: absolute;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: var(–ink-4);
+}
+
+.pm-dot {
+position: absolute;
+transform: translate(-50%,-50%);
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 4px;
+cursor: default;
+}
+
+.pm-circle {
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 9px;
+font-weight: 700;
+border: 2px solid;
+transition: transform 0.2s;
+}
+
+.pm-dot:hover .pm-circle { transform: scale(1.15); }
+.pm-label { font-size: 9px; font-weight: 500; color: var(–ink-2); white-space: nowrap; }
+
+/* ─── SWOT ─── */
+.swot { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(–rule); }
+
+.swot-cell { padding: 20px; }
+.swot-cell:nth-child(1) { border-right: 1px solid var(–rule); border-bottom: 1px solid var(–rule); background: #F0FBF4; }
+.swot-cell:nth-child(2) { border-bottom: 1px solid var(–rule); background: var(–red-bg); }
+.swot-cell:nth-child(3) { border-right: 1px solid var(–rule); background: var(–gold-bg); }
+.swot-cell:nth-child(4) { background: var(–blue-10); }
+
+.swot-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+.swot-cell:nth-child(1) .swot-lbl { color: var(–green); }
+.swot-cell:nth-child(2) .swot-lbl { color: var(–red); }
+.swot-cell:nth-child(3) .swot-lbl { color: var(–gold); }
+.swot-cell:nth-child(4) .swot-lbl { color: var(–blue-600); }
+
+.swot-list li {
+font-size: 12px;
+color: var(–ink-2);
+list-style: none;
+padding-left: 14px;
+position: relative;
+margin-bottom: 6px;
+line-height: 1.4;
+}
+
+.swot-list li::before { position: absolute; left: 0; }
+.swot-cell:nth-child(1) .swot-list li::before { content:‘✓’; color:var(–green); font-size:10px; }
+.swot-cell:nth-child(2) .swot-list li::before { content:‘✕’; color:var(–red); font-size:10px; }
+.swot-cell:nth-child(3) .swot-list li::before { content:‘⚡’; font-size:9px; }
+.swot-cell:nth-child(4) .swot-list li::before { content:‘→’; color:var(–blue-500); font-size:10px; }
+
+/* ─── TIMELINE ─── */
+.timeline { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(–rule); }
+
+.tl-cell {
+padding: 20px;
+border-right: 1px solid var(–rule);
+background: var(–white);
+}
+
+.tl-cell:last-child { border-right: none; }
+
+.tl-h { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(–ink-4); margin-bottom: 6px; }
+.tl-period { font-family:‘Fraunces’,serif; font-size: 17px; font-weight: 700; color: var(–blue-700); margin-bottom: 4px; }
+.tl-phase { font-size: 10px; font-weight: 500; color: var(–blue-400); margin-bottom: 12px; }
+
+.tl-list li {
+font-size: 11px;
+color: var(–ink-2);
+list-style: none;
+padding-left: 12px;
+position: relative;
+margin-bottom: 5px;
+line-height: 1.4;
+}
+
+.tl-list li::before { content:’›’; position:absolute; left:0; color:var(–blue-400); }
+
+/* ─── RECO CARD ─── */
+.reco {
+display: flex;
+align-items: flex-start;
+gap: 16px;
+background: var(–white);
+border: 1px solid var(–rule);
+border-left: 3px solid var(–blue-500);
+padding: 18px 20px;
+margin-bottom: 12px;
+transition: border-color 0.15s;
+}
+
+.reco:hover { border-color: var(–blue-300); border-left-color: var(–blue-500); }
+.reco.r-red    { border-left-color: var(–red); }
+.reco.r-gold   { border-left-color: var(–gold); }
+.reco.r-green  { border-left-color: var(–green); }
+
+.reco-num {
+flex-shrink: 0;
+width: 52px; height: 52px;
+border: 1.5px solid var(–rule);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background: var(–blue-10);
+}
+
+.reco-p { font-family:‘Fraunces’,serif; font-size: 20px; font-weight: 700; color: var(–blue-700); line-height: 1; }
+.reco-pl { font-size: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(–ink-4); }
+.reco-content { flex: 1; }
+.reco-title { font-family:‘Fraunces’,serif; font-size: 14px; font-weight: 600; color: var(–ink); margin-bottom: 4px; }
+.reco-body { font-size: 12px; color: var(–ink-2); line-height: 1.6; }
+.reco-horizon { flex-shrink: 0; text-align: right; font-size: 10px; color: var(–ink-4); line-height: 1.5; }
+
+/* ─── SURVEY HIGHLIGHT ─── */
+.survey-stat {
+background: var(–white);
+color: #fff;
+padding: 20px 24px;
+display: flex;
+align-items: center;
+gap: 16px;
+}
+
+.sstat-num {
+font-family: ‘Fraunces’, serif;
+font-size: 40px;
+font-weight: 700;
+color: var(–blue-600);
+line-height: 1;
+flex-shrink: 0;
+}
+
+.sstat-body { flex: 1; }
+.sstat-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.sstat-sub { font-size: 11px; color: var(–ink-3); line-height: 1.4; }
+
+/* ─── STORY FLOW ─── */
+.story-flow { display: flex; margin-bottom: 24px; }
+
+.story-step {
+flex: 1;
+padding: 18px 20px;
+background: var(–white);
+border: 1px solid var(–rule);
+border-right: none;
+position: relative;
+}
+
+.story-step:last-child { border-right: 1px solid var(–rule); }
+
+.story-step::after {
+content: ‘›’;
+position: absolute;
+right: -10px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 18px;
+color: var(–blue-300);
+z-index: 2;
+background: var(–white);
+line-height: 1;
+}
+
+.story-step:last-child::after { display: none; }
+
+.step-n { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(–blue-400); margin-bottom: 6px; }
+.step-title { font-family:‘Fraunces’,serif; font-size: 13px; font-weight: 600; color: var(–ink); margin-bottom: 4px; }
+.step-body { font-size: 11px; color: var(–ink-3); line-height: 1.5; }
+
+/* ─── OVERVIEW HERO ─── */
+.hero {
+background: linear-gradient(135deg, var(–blue-500) 0%, var(–blue-300) 100%);
+padding: 32px;
+display: flex;
+align-items: center;
+gap: 32px;
+margin-bottom: 24px;
+position: relative;
+overflow: hidden;
+}
+
+.hero::before {
+content: ‘’;
+position: absolute;
+right: -60px; top: -60px;
+width: 240px; height: 240px;
+border: 1px solid rgba(255,255,255,0.06);
+border-radius: 50%;
+}
+
+.hero::after {
+content: ‘’;
+position: absolute;
+right: -20px; top: -20px;
+width: 160px; height: 160px;
+border: 1px solid rgba(255,255,255,0.04);
+border-radius: 50%;
+}
+
+.hero-text { flex: 1; }
+.hero-eye { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(–blue-600); opacity: 0.7; margin-bottom: 10px; }
+.hero-title { font-family:‘Fraunces’,serif; font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 8px; line-height: 1.2; }
+.hero-body { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 440px; font-weight: 300; }
+
+.hero-stats { display: flex; gap: 0; flex-shrink: 0; }
+
+.hero-stat {
+padding: 0 28px;
+border-left: 1px solid rgba(255,255,255,0.1);
+text-align: center;
+}
+
+.hstat-n { font-family:‘Fraunces’,serif; font-size: 34px; font-weight: 700; color: var(–blue-600); line-height: 1; }
+.hstat-l { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+/* ─── DOC CARDS ─── */
+.doc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+
+.doc-card {
+background: var(–white);
+border: 1px solid var(–rule);
+border-top: 3px solid var(–blue-500);
+padding: 20px;
+cursor: pointer;
+transition: all 0.15s;
+}
+
+.doc-card:hover { border-color: var(–blue-300); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(21,101,192,0.1); }
+.doc-icon { font-size: 26px; margin-bottom: 12px; }
+.doc-title { font-family:‘Fraunces’,serif; font-size: 13px; font-weight: 600; color: var(–ink); margin-bottom: 5px; }
+.doc-meta { font-size: 10px; color: var(–ink-4); font-weight: 500; letter-spacing: 0.3px; margin-bottom: 10px; }
+.doc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.doc-tag { font-size: 9px; font-weight: 600; letter-spacing: 0.5px; padding: 2px 6px; background: var(–blue-10); color: var(–blue-600); border: 1px solid var(–blue-100); }
+
+/* ─── KEY INSIGHTS ─── */
+.ki-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+
+.ki-card {
+background: var(–white);
+border: 1px solid var(–rule);
+border-top: 3px solid var(–blue-500);
+padding: 20px;
+}
+
+.ki-card.ki-green { border-top-color: var(–green); }
+.ki-card.ki-red   { border-top-color: var(–red); }
+.ki-card.ki-gold  { border-top-color: var(–gold); }
+
+.ki-icon { font-size: 20px; margin-bottom: 10px; }
+.ki-title { font-family:‘Fraunces’,serif; font-size: 14px; font-weight: 600; color: var(–ink); margin-bottom: 6px; }
+.ki-body { font-size: 12px; color: var(–ink-2); line-height: 1.6; }
+
+.ki-what {
+margin-top: 12px;
+padding: 10px 12px;
+background: var(–blue-10);
+border-left: 2px solid var(–blue-400);
+font-size: 11px;
+color: var(–blue-700);
+font-style: italic;
+line-height: 1.5;
+}
+
+/* ─── DATA NUMBERS STRIP ─── */
+.num-strip {
+display: grid;
+grid-template-columns: repeat(4,1fr);
+border: 1px solid var(–rule);
+background: var(–white);
+margin-bottom: 24px;
+}
+
+.num-cell {
+padding: 20px;
+border-right: 1px solid var(–rule);
+text-align: center;
+}
+
+.num-cell:last-child { border-right: none; }
+
+.num-val { font-family:‘Fraunces’,serif; font-size: 30px; font-weight: 700; color: var(–blue-700); line-height: 1; margin-bottom: 6px; }
+.num-lbl { font-size: 11px; color: var(–ink-3); line-height: 1.4; }
+
+/* ─── BUILD/BUY/PARTNER ─── */
+.bbp { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(–rule); }
+
+.bbp-cell {
+padding: 22px;
+border-right: 1px solid var(–rule);
+background: var(–white);
+}
+
+.bbp-cell:last-child { border-right: none; background: var(–blue-10); border-top: 3px solid var(–blue-500); }
+.bbp-head { font-family:‘Fraunces’,serif; font-size: 18px; font-weight: 700; color: var(–ink); margin-bottom: 6px; }
+.bbp-who { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(–ink-4); text-transform: uppercase; margin-bottom: 12px; }
+.bbp-list li { font-size: 12px; color: var(–ink-2); list-style: none; padding-left: 14px; position: relative; margin-bottom: 5px; line-height: 1.4; }
+.bbp-list li::before { position: absolute; left: 0; font-size: 10px; }
+.bbp-list .pro::before { content:‘✓’; color:var(–green); }
+.bbp-list .con::before { content:‘⚠’; color:var(–gold); }
+
+/* ─── ANNO ─── */
+.anno { font-size: 11px; color: var(–ink-4); margin-top: 8px; font-style: italic; }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-thumb { background: var(–blue-200); border-radius: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+canvas { display: block; }
+</style>
+
+</head>
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+  <div class="sb-top">
+    <div class="sb-wordmark">Quantum Banking</div>
+    <div class="sb-sub">Intelligence Platform</div>
+    <div class="sb-badge">Académique · Confidentiel</div>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="sb-section-label">Navigation</div>
+    <div class="sb-item active" onclick="go('overview')"><span class="sb-icon">◈</span> Overview</div>
+    <div class="sb-item" onclick="go('competitive')"><span class="sb-icon">⊞</span> Benchmark Compétitif <span class="sb-chip">P3–7</span></div>
+    <div class="sb-item" onclick="go('comms')"><span class="sb-icon">◉</span> Benchmark Comm.</div>
+    <div class="sb-item" onclick="go('survey')"><span class="sb-icon">◎</span> Enquête · 103 rép.</div>
+    <div class="sb-section-label">Synthèse</div>
+    <div class="sb-item" onclick="go('insights')"><span class="sb-icon">★</span> Key Insights</div>
+    <div class="sb-item" onclick="go('recos')"><span class="sb-icon">⬡</span> Recommandations</div>
+    <div class="sb-item" onclick="go('docs')"><span class="sb-icon">⊡</span> Data Room</div>
+  </nav>
+
+  <div class="sb-foot">
+    <strong>Sciences des Organisations</strong><br>
+    Paris-Dauphine PSL · Madrid<br>
+    Mars 2026
+  </div>
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+  <!-- TOPBAR -->
+
+  <div class="topbar">
+    <div class="tb-crumb">
+      <span>QBIP</span>
+      <span class="sep">›</span>
+      <span class="cur" id="crumb">Overview</span>
+    </div>
+    <div class="tb-right">
+      <div class="tb-live">Données 2024–2026</div>
+      <div class="tb-date">Avril 2026 · Confidentiel</div>
+    </div>
+  </div>
+
+  <!-- ═══ OVERVIEW ═══ -->
+
+  <div class="page active" id="page-overview">
+    <div class="ph">
+      <div class="ph-eye">Quantum Banking Intelligence Platform</div>
+      <div class="ph-title">Quantum Computing<br>en Banca & Finanzas</div>
+      <div class="ph-body">Analyse stratégique complète — Benchmark compétitif, communication digitale, enquête terrain 103 répondants. Niveau cabinet de conseil.</div>
+    </div>
+
+```
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eye">Rapport Stratégique · Mars 2026</div>
+    <div class="hero-title">Le Quantum Banking n'est plus une hypothèse — c'est une réalité</div>
+    <div class="hero-body">JPMorgan, HSBC, BNP Paribas et Goldman Sachs investissent massivement. HSBC enregistre déjà +34% de fill rate sur ses obligations. La fenêtre stratégique se ferme.</div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hstat-n">$1T+</div><div class="hstat-l">Marché 2035</div></div>
+    <div class="hero-stat"><div class="hstat-n">10</div><div class="hstat-l">Banques analysées</div></div>
+    <div class="hero-stat"><div class="hstat-n">2030</div><div class="hstat-l">Q-Advantage</div></div>
+  </div>
+</div>
+
+<div class="kpi-row mb24">
+  <div class="kpi"><div class="kpi-lbl">Investissement secteur</div><div class="kpi-val">$2.5B</div><div class="kpi-sub">+68% vs 2023 · accélération continue</div></div>
+  <div class="kpi accent-green"><div class="kpi-lbl">Acteurs en production</div><div class="kpi-val">3</div><div class="kpi-sub">JPMorgan · HSBC · Citi déjà actifs</div></div>
+  <div class="kpi accent-red"><div class="kpi-lbl">Q-Day deadline</div><div class="kpi-val">2030</div><div class="kpi-sub">Migration PQC obligatoire avant 2030</div></div>
+  <div class="kpi accent-gold"><div class="kpi-lbl">Talent mondial</div><div class="kpi-val">50K</div><div class="kpi-sub">Ingénieurs quantiques dans le monde — pénurie critique</div></div>
+</div>
+
+<div class="story-flow mb24">
+  <div class="story-step"><div class="step-n">01 · Contexte</div><div class="step-title">Qu'est-ce que le Quantum?</div><div class="step-body">Superposition, intrication, interférence. Révolution computationnelle qui menace ou transforme la finance.</div></div>
+  <div class="story-step"><div class="step-n">02 · Marché</div><div class="step-title">Pourquoi les banques investissent?</div><div class="step-body">5 moteurs: vitesse de calcul, risque, cybersécurité post-quantum, nouveaux produits, avantage compétitif.</div></div>
+  <div class="story-step"><div class="step-n">03 · Acteurs</div><div class="step-title">Qui mène la course?</div><div class="step-body">JPMorgan en production. HSBC +34% fill rate. BNP souveraineté. IBM partenaire de référence.</div></div>
+  <div class="story-step"><div class="step-n">04 · Action</div><div class="step-title">Que faire maintenant?</div><div class="step-body">5 priorités: PQC immédiat, pilotes ROI, capital humain, stratégie intégrée, produits Q.</div></div>
+</div>
+
+<div class="g2 mb16">
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Calendrier d'Adoption Quantum</div><div class="card-sub">Maturité par cas d'usage · 2024–2040</div></div><span class="tag tag-blue">TIMELINE</span></div>
+    <canvas id="c-timeline" height="220"></canvas>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Feuille de Route 2026–2045</div><div class="card-sub">3 horizons · disruptions · nouveaux rôles</div></div><span class="tag tag-blue">ROADMAP</span></div>
+    <div class="timeline" style="border:none;margin-top:4px;">
+      <div class="tl-cell" style="border-left:none;padding:12px 14px;">
+        <div class="tl-h">H1</div>
+        <div class="tl-period">2026–30</div>
+        <div class="tl-phase">NISQ + Hybride</div>
+        <ul class="tl-list">
+          <li>Bond trading quantum</li>
+          <li>Migration PQC obligatoire</li>
+          <li>QRN dans transactions</li>
+        </ul>
+      </div>
+      <div class="tl-cell" style="padding:12px 14px;">
+        <div class="tl-h">H2</div>
+        <div class="tl-period">2030–37</div>
+        <div class="tl-phase">Fault-Tolerant</div>
+        <ul class="tl-list">
+          <li>VaR en minutes</li>
+          <li>Pricing dérivés temps réel</li>
+          <li>Chief Quantum Officer</li>
+        </ul>
+      </div>
+      <div class="tl-cell" style="padding:12px 14px;">
+        <div class="tl-h">H3</div>
+        <div class="tl-period">2037–45</div>
+        <div class="tl-phase">Full Quantum</div>
+        <ul class="tl-list">
+          <li>Refondation cryptographie</li>
+          <li>Marchés Q natifs</li>
+          <li>Actifs financiers Q</li>
+        </ul>
+      </div>
+      <div class="tl-cell" style="border-right:none;padding:12px 14px;">
+        <div class="tl-h">H4</div>
+        <div class="tl-period">2045+</div>
+        <div class="tl-phase">Quantum Internet</div>
+        <ul class="tl-list">
+          <li>Fin modèles stochastiques</li>
+          <li>Marchés auto-régulés IA-Q</li>
+          <li>Tokens quantiques</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Maturité des Cas d'Usage · 2026</div><div class="card-sub">État de déploiement réel par domaine</div></div><span class="tag tag-blue">USE CASES</span></div>
+  <canvas id="c-usecases" height="180"></canvas>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ BENCHMARK COMPÉTITIF ═══ -->
+
+  <div class="page" id="page-competitive">
+    <div class="ph">
+      <div class="ph-eye">Parties 3 · 4 · 5 · 6 · 7</div>
+      <div class="ph-title">Benchmark Compétitif</div>
+      <div class="ph-body">10 banques analysées · Écosystème technologique · Analyse stratégique SWOT · Vision prospective 2030–2045</div>
+    </div>
+
+```
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Q-Score · Classement Quantum Readiness</div><div class="card-sub">Score global /10 · Données 2026 consolidées</div></div><span class="tag tag-blue">SCORECARD</span></div>
+  <canvas id="c-qscore" height="200"></canvas>
+</div>
+
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Profils des 10 Banques Leaders</div><div class="card-sub">Stratégie · Maturité · Partenaires · Investissement</div></div><span class="tag tag-blue">PARTIE 4</span></div>
+  <div class="actor-grid">
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇺🇸</span><div><div class="actor-name">JPMorgan Chase</div><div class="actor-tier">PRODUCTION · FULL-STACK PIONEER</div></div><div class="actor-score">9.5</div></div><div class="actor-tags"><span class="actor-tag">QKD PROD.</span><span class="actor-tag">IBM QUANTUM</span><span class="actor-tag">$100M+/AN</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>95%</span></div><div class="prog-track"><div class="prog-fill" style="width:95%"></div></div></div></div>
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇬🇧</span><div><div class="actor-name">HSBC</div><div class="actor-tier">PILOTE AVANCÉ · ALPHA-FOCUSED</div></div><div class="actor-score">8.5</div></div><div class="actor-tags"><span class="actor-tag">+34% FILL RATE</span><span class="actor-tag">IBM HERON 133q</span><span class="actor-tag">BOND TRADING</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>85%</span></div><div class="prog-track"><div class="prog-fill" style="width:85%"></div></div></div></div>
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇺🇸</span><div><div class="actor-name">Goldman Sachs</div><div class="actor-tier">R&D / SIMULATION · ALGO LEADER</div></div><div class="actor-score">8.0</div></div><div class="actor-tags"><span class="actor-tag">QAE RESEARCH</span><span class="actor-tag">AWS BRAKET</span><span class="actor-tag">IONQ</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>80%</span></div><div class="prog-track"><div class="prog-fill" style="width:80%"></div></div></div></div>
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇫🇷</span><div><div class="actor-name">BNP Paribas</div><div class="actor-tier">R&D ÉCHELLE · STRATÉGIE SOUVERAINE</div></div><div class="actor-score">7.5</div></div><div class="actor-tags"><span class="actor-tag">PASQAL</span><span class="actor-tag">ALICE & BOB</span><span class="actor-tag">ESG QUANTUM</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>75%</span></div><div class="prog-track"><div class="prog-fill" style="width:75%"></div></div></div></div>
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇺🇸</span><div><div class="actor-name">Citigroup</div><div class="actor-tier">PRÉPARATION · SÉCURITÉ FIRST</div></div><div class="actor-score">7.0</div></div><div class="actor-tags"><span class="actor-tag">PQC ACTIF</span><span class="actor-tag">GOOGLE Q.</span><span class="actor-tag">NIST</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>70%</span></div><div class="prog-track"><div class="prog-fill" style="width:70%"></div></div></div></div>
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇩🇪</span><div><div class="actor-name">Deutsche Bank</div><div class="actor-tier">EN DÉVELOPPEMENT · STABILITÉ OPS</div></div><div class="actor-score">6.5</div></div><div class="actor-tags"><span class="actor-tag">TERRA QUANTUM</span><span class="actor-tag">NVIDIA</span><span class="actor-tag">HYBRIDE</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>65%</span></div><div class="prog-track"><div class="prog-fill" style="width:65%;background:var(--blue-300)"></div></div></div></div>
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇬🇧</span><div><div class="actor-name">Standard Chartered</div><div class="actor-tier">INCUBATION · ECOSYSTEM PLAY</div></div><div class="actor-score" style="color:var(--ink-3)">5.5</div></div><div class="actor-tags"><span class="actor-tag">FUJITSU</span><span class="actor-tag">QAAS</span><span class="actor-tag">ASIE</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>55%</span></div><div class="prog-track"><div class="prog-fill" style="width:55%;background:var(--blue-200)"></div></div></div></div>
+    <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇪🇸</span><div><div class="actor-name">BBVA</div><div class="actor-tier">RECHERCHE PRÉCOCE · INNOVATION LAB</div></div><div class="actor-score" style="color:var(--ink-3)">4.5</div></div><div class="actor-tags"><span class="actor-tag">IBM Q. NETWORK</span><span class="actor-tag">QUANTUM SPAIN</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>45%</span></div><div class="prog-track"><div class="prog-fill" style="width:45%;background:var(--ink-4)"></div></div></div></div>
+  </div>
+</div>
+
+<div class="g2 mb16">
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Radar Compétitif · Top 4 Banques</div><div class="card-sub">6 dimensions stratégiques</div></div><span class="tag tag-blue">RADAR</span></div>
+    <canvas id="c-radar" height="240"></canvas>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:#1565C0"></div>JPMorgan</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:#198038"></div>HSBC</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:#A0720A"></div>Goldman</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:#C0392B"></div>BNP</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Mapping Concurrentiel 2×2</div><div class="card-sub">Maturité technique vs Ambition stratégique</div></div><span class="tag tag-gold">POSITIONING</span></div>
+    <div class="pos-map">
+      <div class="pos-ax-x"></div>
+      <div class="pos-ax-y"></div>
+      <div class="pm-qlbl" style="left:10px;bottom:8px;color:var(--ink-4)">Faible maturité</div>
+      <div class="pm-qlbl" style="right:10px;bottom:8px;color:var(--ink-4)">Forte maturité</div>
+      <div class="pm-qlbl" style="top:8px;left:50%;transform:translateX(-50%);color:var(--ink-4)">Haute ambition</div>
+      <div class="pm-qlbl" style="bottom:8px;left:50%;transform:translateX(-50%);color:var(--ink-4)">Faible ambition</div>
+      <!-- quadrant labels -->
+      <div style="position:absolute;left:8px;top:8px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;">VISIONAIRES</div>
+      <div style="position:absolute;right:8px;top:8px;font-size:9px;color:var(--blue-500);font-weight:600;opacity:0.7;">LEADERS</div>
+      <div style="position:absolute;left:8px;bottom:22px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;">SUIVEURS</div>
+      <div style="position:absolute;right:8px;bottom:22px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;">EXÉCUTANTS</div>
+
+      <div class="pm-dot" style="left:88%;top:15%"><div class="pm-circle" style="width:42px;height:42px;background:rgba(21,101,192,0.12);border-color:var(--blue-600);color:var(--blue-700)">JPM</div><div class="pm-label">JPMorgan</div></div>
+      <div class="pm-dot" style="left:76%;top:26%"><div class="pm-circle" style="width:36px;height:36px;background:rgba(25,128,56,0.1);border-color:var(--green);color:var(--green)">HSBC</div><div class="pm-label">HSBC</div></div>
+      <div class="pm-dot" style="left:70%;top:20%"><div class="pm-circle" style="width:34px;height:34px;background:rgba(160,114,10,0.1);border-color:var(--gold);color:var(--gold)">GS</div><div class="pm-label">Goldman</div></div>
+      <div class="pm-dot" style="left:60%;top:30%"><div class="pm-circle" style="width:32px;height:32px;background:rgba(192,57,43,0.1);border-color:var(--red);color:var(--red)">BNP</div><div class="pm-label">BNP</div></div>
+      <div class="pm-dot" style="left:63%;top:48%"><div class="pm-circle" style="width:28px;height:28px;background:var(--blue-10);border-color:var(--blue-300);color:var(--blue-500)">CITI</div><div class="pm-label">Citi</div></div>
+      <div class="pm-dot" style="left:50%;top:54%"><div class="pm-circle" style="width:26px;height:26px;background:var(--blue-10);border-color:var(--blue-200);color:var(--blue-400)">DB</div><div class="pm-label">Deutsche</div></div>
+      <div class="pm-dot" style="left:36%;top:62%"><div class="pm-circle" style="width:24px;height:24px;background:var(--rule-2);border-color:var(--rule);color:var(--ink-4)">SCB</div><div class="pm-label">Std Chartered</div></div>
+      <div class="pm-dot" style="left:26%;top:56%"><div class="pm-circle" style="width:22px;height:22px;background:var(--rule-2);border-color:var(--rule);color:var(--ink-4)">BBVA</div><div class="pm-label">BBVA</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Analyse Stratégique — SWOT Quantum</div><div class="card-sub">Partie 6 · Forces · Limites · Risques · Opportunités</div></div><span class="tag tag-blue">SWOT</span></div>
+  <div class="swot">
+    <div class="swot-cell"><div class="swot-lbl">Forces structurelles</div><ul class="swot-list"><li>Speedup quadratique Monte Carlo (2027–30)</li><li>Optimisation NP-Hard → polynomial</li><li>QKD: sécurité inviolable (JPM en prod.)</li><li>Machine Learning Q — features exponentiels</li><li>First-mover: IP propriétaire 3–5 ans d'avance</li></ul></div>
+    <div class="swot-cell"><div class="swot-lbl">Limites actuelles (NISQ)</div><ul class="swot-list"><li>Décoherence: circuits courts seulement</li><li>Température 15 millikelvin: $5–15M/système</li><li>Max 1000 qubits bruités vs 1M+ nécessaires</li><li>Taux d'erreur: 40% sur 100 portes</li><li>Pénurie talent: &lt;50K ingénieurs worldwide</li></ul></div>
+    <div class="swot-cell"><div class="swot-lbl">Risques stratégiques</div><ul class="swot-list"><li>🔴 Q-Day: rupture RSA-2048 avant 2035</li><li>🔴 "Store Now Decrypt Later" — acteurs étatiques</li><li>🟠 Concentration technologique IBM/Google</li><li>🟠 Disruption emplois (Risk Managers, Quants)</li><li>🟡 "Quantum Winter" si délais non tenus</li></ul></div>
+    <div class="swot-cell"><div class="swot-lbl">Opportunités à saisir</div><ul class="swot-list"><li>Bond trading Q généralisé (playbook HSBC)</li><li>Fonds ESG quantum — marché $450B 2035</li><li>QaaS bancaire pour clients</li><li>PQC comme avantage réputationnel</li><li>Chief Quantum Officer — nouveau rôle C-Suite</li></ul></div>
+  </div>
+</div>
+
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Matrice Build · Buy · Partner par Profil de Banque</div><div class="card-sub">IBM positionné comme partenaire de référence · Partie 7</div></div><span class="tag tag-blue">STRATÉGIE</span></div>
+  <div class="bbp">
+    <div class="bbp-cell">
+      <div class="bbp-head">🔨 Build</div>
+      <div class="bbp-who">Pour: JPMorgan, Goldman (Tier 1 global)</div>
+      <ul class="bbp-list">
+        <li class="pro">Contrôle total de l'IP</li>
+        <li class="pro">Avantage propriétaire durable</li>
+        <li class="con">Coût $50M–$500M minimum</li>
+        <li class="con">Talent rare à retenir</li>
+        <li class="con">Time-to-market 3–5 ans</li>
+      </ul>
+    </div>
+    <div class="bbp-cell">
+      <div class="bbp-head">🛒 Buy</div>
+      <div class="bbp-who">Pour: Banques Tier 2–3 (budget limité)</div>
+      <ul class="bbp-list">
+        <li class="pro">Rapidité de déploiement</li>
+        <li class="pro">Expertise immédiate</li>
+        <li class="con">Dépendance fournisseur</li>
+        <li class="con">Licences récurrentes</li>
+        <li class="con">Risque d'obsolescence</li>
+      </ul>
+    </div>
+    <div class="bbp-cell">
+      <div class="bbp-head" style="color:var(--blue-700)">🤝 Partner <span style="font-size:11px;color:var(--blue-500);font-weight:400">← IBM recommande</span></div>
+      <div class="bbp-who" style="color:var(--blue-500)">IBM Quantum Network · 250+ membres</div>
+      <ul class="bbp-list">
+        <li class="pro">Partage coûts & risques</li>
+        <li class="pro">Accès aux meilleurs experts</li>
+        <li class="pro">Flexibilité et scalabilité</li>
+        <li class="con">Partage possible de l'IP</li>
+        <li class="con">Coordination plus complexe</li>
+      </ul>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ BENCHMARK COMMUNICATION ═══ -->
+
+  <div class="page" id="page-comms">
+    <div class="ph">
+      <div class="ph-eye">Benchmark Communication Digital</div>
+      <div class="ph-title">Stratégies de Communication<br>Quantum B2B</div>
+      <div class="ph-body">8 objectifs · Heat map 10 acteurs × 8 dimensions · Gaps secteur · Plan d'action IBM 12 initiatives</div>
+    </div>
+
+```
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Heat Map · Maturité par Objectif × Entreprise</div><div class="card-sub">Score /10 · IBM référence ⭐</div></div><span class="tag tag-blue">HEAT MAP</span></div>
+  <div style="overflow-x:auto;">
+    <table class="mtable" style="min-width:820px;">
+      <thead>
+        <tr>
+          <th style="min-width:170px;">Objectif</th>
+          <th style="color:var(--blue-200);">🔵 IBM ⭐</th>
+          <th>Google AI</th><th>Microsoft</th><th>Quantinuum</th>
+          <th>IonQ</th><th>D-Wave</th><th>Rigetti</th>
+          <th>PsiQ.</th><th>Pasqal</th><th>Classiq</th>
+          <th style="min-width:180px;">Gap secteur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1️⃣ Brand Awareness</strong></td><td><span class="hb hb-ibm">9⭐</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-9">9</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-6">6</span></td><td style="font-size:11px;color:var(--ink-3)">Startups sans ressources vs IBM/Google</td></tr>
+        <tr><td><strong>2️⃣ Lead Generation B2B</strong></td><td><span class="hb hb-ibm">7⭐</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-4">4</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-7">7</span></td><td style="font-size:11px;color:var(--red);font-weight:500">⚠ Peu de contenu ROI/Business value</td></tr>
+        <tr><td><strong>3️⃣ Éducation du Marché</strong></td><td><span class="hb hb-ibm">10⭐</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-4">4</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-7">7</span></td><td style="font-size:11px;color:var(--green);font-weight:500">IBM domine. Qiskit 550K+ utilisateurs</td></tr>
+        <tr><td><strong>4️⃣ Fidélisation Partners</strong></td><td><span class="hb hb-ibm">8⭐</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-6">6</span></td><td style="font-size:11px;color:var(--gold);font-weight:500">IBM 250+ membres, comm. insuffisante</td></tr>
+        <tr><td><strong>5️⃣ Recrutement Talent</strong></td><td><span class="hb hb-ibm">8⭐</span></td><td><span class="hb hb-9">9</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-7">7</span></td><td style="font-size:11px;color:var(--ink-3)">Google leader. IBM lutte vs glamour Google</td></tr>
+        <tr><td><strong>6️⃣ Confiance Régulatoire</strong></td><td><span class="hb hb-ibm">9⭐</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-4">4</span></td><td><span class="hb hb-4">4</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-5">5</span></td><td style="font-size:11px;color:var(--red);font-weight:500">🔴 Objectif le + négligé — IBM unique NIST</td></tr>
+        <tr><td><strong>7️⃣ Communauté Dev.</strong></td><td><span class="hb hb-ibm">10⭐</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-7">7</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-8">8</span></td><td style="font-size:11px;color:var(--green);font-weight:500">IBM domine. Qiskit 25K stars GitHub</td></tr>
+        <tr><td><strong>8️⃣ Hype Management</strong></td><td><span class="hb hb-ibm">7⭐</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-6">6</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-8">8</span></td><td><span class="hb hb-4">4</span></td><td><span class="hb hb-4">4</span></td><td><span class="hb hb-5">5</span></td><td><span class="hb hb-5">5</span></td><td style="font-size:11px;color:var(--red);font-weight:500">🔴 Crash Jan.2025: aucun protocole actif</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="g2 mb16">
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Score Communication Global /10</div><div class="card-sub">Positionnement par acteur</div></div><span class="tag tag-blue">SCORES</span></div>
+    <canvas id="c-comm-scores" height="220"></canvas>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">IBM · Performance par Objectif</div><div class="card-sub">vs Moyenne secteur · 8 dimensions</div></div><span class="tag tag-blue">IBM FOCUS</span></div>
+    <canvas id="c-ibm-radar" height="220"></canvas>
+    <div style="display:flex;gap:14px;margin-top:12px;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:var(--blue-600)"></div>IBM Score</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:var(--ink-4)"></div>Moy. Secteur</div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Top 5 Gaps à Combler — Plan d'Action IBM 12 mois</div><div class="card-sub">Initiatives priorisées · KPIs concrets</div></div><span class="tag tag-blue">PLAN IBM</span></div>
+  <div class="reco r-red"><div class="reco-num"><div class="reco-p" style="color:var(--red)">01</div><div class="reco-pl">IMMÉDIAT</div></div><div class="reco-content"><div class="reco-title">IBM Quantum ROI Calculator Web</div><div class="reco-body">Outil interactif: industrie + cas d'usage → ROI vs classique. Basé sur HSBC +34%, JPMorgan QKD, $1B cumulé. Target: 50K visites/mois, 5K leads, 200 MQLs enterprise.</div></div><div class="reco-horizon">0–3 MOIS<br>🔴 CRITIQUE</div></div>
+  <div class="reco r-red"><div class="reco-num"><div class="reco-p" style="color:var(--red)">02</div><div class="reco-pl">IMMÉDIAT</div></div><div class="reco-content"><div class="reco-title">Amplification NIST PQC — IBM Standard</div><div class="reco-body">Campagne sur le rôle IBM dans 2/4 standards PQC NIST. Landing page IBM Quantum Safe. Webinar avec régulateurs. 500 mentions médias ciblés.</div></div><div class="reco-horizon">0–3 MOIS<br>🔴 EXCLUSIF IBM</div></div>
+  <div class="reco"><div class="reco-num"><div class="reco-p">03</div><div class="reco-pl">3–6 MOIS</div></div><div class="reco-content"><div class="reco-title">IBM Quantum Executive Content Series</div><div class="reco-body">Série mensuelle C-Suite: vidéo 3min par industrie, 1-pager avec chiffres réels, "Quantum Readiness Assessment". 30% open rate newsletter CEO/CFO.</div></div><div class="reco-horizon">3–6 MOIS<br>🔵 STRATÉGIQUE</div></div>
+  <div class="reco"><div class="reco-num"><div class="reco-p">04</div><div class="reco-pl">3–6 MOIS</div></div><div class="reco-content"><div class="reco-title">IBM Quantum Progress Report Trimestriel</div><div class="reco-body">Transparence: promesses vs réalisations. Co-signé Gambetta + Krishna. 10K téléchargements/édition. NPS partners +10 pts en 12 mois.</div></div><div class="reco-horizon">3–6 MOIS<br>🔵 CONFIANCE</div></div>
+  <div class="reco r-gold"><div class="reco-num"><div class="reco-p" style="color:var(--gold)">05</div><div class="reco-pl">6–12 MOIS</div></div><div class="reco-content"><div class="reco-title">IBM Quantum Policy Hub + Awards Program</div><div class="reco-body">Centre dédié politique publique + prix annuels IBM Quantum Excellence. IBM comme arbitre et architecte du secteur. 50+ médias couvrants la cérémonie.</div></div><div class="reco-horizon">6–12 MOIS<br>🟡 VISION</div></div>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ ENQUÊTE ═══ -->
+
+  <div class="page" id="page-survey">
+    <div class="ph">
+      <div class="ph-eye">Enquête Terrain · Google Forms · Avril 2026</div>
+      <div class="ph-title">Résultats de l'Enquête<br>103 Répondants</div>
+      <div class="ph-body">Étudiants et jeunes professionnels · Finance / Économie / Ingénierie · Panel: 86,4% de 18–24 ans, 83,5% étudiants, 61,2% Finance/Business</div>
+    </div>
+
+```
+<div class="kpi-row mb24">
+  <div class="kpi"><div class="kpi-lbl">Notoriété quantum</div><div class="kpi-val">55,3%</div><div class="kpi-sub">ont entendu parler du quantum computing</div></div>
+  <div class="kpi accent-red"><div class="kpi-lbl">Connaissance IBM Quantum</div><div class="kpi-val">27,2%</div><div class="kpi-sub">Gap de notoriété critique — 72,8% ne connaissent pas IBM Q.</div></div>
+  <div class="kpi accent-green"><div class="kpi-lbl">Intérêt banking</div><div class="kpi-val">67%</div><div class="kpi-sub">très ou assez intéressés par les applications bancaires</div></div>
+  <div class="kpi accent-gold"><div class="kpi-lbl">Source #1 d'info</div><div class="kpi-val">67,7%</div><div class="kpi-sub">Instagram / TikTok — devant LinkedIn (15,2%)</div></div>
+</div>
+
+<!-- Row 1 -->
+<div class="g2 mb16">
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Avez-vous entendu parler du quantum computing?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q1</span></div>
+    <div class="donut-wrap">
+      <canvas id="c-s1" width="140" height="140" style="flex-shrink:0;"></canvas>
+      <div class="donut-legend">
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl">Oui</div><div class="leg-pct">55,3%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div><div class="leg-lbl">Non</div><div class="leg-pct">44,7%</div></div>
+      </div>
+    </div>
+    <p class="anno">57 répondants sur 103 connaissent le concept</p>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Avez-vous entendu parler d'IBM Quantum?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-red">Q3</span></div>
+    <div class="donut-wrap">
+      <canvas id="c-s2" width="140" height="140" style="flex-shrink:0;"></canvas>
+      <div class="donut-legend">
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl">Oui</div><div class="leg-pct">27,2%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div><div class="leg-lbl">Non</div><div class="leg-pct">72,8%</div></div>
+      </div>
+    </div>
+    <div class="insight"><div class="insight-title">Gap critique</div><div class="insight-body">IBM est le leader mondial du quantum — mais <strong>72,8% de la prochaine génération Finance ne le sait pas.</strong> C'est le gap le plus actionnable de toute l'étude.</div></div>
+  </div>
+</div>
+
+<!-- Row 2 -->
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Niveau de connaissance du quantum computing</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q2</span></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Aucune connaissance</div><div class="hbar-track"><div class="hbar-fill rd" style="width:62.1%"></div></div><div class="hbar-pct">62,1%</div><div class="hbar-n">64 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Niveau basique</div><div class="hbar-track"><div class="hbar-fill b2" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Niveau intermédiaire</div><div class="hbar-track"><div class="hbar-fill b3" style="width:9%"></div></div><div class="hbar-pct">~9,0%</div><div class="hbar-n">9 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Niveau avancé</div><div class="hbar-track"><div class="hbar-fill b3" style="width:3%;opacity:0.6;"></div></div><div class="hbar-pct">~3,0%</div><div class="hbar-n">3 rép.</div></div>
+  <div class="insight"><div class="insight-title">Implication stratégique</div><div class="insight-body">84,4% ont une connaissance nulle ou basique — même dans un panel Finance/Business. IBM doit prioriser l'éducation de marché avant la conversion commerciale. <strong>Le contenu introductif sur cas réels est la priorité absolue.</strong></div></div>
+</div>
+
+<!-- Row 3 -->
+<div class="g2 mb16">
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Comment percevez-vous le quantum computing?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q4</span></div>
+    <div class="donut-wrap">
+      <canvas id="c-s3" width="140" height="140" style="flex-shrink:0;"></canvas>
+      <div class="donut-legend">
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl">Trop tôt / surtout théorique</div><div class="leg-pct">8,7%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:#E53935"></div><div class="leg-lbl">Émergent, premiers cas réels</div><div class="leg-pct">46,6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl">Déjà utile pour l'industrie</div><div class="leg-pct">~6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl">Je ne sais pas</div><div class="leg-pct">38,8%</div></div>
+      </div>
+    </div>
+    <p class="anno">46,6% voient le quantum comme déjà émergent avec des cas réels</p>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Le quantum va-t-il transformer la banque?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-green">Q5</span></div>
+    <div class="donut-wrap">
+      <canvas id="c-s4" width="140" height="140" style="flex-shrink:0;"></canvas>
+      <div class="donut-legend">
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-700)"></div><div class="leg-lbl">Oui, significativement</div><div class="leg-pct">31,1%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-400)"></div><div class="leg-lbl">Oui, modérément</div><div class="leg-pct">30,1%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl">Je ne suis pas sûr(e)</div><div class="leg-pct">34,0%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl">Je ne pense pas</div><div class="leg-pct">~5%</div></div>
+      </div>
+    </div>
+    <div class="insight"><div class="insight-title">Signal fort</div><div class="insight-body"><strong>61,2% croient à une transformation</strong> significative ou modérée. Seulement ~5% sceptiques.</div></div>
+  </div>
+</div>
+
+<!-- Row 4 -->
+<div class="card mb16">
+  <div class="card-hd"><div><div class="card-title">Quand les banques utiliseront-elles activement le quantum?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-gold">Q6</span></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Dans 3–5 ans</div><div class="hbar-track"><div class="hbar-fill" style="width:35.9%"></div></div><div class="hbar-pct">35,9%</div><div class="hbar-n">37 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Je ne sais pas</div><div class="hbar-track"><div class="hbar-fill gy" style="width:31.1%"></div></div><div class="hbar-pct">31,1%</div><div class="hbar-n">32 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Dans 5–10 ans</div><div class="hbar-track"><div class="hbar-fill b2" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Dans 1–2 ans</div><div class="hbar-track"><div class="hbar-fill b3" style="width:7.8%"></div></div><div class="hbar-pct">7,8%</div><div class="hbar-n">8 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide">Déjà utilisé</div><div class="hbar-track"><div class="hbar-fill gr" style="width:3%"></div></div><div class="hbar-pct">~3%</div><div class="hbar-n">3 rép.</div></div>
+  <p class="anno">Aligné avec le consensus experts: adoption bancaire active attendue 2028–2032</p>
+</div>
+
+<!-- Row 5: Trust + Interest -->
+<div class="g2 mb16">
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Confiance envers IBM comme fournisseur quantum</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q8</span></div>
+    <div class="hbar-row"><div class="hbar-lbl">Je ne sais pas</div><div class="hbar-track"><div class="hbar-fill gy" style="width:31.1%"></div></div><div class="hbar-pct">31,1%</div><div class="hbar-n">32 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Haute confiance</div><div class="hbar-track"><div class="hbar-fill gr" style="width:27.2%"></div></div><div class="hbar-pct">27,2%</div><div class="hbar-n">28 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Confiance modérée</div><div class="hbar-track"><div class="hbar-fill b2" style="width:20.4%"></div></div><div class="hbar-pct">20,4%</div><div class="hbar-n">21 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Très haute confiance</div><div class="hbar-track"><div class="hbar-fill" style="width:9.7%;background:#7B1FA2"></div></div><div class="hbar-pct">9,7%</div><div class="hbar-n">10 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Faible confiance</div><div class="hbar-track"><div class="hbar-fill rd" style="width:8.7%"></div></div><div class="hbar-pct">8,7%</div><div class="hbar-n">9 rép.</div></div>
+    <div class="insight"><div class="insight-title">Lecture</div><div class="insight-body">57% ont une confiance haute, très haute ou modérée. Le 31,1% "je ne sais pas" = méconnaissance, non défiance. <strong>Capital de confiance à activer.</strong></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Intérêt pour les applications banking du quantum</div><div class="card-sub">103 répondants</div></div><span class="tag tag-green">Q9</span></div>
+    <div class="donut-wrap" style="margin-bottom:14px;">
+      <canvas id="c-s5" width="140" height="140" style="flex-shrink:0;"></canvas>
+      <div class="donut-legend">
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-700)"></div><div class="leg-lbl">Très intéressé(e)</div><div class="leg-pct">19,4%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-400)"></div><div class="leg-lbl">Assez intéressé(e)</div><div class="leg-pct">47,6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl">Neutre</div><div class="leg-pct">13,6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl">Peu / pas intéressé(e)</div><div class="leg-pct">~19%</div></div>
+      </div>
+    </div>
+    <div class="insight"><div class="insight-title">Signal fort</div><div class="insight-body"><strong>67% très ou assez intéressés</strong> malgré un faible niveau de connaissance. L'appétit dépasse l'expertise: opportunité pédagogique majeure.</div></div>
+  </div>
+</div>
+
+<!-- Row 6: Sources + Content -->
+<div class="g2 mb16">
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Sources d'information sur les tech émergentes</div><div class="card-sub">99 répondants · Question multi-choix</div></div><span class="tag tag-gold">Q10</span></div>
+    <div class="hbar-row"><div class="hbar-lbl">Instagram / TikTok</div><div class="hbar-track"><div class="hbar-fill rd" style="width:67.7%"></div></div><div class="hbar-pct">67,7%</div><div class="hbar-n">67 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">YouTube</div><div class="hbar-track"><div class="hbar-fill" style="width:43.4%"></div></div><div class="hbar-pct">43,4%</div><div class="hbar-n">43 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Médias traditionnels</div><div class="hbar-track"><div class="hbar-fill b2" style="width:40.4%"></div></div><div class="hbar-pct">40,4%</div><div class="hbar-n">40 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">LinkedIn</div><div class="hbar-track"><div class="hbar-fill b3" style="width:15.2%"></div></div><div class="hbar-pct">15,2%</div><div class="hbar-n">15 rép.</div></div>
+    <div class="insight"><div class="insight-title">Rupture générationnelle</div><div class="insight-body">Instagram/TikTok écrase LinkedIn (67,7% vs 15,2%). La comm. quantum IBM est calibrée pour LinkedIn — <strong>invisible pour 67% de cette audience.</strong></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div><div class="card-title">Quel contenu quantum vous serait le plus utile?</div><div class="card-sub">103 répondants · Question multi-choix</div></div><span class="tag tag-blue">Q11</span></div>
+    <div class="hbar-row"><div class="hbar-lbl">Cas d'usage réels</div><div class="hbar-track"><div class="hbar-fill" style="width:55.3%"></div></div><div class="hbar-pct">55,3%</div><div class="hbar-n">57 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Contenu introductif</div><div class="hbar-track"><div class="hbar-fill b2" style="width:35%"></div></div><div class="hbar-pct">35,0%</div><div class="hbar-n">36 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Contenu technique</div><div class="hbar-track"><div class="hbar-fill b3" style="width:25.2%"></div></div><div class="hbar-pct">25,2%</div><div class="hbar-n">26 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Avis d'experts</div><div class="hbar-track"><div class="hbar-fill b3" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl">Non intéressé(e)</div><div class="hbar-track"><div class="hbar-fill gy" style="width:17.5%"></div></div><div class="hbar-pct">17,5%</div><div class="hbar-n">18 rép.</div></div>
+    <div class="insight"><div class="insight-title">Format gagnant</div><div class="insight-body"><strong>Cas d'usage réels dominent (55,3%).</strong> Cette audience veut du concret, du prouvé — HSBC +34%, JPMorgan QKD sont les arguments #1.</div></div>
+  </div>
+</div>
+
+<!-- 3 Key Findings -->
+<div class="g3">
+  <div style="background:var(--blue-500);color:#fff;padding:22px;">
+    <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:var(--blue-100);margin-bottom:8px;">FINDING 01</div>
+    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;">Gap notoriété IBM critique</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;">55,3% connaissent le quantum — seulement 27,2% connaissent IBM Quantum. IBM est le leader mondial, invisible auprès de la prochaine génération Finance.</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--blue-200);font-weight:500;">→ Brand awareness sur TikTok / YouTube / Instagram</div>
+  </div>
+  <div style="background:var(--blue-500);color:#fff;padding:22px;">
+    <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:var(--blue-200);margin-bottom:8px;">FINDING 02</div>
+    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;">L'intérêt précède la connaissance</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.6;">67% intéressés par le quantum banking malgré 84% de niveau nul/basique. La demande de contenu existe — pas sur les bons canaux.</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--blue-200);font-weight:500;">→ Contenu introductif, cas réels, format court et visuel</div>
+  </div>
+  <div style="background:var(--blue-500);color:#fff;padding:22px;">
+    <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:var(--blue-100);margin-bottom:8px;">FINDING 03</div>
+    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;">La confiance IBM est latente</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.6;">57% font confiance à IBM — mais 31,1% "je ne sais pas". Méconnaissance, non défiance. Le capital de confiance est là; il faut l'activer.</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--blue-100);font-weight:500;">→ Preuves business concrètes: HSBC, JPM, $1B cumulé</div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ KEY INSIGHTS ═══ -->
+
+  <div class="page" id="page-insights">
+    <div class="ph">
+      <div class="ph-eye">Synthèse Ultra-Condensée</div>
+      <div class="ph-title">Key Insights</div>
+      <div class="ph-body">Les insights stratégiques clés pour les décideurs C-level</div>
+    </div>
+
+```
+<div class="num-strip mb24">
+  <div class="num-cell"><div class="num-val">+34%</div><div class="num-lbl">Fill rate HSBC bond trading avec IBM Heron 133q</div></div>
+  <div class="num-cell"><div class="num-val">550K+</div><div class="num-lbl">Utilisateurs Qiskit — avantage IBM inégalé</div></div>
+  <div class="num-cell"><div class="num-val">$450B</div><div class="num-lbl">Marché nouveaux produits financiers quantiques 2035</div></div>
+  <div class="num-cell"><div class="num-val">2030</div><div class="num-lbl">Horizon Q-Day — deadline migration PQC absolue</div></div>
+</div>
+
+<div class="ki-grid">
+  <div class="ki-card ki-red"><div class="ki-icon">🔴</div><div class="ki-title">Le Q-Day n'est pas hypothétique</div><div class="ki-body">RSA-2048 sera cassable d'ici 2030–2035. Les données chiffrées aujourd'hui sont déjà capturées "Store Now Decrypt Later". Coût de non-action: &gt;$100Bn secteur.</div><div class="ki-what">→ Migration PQC = priorité budgétaire #1, non-négociable avant 2030.</div></div>
+  <div class="ki-card ki-green"><div class="ki-icon">✅</div><div class="ki-title">Le quantum fonctionne déjà</div><div class="ki-body">HSBC +34% fill rate. JPMorgan QKD en production. D-Wave +179% revenue 2025. Ce n'est plus de la recherche — c'est de l'exploitation commerciale partielle.</div><div class="ki-what">→ Les early adopters construisent une avance irattrapable sur 3–5 ans.</div></div>
+  <div class="ki-card"><div class="ki-icon">🔵</div><div class="ki-title">IBM domine l'écosystème</div><div class="ki-body">Qiskit: 550K+ utilisateurs, 25K GitHub stars. 250+ membres Quantum Network. 2/4 standards PQC NIST développés par IBM. Avance structurelle.</div><div class="ki-what">→ IBM est le partenaire par défaut pour toute stratégie quantum bancaire sérieuse.</div></div>
+  <div class="ki-card ki-red"><div class="ki-icon">📊</div><div class="ki-title">Gap de communication massif</div><div class="ki-body">Les acteurs quantum parlent aux développeurs, pas aux CFOs/Boards. Aucun calculateur ROI. Aucun protocole de crise actif lors du crash Jan. 2025.</div><div class="ki-what">→ Premier acteur à combler ce gap capture le cycle de vente C-Suite entier.</div></div>
+  <div class="ki-card ki-gold"><div class="ki-icon">⚡</div><div class="ki-title">L'optimisation portefeuille: killer app</div><div class="ki-body">QAOA réduit NP-Hard à polynomial. BNP Paribas: -40% tracking error. Ratio de Sharpe +15–25%. Premier cas d'usage enterprise déployable maintenant.</div><div class="ki-what">→ Toute banque avec 10K+ actifs a un ROI quantum quantifiable aujourd'hui.</div></div>
+  <div class="ki-card"><div class="ki-icon">🌍</div><div class="ki-title">La souveraineté technologique compte</div><div class="ki-body">BNP → Pasqal (France). Standard Chartered → Fujitsu (Japon). Le quantum est géopolitique: dépendance vs autonomie stratégique.</div><div class="ki-what">→ Les banques européennes doivent définir leur stratégie souveraineté avant 2028.</div></div>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ RECOMMANDATIONS ═══ -->
+
+  <div class="page" id="page-recos">
+    <div class="ph">
+      <div class="ph-eye">Plan d'Action Stratégique · Vision 2030</div>
+      <div class="ph-title">Recommandations<br>Stratégiques</div>
+      <div class="ph-body">5 priorités actionnables · Horizon temporel · Investissements · Partenaires IBM</div>
+    </div>
+
+```
+<div class="reco r-red mb16"><div class="reco-num"><div class="reco-p" style="color:var(--red)">P1</div><div class="reco-pl">IMMÉDIAT</div></div><div class="reco-content"><div class="reco-title">Initier la Migration PQC (Cryptographie Post-Quantique)</div><div class="reco-body">Budget $50–500M selon taille. Inventaire données sensibles. Adoption NIST CRYSTALS-Kyber / Dilithium. Délai absolu: avant 2030. Risque de non-action: CATASTROPHIQUE. Partenaire recommandé: IBM Quantum Safe Explorer + Advisor + Remediator (en production).</div></div><div class="reco-horizon">0–12 MOIS<br>🔴 CRITIQUE</div></div>
+
+<div class="reco r-red mb16"><div class="reco-num"><div class="reco-p" style="color:var(--red)">P2</div><div class="reco-pl">12–24 MOIS</div></div><div class="reco-content"><div class="reco-title">Déployer 2–3 Pilotes Quantum avec ROI Rapide</div><div class="reco-body">Priorités: Bond trading RFQ (playbook HSBC +34% fill rate), Optimisation portefeuille QAOA, QRN pour trading stochastique. Partenaires: IBM Quantum Network + Quantinuum. Budget pilote: $5–20M/cas d'usage.</div></div><div class="reco-horizon">12–24 MOIS<br>🟠 HAUTE</div></div>
+
+<div class="reco r-gold mb16"><div class="reco-num"><div class="reco-p" style="color:var(--gold)">P3</div><div class="reco-pl">2–4 ANS</div></div><div class="reco-content"><div class="reco-title">Construire le Capital Humain Quantique</div><div class="reco-body">Programme "Quantum Quants" interne. Partnerships universitaires (MIT, École Polytechnique, TU Munich). Recrutement 5–10 PhDs quantum. Budget formation: $5–20M. Rejoindre IBM Quantum Network pour accès ressources et formation.</div></div><div class="reco-horizon">2–4 ANS<br>🟡 IMPORTANTE</div></div>
+
+<div class="reco mb16"><div class="reco-num"><div class="reco-p">P4</div><div class="reco-pl">3–5 ANS</div></div><div class="reco-content"><div class="reco-title">Développer une Quantum Strategy Intégrée</div><div class="reco-body">Création d'un Chief Quantum Officer (CQO). Roadmap 5 ans validée Comité Exécutif. Investissement R&D $30–100M/an. Écosystème de startups (Pasqal, Alice & Bob, PQShield selon profil).</div></div><div class="reco-horizon">3–5 ANS<br>🔵 STRATÉGIQUE</div></div>
+
+<div class="reco mb24"><div class="reco-num"><div class="reco-p">P5</div><div class="reco-pl">5–10 ANS</div></div><div class="reco-content"><div class="reco-title">Préparer les Nouveaux Produits Financiers Quantiques</div><div class="reco-body">Structurer les premières offres Q-ESG et dérivés quantum. Construire les datasets propriétaires pour un avantage compétitif durable. Marché potentiel: $450B d'ici 2035.</div></div><div class="reco-horizon">5–10 ANS<br>🟣 VISION</div></div>
+
+<div class="card">
+  <div class="card-hd"><div><div class="card-title">Impact Quantum par Segment · 2030 vs 2040</div><div class="card-sub">Gagnants et perdants de la révolution quantum</div></div><span class="tag tag-blue">IMPACT</span></div>
+  <table class="mtable">
+    <thead><tr><th>Segment</th><th>État actuel</th><th>Impact Quantum 2030</th><th>Impact Quantum 2040</th><th>Gagnants ✅</th><th>Perdants ❌</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Renta Fija</strong></td><td style="font-size:11px;color:var(--ink-3)">Pricing RFQ semi-manuel</td><td style="font-size:11px">Pricing Q &lt;1ms · fill rate +30%</td><td style="font-size:11px">Market making entièrement Q</td><td style="font-size:11px;color:var(--green)">HSBC, JPM</td><td style="font-size:11px;color:var(--red)">Courtiers trad.</td></tr>
+      <tr><td><strong>Dérivés Actions</strong></td><td style="font-size:11px;color:var(--ink-3)">Black-Scholes + Monte Carlo</td><td style="font-size:11px">Pricing temps réel tout payoff</td><td style="font-size:11px">Nouvelles classes d'actifs Q</td><td style="font-size:11px;color:var(--green)">Goldman, BNP</td><td style="font-size:11px;color:var(--red)">Banques régionales</td></tr>
+      <tr><td><strong>Gestion d'Actifs</strong></td><td style="font-size:11px;color:var(--ink-3)">Markowitz + facteurs</td><td style="font-size:11px">Portefeuilles 10K+ contraintes</td><td style="font-size:11px">100% grands fonds sur quantum</td><td style="font-size:11px;color:var(--green)">BlackRock, BNP AM</td><td style="font-size:11px;color:var(--red)">Gestionnaires classiques</td></tr>
+      <tr><td><strong>Banque de Détail</strong></td><td style="font-size:11px;color:var(--ink-3)">Scoring logistique, fraude ML</td><td style="font-size:11px">Scoring Q +20%, fraude quasi-zéro</td><td style="font-size:11px">Décisions en temps réel</td><td style="font-size:11px;color:var(--green)">Challengers QaaS</td><td style="font-size:11px;color:var(--red)">Banques lentes</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ DATA ROOM ═══ -->
+
+  <div class="page" id="page-docs">
+    <div class="ph">
+      <div class="ph-eye">Espace Documentaire</div>
+      <div class="ph-title">Data Room</div>
+      <div class="ph-body">Accès structuré aux documents du projet · Benchmarks · Analyses · Recommandations</div>
+    </div>
+
+```
+<div class="kpi-row mb24">
+  <div class="kpi"><div class="kpi-lbl">Documents</div><div class="kpi-val">7</div><div class="kpi-sub">Fichiers sources + analyses intégrées</div></div>
+  <div class="kpi accent-green"><div class="kpi-lbl">Répondants enquête</div><div class="kpi-val">103</div><div class="kpi-sub">Google Forms · Avril 2026</div></div>
+  <div class="kpi accent-gold"><div class="kpi-lbl">Mise à jour</div><div class="kpi-val">Mars 26</div><div class="kpi-sub">Données consolidées 2024–2026</div></div>
+  <div class="kpi accent-red"><div class="kpi-lbl">Statut</div><div class="kpi-val" style="font-size:18px;">CONFIDENTIEL</div><div class="kpi-sub">Usage académique uniquement</div></div>
+</div>
+
+<div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;">📂 Benchmarks</div>
+<div class="doc-grid mb24">
+  <div class="doc-card"><div class="doc-icon">📊</div><div class="doc-title">Benchmark Compétitif — Quantum Banking</div><div class="doc-meta">Benchmark_Competitivo_ESP.xlsx · 8 feuilles · Mars 2026</div><div class="doc-tags"><span class="doc-tag">COMPÉTITIF</span><span class="doc-tag">10 BANQUES</span><span class="doc-tag">STRATÉGIQUE</span></div></div>
+  <div class="doc-card"><div class="doc-icon">📡</div><div class="doc-title">Benchmark Communication Digital</div><div class="doc-meta">VRAI_Benchmark_Comunicacion_ESP.xlsx · 5 feuilles</div><div class="doc-tags"><span class="doc-tag">COMMUNICATION</span><span class="doc-tag">10 ACTEURS</span><span class="doc-tag">8 OBJECTIFS</span></div></div>
+  <div class="doc-card"><div class="doc-icon">📋</div><div class="doc-title">Enquête Terrain · 103 Répondants</div><div class="doc-meta">Google Forms · Avril 2026 · 11 questions</div><div class="doc-tags"><span class="doc-tag">PRIMAIRE</span><span class="doc-tag">103 RÉP.</span><span class="doc-tag">QUANT.</span></div></div>
+</div>
+
+<div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;">📂 Sources & Références</div>
+<div class="card">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;font-size:12px;color:var(--ink-2);line-height:2;">
+    <div><div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-600);margin-bottom:8px;">Institutions</div>IBM Quantum Network<br>Quantinuum · IonQ · D-Wave<br>Google Quantum AI<br>Microsoft Azure Quantum<br>Pasqal · PQShield · Classiq<br>McKinsey · BCG</div>
+    <div><div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-600);margin-bottom:8px;">Publications</div>Nature · Science Journals<br>IEEE Quantum Week<br>Quantum Computing Report<br>The Quantum Insider<br>Constellation Research<br>Standards NIST PQC 2024</div>
+    <div><div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-600);margin-bottom:8px;">Données Marché</div>JPMorgan Annual Report 2025<br>HSBC Quantum Results 2024<br>IonQ Revenue $130M 2025<br>D-Wave Revenue +179% 2025<br>LinkedIn / GitHub / YouTube<br>EuroQCI Initiative · DARPA</div>
+  </div>
+</div>
+```
+
+  </div>
+
+</main>
+
+<script>
+// ── NAVIGATION ──
+const crumbs = { overview:'Overview', competitive:'Benchmark Compétitif', comms:'Benchmark Communication', survey:'Enquête · 103 rép.', insights:'Key Insights', recos:'Recommandations', docs:'Data Room' };
+
+function go(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes("'" + id + "'")) n.classList.add('active');
+  });
+  document.getElementById('crumb').textContent = crumbs[id] || id;
+  window.scrollTo(0, 0);
+}
+
+// ── CHART DEFAULTS ──
+Chart.defaults.font.family = "'Geist', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#5B7090';
+
+const B9  = '#0F3D7A';
+const B7  = '#0F3D7A';
+const B6  = '#1254A8';
+const B5  = '#1565C0';
+const B4  = '#1976D2';
+const B3  = '#42A5F5';
+const B2  = '#90CAF9';
+const B1  = '#BBDEFB';
+const GR  = '#1B7A45';
+const RD  = '#C0392B';
+const GD  = '#A0720A';
+const GY  = '#94A8C0';
+const WH  = '#FFFFFF';
+const RUL = '#DCE8F5';
+
+function donut(id, labels, data, colors) {
+  new Chart(document.getElementById(id), {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: WH, borderWidth: 3, hoverOffset: 5 }] },
+    options: { responsive: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } } }, cutout: '60%' }
+  });
+}
+
+// ── OVERVIEW CHARTS ──
+new Chart(document.getElementById('c-timeline'), {
+  type: 'line',
+  data: {
+    labels: ['2024','2025','2026','2027','2028','2029','2030','2032','2035','2040'],
+    datasets: [
+      { label: 'QKD/PQC Security', data: [20,25,35,50,65,75,85,90,95,98], borderColor: RD, backgroundColor: 'rgba(192,57,43,0.05)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: RD },
+      { label: 'Portfolio Optim.', data: [10,15,25,38,55,65,75,85,92,97], borderColor: B5, backgroundColor: 'rgba(21,101,192,0.05)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: B5 },
+      { label: 'Bond Trading RFQ', data: [5,10,18,30,45,60,72,83,90,96], borderColor: GR, backgroundColor: 'rgba(27,122,69,0.04)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: GR },
+      { label: 'Quantum ML', data: [2,5,8,15,25,40,55,70,82,93], borderColor: GD, backgroundColor: 'rgba(160,114,10,0.04)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: GD }
+    ]
+  },
+  options: {
+    responsive: true, interaction: { mode:'index', intersect:false },
+    plugins: { legend: { position:'bottom', labels: { boxWidth:8, usePointStyle:true, pointStyle:'circle', padding:14 } } },
+    scales: { y: { min:0, max:100, grid:{ color: RUL }, ticks:{ callback: v => v+'%' } }, x: { grid:{ color: RUL } } }
+  }
+});
+
+new Chart(document.getElementById('c-usecases'), {
+  type: 'bar',
+  data: {
+    labels: ['QKD / Sécurité','Bond Trading RFQ','Portfolio Optim.','Stress Testing','Fraude Détection','Monte Carlo Q','Credit Scoring','AML Graphes'],
+    datasets: [{ label:'Maturité 2026', data:[85,72,65,55,48,35,30,15], backgroundColor: [RD,GR,B5,B4,GD,B3,B2,GY], borderRadius:2 }]
+  },
+  options: {
+    responsive:true, indexAxis:'y',
+    plugins:{ legend:{display:false} },
+    scales: { x:{ max:100, grid:{color:RUL}, ticks:{callback:v=>v+'%'} }, y:{ grid:{display:false} } }
+  }
+});
+
+// ── COMPETITIVE CHARTS ──
+new Chart(document.getElementById('c-qscore'), {
+  type: 'bar',
+  data: {
+    labels: ['JPMorgan','HSBC','Goldman','BNP Paribas','Citigroup','Deutsche','Std. Chartered','Wells Fargo','BBVA','Intesa SP.'],
+    datasets: [{ label:'Q-Score /10', data:[9.5,8.5,8.0,7.5,7.0,6.5,5.5,5.0,4.5,4.0],
+      backgroundColor: [B9,B7,B6,B5,B4,B3,B2,B1,GY,GY+'88'], borderRadius:2 }]
+  },
+  options: {
+    responsive:true, plugins:{legend:{display:false}},
+    scales:{ y:{min:0,max:10,grid:{color:RUL},ticks:{callback:v=>v+'/10'}}, x:{grid:{display:false}} }
+  }
+});
+
+new Chart(document.getElementById('c-radar'), {
+  type: 'radar',
+  data: {
+    labels: ['Maturité Tech.','Investissement','Partenariats','Production Réelle','Talent Q','Stratégie 2030'],
+    datasets: [
+      { label:'JPMorgan', data:[9.5,9,9,9.5,8,9.5], borderColor:B9, backgroundColor:'rgba(6,26,58,0.08)', borderWidth:2, pointRadius:3, pointBackgroundColor:B9 },
+      { label:'HSBC',     data:[8,7.5,8.5,8,7,8],   borderColor:GR, backgroundColor:'rgba(27,122,69,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GR },
+      { label:'Goldman',  data:[7.5,8,7,6,8,8.5],   borderColor:GD, backgroundColor:'rgba(160,114,10,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GD },
+      { label:'BNP',      data:[7,7,8,6,7.5,7.5],   borderColor:RD, backgroundColor:'rgba(192,57,43,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:RD }
+    ]
+  },
+  options: {
+    responsive:true,
+    plugins:{ legend:{display:false} },
+    scales:{ r:{ beginAtZero:true, max:10, grid:{color:RUL}, angleLines:{color:RUL}, pointLabels:{font:{size:10},color:GY}, ticks:{display:false} } }
+  }
+});
+
+// ── COMMS CHARTS ──
+new Chart(document.getElementById('c-comm-scores'), {
+  type: 'bar',
+  data: {
+    labels: ['IBM','Google AI','Microsoft','Quantinuum','D-Wave','IonQ','Classiq','Pasqal','Rigetti','PsiQuantum'],
+    datasets: [{ label:'Score /10', data:[9.0,7.5,7.5,7.5,7.5,7.0,7.5,6.5,4.5,4.0],
+      backgroundColor: [B9,GY,GY,GY,GY,GY,GY,GY,RD+'AA',RD+'66'], borderRadius:2 }]
+  },
+  options: {
+    responsive:true, plugins:{legend:{display:false}},
+    scales:{ y:{min:0,max:10,grid:{color:RUL},ticks:{callback:v=>v+'/10'}}, x:{grid:{display:false}} }
+  }
+});
+
+new Chart(document.getElementById('c-ibm-radar'), {
+  type: 'radar',
+  data: {
+    labels: ['Brand Awareness','Lead Gen.','Éducation','Partners','Talent','Régulateurs','Dev. Community','Hype Mgmt'],
+    datasets: [
+      { label:'IBM', data:[9,7,10,8,8,9,10,7], borderColor:B5, backgroundColor:'rgba(21,101,192,0.1)', borderWidth:2, pointRadius:3, pointBackgroundColor:B5 },
+      { label:'Moy. Secteur', data:[6.9,6.2,6.7,6.2,7.3,5.4,6.8,5.5], borderColor:GY, backgroundColor:'rgba(148,168,192,0.05)', borderWidth:1.5, borderDash:[4,4], pointRadius:2 }
+    ]
+  },
+  options: {
+    responsive:true, plugins:{legend:{display:false}},
+    scales:{ r:{ beginAtZero:true, max:10, grid:{color:RUL}, angleLines:{color:RUL}, pointLabels:{font:{size:10},color:GY}, ticks:{display:false} } }
+  }
+});
+
+// ── SURVEY DONUTS ──
+donut('c-s1', ['Oui','Non'], [55.3,44.7], [B5, RD]);
+donut('c-s2', ['Oui — IBM Quantum','Non'], [27.2,72.8], [B5, RD]);
+donut('c-s3', ['Trop tôt','Émergent','Déjà utile','Je ne sais pas'], [8.7,46.6,5.9,38.8], [B5,'#E53935',GD,GY]);
+donut('c-s4', ['Oui, significativement','Oui, modérément','Pas sûr(e)','Je ne pense pas'], [31.1,30.1,34,4.8], [B9,B4,GD,GY]);
+donut('c-s5', ['Très intéressé(e)','Assez intéressé(e)','Neutre','Peu/pas intéressé(e)'], [19.4,47.6,13.6,19.4], [B9,B4,GD,GY]);
+</script>
+
+</body>
+	</html>
