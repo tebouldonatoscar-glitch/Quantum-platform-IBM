@@ -2275,121 +2275,153 @@ const GY  = '#a8a8a8';
 const WH  = '#FFFFFF';
 const RUL = '#e0e0e0';
 
-function donut(id, labels, data, colors) {
-  new Chart(document.getElementById(id), {
-    type: 'doughnut',
-    data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: WH, borderWidth: 3, hoverOffset: 5 }] },
-    options: { responsive: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } } }, cutout: '60%' }
-  });
-}
+// ── SCROLL ANIMATION CONFIG ──
+// Charts are lazily initialized when they enter the viewport so that
+// Chart.js's built-in "grow from 0" animation plays at the right moment.
+const ANIM = { duration: 1000, easing: 'easeInOutQuart' };
+const CHART_REGISTRY = {};
 
 // ── OVERVIEW CHARTS ──
-charts.timeline = new Chart(document.getElementById('c-timeline'), {
-  type: 'line',
-  data: {
-    labels: ['2024','2025','2026','2027','2028','2029','2030','2032','2035','2040'],
-    datasets: [
-      { label: 'QKD/PQC Security', data: [20,25,35,50,65,75,85,90,95,98], borderColor: RD, backgroundColor: 'rgba(192,57,43,0.05)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: RD },
-      { label: 'Portfolio Optim.', data: [10,15,25,38,55,65,75,85,92,97], borderColor: B5, backgroundColor: 'rgba(21,101,192,0.05)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: B5 },
-      { label: 'Bond Trading RFQ', data: [5,10,18,30,45,60,72,83,90,96], borderColor: GR, backgroundColor: 'rgba(27,122,69,0.04)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: GR },
-      { label: 'Quantum ML', data: [2,5,8,15,25,40,55,70,82,93], borderColor: GD, backgroundColor: 'rgba(160,114,10,0.04)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: GD }
-    ]
-  },
-  options: {
-    responsive: true, interaction: { mode:'index', intersect:false },
-    plugins: { legend: { position:'bottom', labels: { boxWidth:8, usePointStyle:true, pointStyle:'circle', padding:14 } } },
-    scales: { y: { min:0, max:100, grid:{ color: RUL }, ticks:{ callback: v => v+'%' } }, x: { grid:{ color: RUL } } }
-  }
-});
+CHART_REGISTRY['c-timeline'] = function() {
+  charts.timeline = new Chart(document.getElementById('c-timeline'), {
+    type: 'line',
+    data: {
+      labels: ['2024','2025','2026','2027','2028','2029','2030','2032','2035','2040'],
+      datasets: [
+        { label: 'QKD/PQC Security', data: [20,25,35,50,65,75,85,90,95,98], borderColor: RD, backgroundColor: 'rgba(192,57,43,0.05)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: RD },
+        { label: 'Portfolio Optim.', data: [10,15,25,38,55,65,75,85,92,97], borderColor: B5, backgroundColor: 'rgba(21,101,192,0.05)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: B5 },
+        { label: 'Bond Trading RFQ', data: [5,10,18,30,45,60,72,83,90,96], borderColor: GR, backgroundColor: 'rgba(27,122,69,0.04)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: GR },
+        { label: 'Quantum ML', data: [2,5,8,15,25,40,55,70,82,93], borderColor: GD, backgroundColor: 'rgba(160,114,10,0.04)', borderWidth: 2, tension: 0.4, fill: true, pointRadius: 3, pointBackgroundColor: GD }
+      ]
+    },
+    options: {
+      animation: ANIM,
+      responsive: true, interaction: { mode:'index', intersect:false },
+      plugins: { legend: { position:'bottom', labels: { boxWidth:8, usePointStyle:true, pointStyle:'circle', padding:14 } } },
+      scales: { y: { min:0, max:100, grid:{ color: RUL }, ticks:{ callback: v => v+'%' } }, x: { grid:{ color: RUL } } }
+    }
+  });
+};
 
-charts.usecases = new Chart(document.getElementById('c-usecases'), {
-  type: 'bar',
-  data: {
-    labels: CHART_LABELS.fr.usecases,
-    datasets: [{ label:CHART_LABELS.fr.usecases_ds, data:[85,72,65,55,48,35,30,15], backgroundColor: [RD,GR,B5,B4,GD,B3,B2,GY], borderRadius:2 }]
-  },
-  options: {
-    responsive:true, indexAxis:'y',
-    plugins:{ legend:{display:false} },
-    scales: { x:{ max:100, grid:{color:RUL}, ticks:{callback:v=>v+'%'} }, y:{ grid:{display:false} } }
-  }
-});
+CHART_REGISTRY['c-usecases'] = function() {
+  const cl = CHART_LABELS[currentLang] || CHART_LABELS.fr;
+  charts.usecases = new Chart(document.getElementById('c-usecases'), {
+    type: 'bar',
+    data: {
+      labels: cl.usecases,
+      datasets: [{ label: cl.usecases_ds, data:[85,72,65,55,48,35,30,15], backgroundColor: [RD,GR,B5,B4,GD,B3,B2,GY], borderRadius:2 }]
+    },
+    options: {
+      animation: ANIM,
+      responsive:true, indexAxis:'y',
+      plugins:{ legend:{display:false} },
+      scales: { x:{ max:100, grid:{color:RUL}, ticks:{callback:v=>v+'%'} }, y:{ grid:{display:false} } }
+    }
+  });
+};
 
 // ── COMPETITIVE CHARTS ──
-charts.qscore = new Chart(document.getElementById('c-qscore'), {
-  type: 'bar',
-  data: {
-    labels: ['JPMorgan','HSBC','Goldman','BNP Paribas','Citigroup','Deutsche','Std. Chartered','Wells Fargo','BBVA','Intesa SP.'],
-    datasets: [{ label:'Q-Score /10', data:[9.5,8.5,8.0,7.5,7.0,6.5,5.5,5.0,4.5,4.0],
-      backgroundColor: [B9,B7,B6,B5,B4,B3,B2,B1,GY,GY+'88'], borderRadius:2 }]
-  },
-  options: {
-    responsive:true, plugins:{legend:{display:false}},
-    scales:{ y:{min:0,max:10,grid:{color:RUL},ticks:{callback:v=>v+'/10'}}, x:{grid:{display:false}} }
-  }
-});
+CHART_REGISTRY['c-qscore'] = function() {
+  charts.qscore = new Chart(document.getElementById('c-qscore'), {
+    type: 'bar',
+    data: {
+      labels: ['JPMorgan','HSBC','Goldman','BNP Paribas','Citigroup','Deutsche','Std. Chartered','Wells Fargo','BBVA','Intesa SP.'],
+      datasets: [{ label:'Q-Score /10', data:[9.5,8.5,8.0,7.5,7.0,6.5,5.5,5.0,4.5,4.0],
+        backgroundColor: [B9,B7,B6,B5,B4,B3,B2,B1,GY,GY+'88'], borderRadius:2 }]
+    },
+    options: {
+      animation: ANIM,
+      responsive:true, plugins:{legend:{display:false}},
+      scales:{ y:{min:0,max:10,grid:{color:RUL},ticks:{callback:v=>v+'/10'}}, x:{grid:{display:false}} }
+    }
+  });
+};
 
-charts.radar = new Chart(document.getElementById('c-radar'), {
-  type: 'radar',
-  data: {
-    labels: CHART_LABELS.fr.radar,
-    datasets: [
-      { label:'JPMorgan', data:[9.5,9,9,9.5,8,9.5], borderColor:B9, backgroundColor:'rgba(6,26,58,0.08)', borderWidth:2, pointRadius:3, pointBackgroundColor:B9 },
-      { label:'HSBC',     data:[8,7.5,8.5,8,7,8],   borderColor:GR, backgroundColor:'rgba(27,122,69,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GR },
-      { label:'Goldman',  data:[7.5,8,7,6,8,8.5],   borderColor:GD, backgroundColor:'rgba(160,114,10,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GD },
-      { label:'BNP',      data:[7,7,8,6,7.5,7.5],   borderColor:RD, backgroundColor:'rgba(192,57,43,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:RD }
-    ]
-  },
-  options: {
-    responsive:true,
-    plugins:{ legend:{display:false} },
-    scales:{ r:{ beginAtZero:true, max:10, grid:{color:RUL}, angleLines:{color:RUL}, pointLabels:{font:{size:10},color:GY}, ticks:{display:false} } }
-  }
-});
+CHART_REGISTRY['c-radar'] = function() {
+  const cl = CHART_LABELS[currentLang] || CHART_LABELS.fr;
+  charts.radar = new Chart(document.getElementById('c-radar'), {
+    type: 'radar',
+    data: {
+      labels: cl.radar,
+      datasets: [
+        { label:'JPMorgan', data:[9.5,9,9,9.5,8,9.5], borderColor:B9, backgroundColor:'rgba(6,26,58,0.08)', borderWidth:2, pointRadius:3, pointBackgroundColor:B9 },
+        { label:'HSBC',     data:[8,7.5,8.5,8,7,8],   borderColor:GR, backgroundColor:'rgba(27,122,69,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GR },
+        { label:'Goldman',  data:[7.5,8,7,6,8,8.5],   borderColor:GD, backgroundColor:'rgba(160,114,10,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GD },
+        { label:'BNP',      data:[7,7,8,6,7.5,7.5],   borderColor:RD, backgroundColor:'rgba(192,57,43,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:RD }
+      ]
+    },
+    options: {
+      animation: ANIM,
+      responsive:true,
+      plugins:{ legend:{display:false} },
+      scales:{ r:{ beginAtZero:true, max:10, grid:{color:RUL}, angleLines:{color:RUL}, pointLabels:{font:{size:10},color:GY}, ticks:{display:false} } }
+    }
+  });
+};
 
 // ── COMMS CHARTS ──
-charts.commScores = new Chart(document.getElementById('c-comm-scores'), {
-  type: 'bar',
-  data: {
-    labels: ['IBM','Google AI','Microsoft','Quantinuum','D-Wave','IonQ','Classiq','Pasqal','Rigetti','PsiQuantum'],
-    datasets: [{ label:'Score /10', data:[9.0,7.5,7.5,7.5,7.5,7.0,7.5,6.5,4.5,4.0],
-      backgroundColor: [B9,GY,GY,GY,GY,GY,GY,GY,RD+'AA',RD+'66'], borderRadius:2 }]
-  },
-  options: {
-    responsive:true, plugins:{legend:{display:false}},
-    scales:{ y:{min:0,max:10,grid:{color:RUL},ticks:{callback:v=>v+'/10'}}, x:{grid:{display:false}} }
-  }
-});
+CHART_REGISTRY['c-comm-scores'] = function() {
+  charts.commScores = new Chart(document.getElementById('c-comm-scores'), {
+    type: 'bar',
+    data: {
+      labels: ['IBM','Google AI','Microsoft','Quantinuum','D-Wave','IonQ','Classiq','Pasqal','Rigetti','PsiQuantum'],
+      datasets: [{ label:'Score /10', data:[9.0,7.5,7.5,7.5,7.5,7.0,7.5,6.5,4.5,4.0],
+        backgroundColor: [B9,GY,GY,GY,GY,GY,GY,GY,RD+'AA',RD+'66'], borderRadius:2 }]
+    },
+    options: {
+      animation: ANIM,
+      responsive:true, plugins:{legend:{display:false}},
+      scales:{ y:{min:0,max:10,grid:{color:RUL},ticks:{callback:v=>v+'/10'}}, x:{grid:{display:false}} }
+    }
+  });
+};
 
-charts.ibmRadar = new Chart(document.getElementById('c-ibm-radar'), {
-  type: 'radar',
-  data: {
-    labels: CHART_LABELS.fr.ibmradar,
-    datasets: [
-      { label:'IBM', data:[9,7,10,8,8,9,10,7], borderColor:B5, backgroundColor:'rgba(21,101,192,0.1)', borderWidth:2, pointRadius:3, pointBackgroundColor:B5 },
-      { label:CHART_LABELS.fr.ibm_moy, data:[6.9,6.2,6.7,6.2,7.3,5.4,6.8,5.5], borderColor:GY, backgroundColor:'rgba(148,168,192,0.05)', borderWidth:1.5, borderDash:[4,4], pointRadius:2 }
-    ]
-  },
-  options: {
-    responsive:true, plugins:{legend:{display:false}},
-    scales:{ r:{ beginAtZero:true, max:10, grid:{color:RUL}, angleLines:{color:RUL}, pointLabels:{font:{size:10},color:GY}, ticks:{display:false} } }
-  }
-});
+CHART_REGISTRY['c-ibm-radar'] = function() {
+  const cl = CHART_LABELS[currentLang] || CHART_LABELS.fr;
+  charts.ibmRadar = new Chart(document.getElementById('c-ibm-radar'), {
+    type: 'radar',
+    data: {
+      labels: cl.ibmradar,
+      datasets: [
+        { label:'IBM', data:[9,7,10,8,8,9,10,7], borderColor:B5, backgroundColor:'rgba(21,101,192,0.1)', borderWidth:2, pointRadius:3, pointBackgroundColor:B5 },
+        { label:cl.ibm_moy, data:[6.9,6.2,6.7,6.2,7.3,5.4,6.8,5.5], borderColor:GY, backgroundColor:'rgba(148,168,192,0.05)', borderWidth:1.5, borderDash:[4,4], pointRadius:2 }
+      ]
+    },
+    options: {
+      animation: ANIM,
+      responsive:true, plugins:{legend:{display:false}},
+      scales:{ r:{ beginAtZero:true, max:10, grid:{color:RUL}, angleLines:{color:RUL}, pointLabels:{font:{size:10},color:GY}, ticks:{display:false} } }
+    }
+  });
+};
 
 // ── SURVEY DONUTS ──
-function donutRef(id, labels, data, colors) {
-  return new Chart(document.getElementById(id), {
+function _makeDonut(id, key, labels, data, colors) {
+  charts[key] = new Chart(document.getElementById(id), {
     type: 'doughnut',
     data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: WH, borderWidth: 3, hoverOffset: 5 }] },
-    options: { responsive: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } } }, cutout: '60%' }
+    options: { animation: ANIM, responsive: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } } }, cutout: '60%' }
   });
 }
-const cl0 = CHART_LABELS.fr;
-charts.s1 = donutRef('c-s1', cl0.s1, [55.3,44.7], [B5, RD]);
-charts.s2 = donutRef('c-s2', cl0.s2, [27.2,72.8], [B5, RD]);
-charts.s3 = donutRef('c-s3', cl0.s3, [8.7,46.6,5.9,38.8], [B5,'#E53935',GD,GY]);
-charts.s4 = donutRef('c-s4', cl0.s4, [31.1,30.1,34,4.8], [B9,B4,GD,GY]);
-charts.s5 = donutRef('c-s5', cl0.s5, [19.4,47.6,13.6,19.4], [B9,B4,GD,GY]);
+CHART_REGISTRY['c-s1'] = function() { const cl=CHART_LABELS[currentLang]||CHART_LABELS.fr; _makeDonut('c-s1','s1',cl.s1,[55.3,44.7],[B5,RD]); };
+CHART_REGISTRY['c-s2'] = function() { const cl=CHART_LABELS[currentLang]||CHART_LABELS.fr; _makeDonut('c-s2','s2',cl.s2,[27.2,72.8],[B5,RD]); };
+CHART_REGISTRY['c-s3'] = function() { const cl=CHART_LABELS[currentLang]||CHART_LABELS.fr; _makeDonut('c-s3','s3',cl.s3,[8.7,46.6,5.9,38.8],[B5,'#E53935',GD,GY]); };
+CHART_REGISTRY['c-s4'] = function() { const cl=CHART_LABELS[currentLang]||CHART_LABELS.fr; _makeDonut('c-s4','s4',cl.s4,[31.1,30.1,34,4.8],[B9,B4,GD,GY]); };
+CHART_REGISTRY['c-s5'] = function() { const cl=CHART_LABELS[currentLang]||CHART_LABELS.fr; _makeDonut('c-s5','s5',cl.s5,[19.4,47.6,13.6,19.4],[B9,B4,GD,GY]); };
+
+// ── CHART SCROLL OBSERVER ──
+// Each canvas is observed; the first time it enters the viewport its chart
+// is created (triggering the "grow from 0" animation), then unobserved.
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const fn = CHART_REGISTRY[e.target.id];
+      if (fn) fn();
+      chartObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('canvas[id^="c-"]').forEach(c => chartObserver.observe(c));
 
 // ── UPDATE CHART LABELS ON LANGUAGE CHANGE ──
 function updateCharts(lang) {
