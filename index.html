@@ -1032,11 +1032,38 @@ canvas { display: block; }
   .ph-title { font-size: 22px; }
   .hbar-lbl, .hbar-lbl.wide { width: 120px; font-size: 11px; }
 }
+
+/* ─── SCROLL REVEAL ─── */
+.sr {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.sr.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter { animation: fadeUp 0.38s ease both; }
+
+/* Scroll progress bar */
+#scroll-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--blue-600);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
 </style>
 
 </head>
 <body>
 
+<div id="scroll-bar"></div>
 <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
 
 <!-- SIDEBAR -->
@@ -1126,58 +1153,58 @@ canvas { display: block; }
 </div>
 
 <div class="story-flow mb24">
-  <div class="story-step"><div class="step-n">01 · Contexte</div><div class="step-title">Qu'est-ce que le Quantum?</div><div class="step-body">Superposition, intrication, interférence. Révolution computationnelle qui menace ou transforme la finance.</div></div>
-  <div class="story-step"><div class="step-n">02 · Marché</div><div class="step-title">Pourquoi les banques investissent?</div><div class="step-body">5 moteurs: vitesse de calcul, risque, cybersécurité post-quantum, nouveaux produits, avantage compétitif.</div></div>
-  <div class="story-step"><div class="step-n">03 · Acteurs</div><div class="step-title">Qui mène la course?</div><div class="step-body">JPMorgan en production. HSBC +34% fill rate. BNP souveraineté. IBM partenaire de référence.</div></div>
-  <div class="story-step"><div class="step-n">04 · Action</div><div class="step-title">Que faire maintenant?</div><div class="step-body">5 priorités: PQC immédiat, pilotes ROI, capital humain, stratégie intégrée, produits Q.</div></div>
+  <div class="story-step sr"><div class="step-n" data-i18n="sf01n">01 · Contexte</div><div class="step-title" data-i18n="sf01t">Qu'est-ce que le Quantum?</div><div class="step-body" data-i18n="sf01b">Superposition, intrication, interférence. Révolution computationnelle qui menace ou transforme la finance.</div></div>
+  <div class="story-step sr"><div class="step-n" data-i18n="sf02n">02 · Marché</div><div class="step-title" data-i18n="sf02t">Pourquoi les banques investissent?</div><div class="step-body" data-i18n="sf02b">5 moteurs: vitesse de calcul, risque, cybersécurité post-quantum, nouveaux produits, avantage compétitif.</div></div>
+  <div class="story-step sr"><div class="step-n" data-i18n="sf03n">03 · Acteurs</div><div class="step-title" data-i18n="sf03t">Qui mène la course?</div><div class="step-body" data-i18n="sf03b">JPMorgan en production. HSBC +34% fill rate. BNP souveraineté. IBM partenaire de référence.</div></div>
+  <div class="story-step sr"><div class="step-n" data-i18n="sf04n">04 · Action</div><div class="step-title" data-i18n="sf04t">Que faire maintenant?</div><div class="step-body" data-i18n="sf04b">5 priorités: PQC immédiat, pilotes ROI, capital humain, stratégie intégrée, produits Q.</div></div>
 </div>
 
 <div class="g2 mb16">
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Calendrier d'Adoption Quantum</div><div class="card-sub">Maturité par cas d'usage · 2024–2040</div></div><span class="tag tag-blue">TIMELINE</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="ov_timeline_title">Calendrier d'Adoption Quantum</div><div class="card-sub" data-i18n="ov_timeline_sub">Maturité par cas d'usage · 2024–2040</div></div><span class="tag tag-blue">TIMELINE</span></div>
     <canvas id="c-timeline" height="220"></canvas>
   </div>
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Feuille de Route 2026–2045</div><div class="card-sub">3 horizons · disruptions · nouveaux rôles</div></div><span class="tag tag-blue">ROADMAP</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="ov_roadmap_title">Feuille de Route 2026–2045</div><div class="card-sub" data-i18n="ov_roadmap_sub">3 horizons · disruptions · nouveaux rôles</div></div><span class="tag tag-blue">ROADMAP</span></div>
     <div class="timeline" style="border:none;margin-top:4px;">
       <div class="tl-cell" style="border-left:none;padding:12px 14px;">
         <div class="tl-h">H1</div>
         <div class="tl-period">2026–30</div>
-        <div class="tl-phase">NISQ + Hybride</div>
+        <div class="tl-phase" data-i18n="tl_h1_ph">NISQ + Hybride</div>
         <ul class="tl-list">
-          <li>Bond trading quantum</li>
-          <li>Migration PQC obligatoire</li>
-          <li>QRN dans transactions</li>
+          <li data-i18n="tl_h1_a">Bond trading quantum</li>
+          <li data-i18n="tl_h1_b">Migration PQC obligatoire</li>
+          <li data-i18n="tl_h1_c">QRN dans transactions</li>
         </ul>
       </div>
       <div class="tl-cell" style="padding:12px 14px;">
         <div class="tl-h">H2</div>
         <div class="tl-period">2030–37</div>
-        <div class="tl-phase">Fault-Tolerant</div>
+        <div class="tl-phase" data-i18n="tl_h2_ph">Fault-Tolerant</div>
         <ul class="tl-list">
-          <li>VaR en minutes</li>
-          <li>Pricing dérivés temps réel</li>
-          <li>Chief Quantum Officer</li>
+          <li data-i18n="tl_h2_a">VaR en minutes</li>
+          <li data-i18n="tl_h2_b">Pricing dérivés temps réel</li>
+          <li data-i18n="tl_h2_c">Chief Quantum Officer</li>
         </ul>
       </div>
       <div class="tl-cell" style="padding:12px 14px;">
         <div class="tl-h">H3</div>
         <div class="tl-period">2037–45</div>
-        <div class="tl-phase">Full Quantum</div>
+        <div class="tl-phase" data-i18n="tl_h3_ph">Full Quantum</div>
         <ul class="tl-list">
-          <li>Refondation cryptographie</li>
-          <li>Marchés Q natifs</li>
-          <li>Actifs financiers Q</li>
+          <li data-i18n="tl_h3_a">Refondation cryptographie</li>
+          <li data-i18n="tl_h3_b">Marchés Q natifs</li>
+          <li data-i18n="tl_h3_c">Actifs financiers Q</li>
         </ul>
       </div>
       <div class="tl-cell" style="border-right:none;padding:12px 14px;">
         <div class="tl-h">H4</div>
         <div class="tl-period">2045+</div>
-        <div class="tl-phase">Quantum Internet</div>
+        <div class="tl-phase" data-i18n="tl_h4_ph">Quantum Internet</div>
         <ul class="tl-list">
-          <li>Fin modèles stochastiques</li>
-          <li>Marchés auto-régulés IA-Q</li>
-          <li>Tokens quantiques</li>
+          <li data-i18n="tl_h4_a">Fin modèles stochastiques</li>
+          <li data-i18n="tl_h4_b">Marchés auto-régulés IA-Q</li>
+          <li data-i18n="tl_h4_c">Tokens quantiques</li>
         </ul>
       </div>
     </div>
@@ -1185,7 +1212,7 @@ canvas { display: block; }
 </div>
 
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Maturité des Cas d'Usage · 2026</div><div class="card-sub">État de déploiement réel par domaine</div></div><span class="tag tag-blue">USE CASES</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="ov_usecase_title">Maturité des Cas d'Usage · 2026</div><div class="card-sub" data-i18n="ov_usecase_sub">État de déploiement réel par domaine</div></div><span class="tag tag-blue">USE CASES</span></div>
   <canvas id="c-usecases" height="180"></canvas>
 </div>
 
@@ -1201,12 +1228,12 @@ canvas { display: block; }
     </div>
 
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Q-Score · Classement Quantum Readiness</div><div class="card-sub">Score global /10 · Données 2026 consolidées</div></div><span class="tag tag-blue">SCORECARD</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="cp_qscore_t">Q-Score · Classement Quantum Readiness</div><div class="card-sub" data-i18n="cp_qscore_s">Score global /10 · Données 2026 consolidées</div></div><span class="tag tag-blue">SCORECARD</span></div>
   <canvas id="c-qscore" height="200"></canvas>
 </div>
 
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Profils des 10 Banques Leaders</div><div class="card-sub">Stratégie · Maturité · Partenaires · Investissement</div></div><span class="tag tag-blue">PARTIE 4</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="cp_prof_t">Profils des 10 Banques Leaders</div><div class="card-sub" data-i18n="cp_prof_s">Stratégie · Maturité · Partenaires · Investissement</div></div><span class="tag tag-blue">PARTIE 4</span></div>
   <div class="actor-grid">
     <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇺🇸</span><div><div class="actor-name">JPMorgan Chase</div><div class="actor-tier">PRODUCTION · FULL-STACK PIONEER</div></div><div class="actor-score">9.5</div></div><div class="actor-tags"><span class="actor-tag">QKD PROD.</span><span class="actor-tag">IBM QUANTUM</span><span class="actor-tag">$100M+/AN</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>95%</span></div><div class="prog-track"><div class="prog-fill" style="width:95%"></div></div></div></div>
     <div class="actor-card"><div class="actor-hd"><span class="actor-flag">🇬🇧</span><div><div class="actor-name">HSBC</div><div class="actor-tier">PILOTE AVANCÉ · ALPHA-FOCUSED</div></div><div class="actor-score">8.5</div></div><div class="actor-tags"><span class="actor-tag">+34% FILL RATE</span><span class="actor-tag">IBM HERON 133q</span><span class="actor-tag">BOND TRADING</span></div><div class="prog-wrap"><div class="prog-lbl"><span>Quantum Readiness</span><span>85%</span></div><div class="prog-track"><div class="prog-fill" style="width:85%"></div></div></div></div>
@@ -1221,7 +1248,7 @@ canvas { display: block; }
 
 <div class="g2 mb16">
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Radar Compétitif · Top 4 Banques</div><div class="card-sub">6 dimensions stratégiques</div></div><span class="tag tag-blue">RADAR</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="cp_radar_t">Radar Compétitif · Top 4 Banques</div><div class="card-sub" data-i18n="cp_radar_s">6 dimensions stratégiques</div></div><span class="tag tag-blue">RADAR</span></div>
     <canvas id="c-radar" height="240"></canvas>
     <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;">
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:#1565C0"></div>JPMorgan</div>
@@ -1231,19 +1258,19 @@ canvas { display: block; }
     </div>
   </div>
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Mapping Concurrentiel 2×2</div><div class="card-sub">Maturité technique vs Ambition stratégique</div></div><span class="tag tag-gold">POSITIONING</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="cp_map_t">Mapping Concurrentiel 2×2</div><div class="card-sub" data-i18n="cp_map_s">Maturité technique vs Ambition stratégique</div></div><span class="tag tag-gold">POSITIONING</span></div>
     <div class="pos-map">
       <div class="pos-ax-x"></div>
       <div class="pos-ax-y"></div>
-      <div class="pm-qlbl" style="left:10px;bottom:8px;color:var(--ink-4)">Faible maturité</div>
-      <div class="pm-qlbl" style="right:10px;bottom:8px;color:var(--ink-4)">Forte maturité</div>
-      <div class="pm-qlbl" style="top:8px;left:50%;transform:translateX(-50%);color:var(--ink-4)">Haute ambition</div>
-      <div class="pm-qlbl" style="bottom:8px;left:50%;transform:translateX(-50%);color:var(--ink-4)">Faible ambition</div>
+      <div class="pm-qlbl" style="left:10px;bottom:8px;color:var(--ink-4)" data-i18n="pm_lm">Faible maturité</div>
+      <div class="pm-qlbl" style="right:10px;bottom:8px;color:var(--ink-4)" data-i18n="pm_hm">Forte maturité</div>
+      <div class="pm-qlbl" style="top:8px;left:50%;transform:translateX(-50%);color:var(--ink-4)" data-i18n="pm_ha">Haute ambition</div>
+      <div class="pm-qlbl" style="bottom:8px;left:50%;transform:translateX(-50%);color:var(--ink-4)" data-i18n="pm_la">Faible ambition</div>
       <!-- quadrant labels -->
-      <div style="position:absolute;left:8px;top:8px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;">VISIONAIRES</div>
-      <div style="position:absolute;right:8px;top:8px;font-size:9px;color:var(--blue-500);font-weight:600;opacity:0.7;">LEADERS</div>
-      <div style="position:absolute;left:8px;bottom:22px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;">SUIVEURS</div>
-      <div style="position:absolute;right:8px;bottom:22px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;">EXÉCUTANTS</div>
+      <div style="position:absolute;left:8px;top:8px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;" data-i18n="pm_vis">VISIONAIRES</div>
+      <div style="position:absolute;right:8px;top:8px;font-size:9px;color:var(--blue-500);font-weight:600;opacity:0.7;" data-i18n="pm_lead">LEADERS</div>
+      <div style="position:absolute;left:8px;bottom:22px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;" data-i18n="pm_fol">SUIVEURS</div>
+      <div style="position:absolute;right:8px;bottom:22px;font-size:9px;color:var(--ink-4);font-weight:600;opacity:0.5;" data-i18n="pm_exe">EXÉCUTANTS</div>
 
       <div class="pm-dot" style="left:88%;top:15%"><div class="pm-circle" style="width:42px;height:42px;background:rgba(21,101,192,0.12);border-color:var(--blue-600);color:var(--blue-700)">JPM</div><div class="pm-label">JPMorgan</div></div>
       <div class="pm-dot" style="left:76%;top:26%"><div class="pm-circle" style="width:36px;height:36px;background:rgba(25,128,56,0.1);border-color:var(--green);color:var(--green)">HSBC</div><div class="pm-label">HSBC</div></div>
@@ -1258,17 +1285,17 @@ canvas { display: block; }
 </div>
 
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Analyse Stratégique — SWOT Quantum</div><div class="card-sub">Partie 6 · Forces · Limites · Risques · Opportunités</div></div><span class="tag tag-blue">SWOT</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="cp_swot_t">Analyse Stratégique — SWOT Quantum</div><div class="card-sub" data-i18n="cp_swot_s">Partie 6 · Forces · Limites · Risques · Opportunités</div></div><span class="tag tag-blue">SWOT</span></div>
   <div class="swot">
-    <div class="swot-cell"><div class="swot-lbl">Forces structurelles</div><ul class="swot-list"><li>Speedup quadratique Monte Carlo (2027–30)</li><li>Optimisation NP-Hard → polynomial</li><li>QKD: sécurité inviolable (JPM en prod.)</li><li>Machine Learning Q — features exponentiels</li><li>First-mover: IP propriétaire 3–5 ans d'avance</li></ul></div>
-    <div class="swot-cell"><div class="swot-lbl">Limites actuelles (NISQ)</div><ul class="swot-list"><li>Décoherence: circuits courts seulement</li><li>Température 15 millikelvin: $5–15M/système</li><li>Max 1000 qubits bruités vs 1M+ nécessaires</li><li>Taux d'erreur: 40% sur 100 portes</li><li>Pénurie talent: &lt;50K ingénieurs worldwide</li></ul></div>
-    <div class="swot-cell"><div class="swot-lbl">Risques stratégiques</div><ul class="swot-list"><li>🔴 Q-Day: rupture RSA-2048 avant 2035</li><li>🔴 "Store Now Decrypt Later" — acteurs étatiques</li><li>🟠 Concentration technologique IBM/Google</li><li>🟠 Disruption emplois (Risk Managers, Quants)</li><li>🟡 "Quantum Winter" si délais non tenus</li></ul></div>
-    <div class="swot-cell"><div class="swot-lbl">Opportunités à saisir</div><ul class="swot-list"><li>Bond trading Q généralisé (playbook HSBC)</li><li>Fonds ESG quantum — marché $450B 2035</li><li>QaaS bancaire pour clients</li><li>PQC comme avantage réputationnel</li><li>Chief Quantum Officer — nouveau rôle C-Suite</li></ul></div>
+    <div class="swot-cell"><div class="swot-lbl" data-i18n="swot_f">Forces structurelles</div><ul class="swot-list"><li>Speedup quadratique Monte Carlo (2027–30)</li><li>Optimisation NP-Hard → polynomial</li><li>QKD: sécurité inviolable (JPM en prod.)</li><li>Machine Learning Q — features exponentiels</li><li>First-mover: IP propriétaire 3–5 ans d'avance</li></ul></div>
+    <div class="swot-cell"><div class="swot-lbl" data-i18n="swot_l">Limites actuelles (NISQ)</div><ul class="swot-list"><li>Décoherence: circuits courts seulement</li><li>Température 15 millikelvin: $5–15M/système</li><li>Max 1000 qubits bruités vs 1M+ nécessaires</li><li>Taux d'erreur: 40% sur 100 portes</li><li>Pénurie talent: &lt;50K ingénieurs worldwide</li></ul></div>
+    <div class="swot-cell"><div class="swot-lbl" data-i18n="swot_r">Risques stratégiques</div><ul class="swot-list"><li>🔴 Q-Day: rupture RSA-2048 avant 2035</li><li>🔴 "Store Now Decrypt Later" — acteurs étatiques</li><li>🟠 Concentration technologique IBM/Google</li><li>🟠 Disruption emplois (Risk Managers, Quants)</li><li>🟡 "Quantum Winter" si délais non tenus</li></ul></div>
+    <div class="swot-cell"><div class="swot-lbl" data-i18n="swot_o">Opportunités à saisir</div><ul class="swot-list"><li>Bond trading Q généralisé (playbook HSBC)</li><li>Fonds ESG quantum — marché $450B 2035</li><li>QaaS bancaire pour clients</li><li>PQC comme avantage réputationnel</li><li>Chief Quantum Officer — nouveau rôle C-Suite</li></ul></div>
   </div>
 </div>
 
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Matrice Build · Buy · Partner par Profil de Banque</div><div class="card-sub">IBM positionné comme partenaire de référence · Partie 7</div></div><span class="tag tag-blue">STRATÉGIE</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="cp_bbp_t">Matrice Build · Buy · Partner par Profil de Banque</div><div class="card-sub" data-i18n="cp_bbp_s">IBM positionné comme partenaire de référence · Partie 7</div></div><span class="tag tag-blue">STRATÉGIE</span></div>
   <div class="bbp">
     <div class="bbp-cell">
       <div class="bbp-head">🔨 Build</div>
@@ -1318,7 +1345,7 @@ canvas { display: block; }
     </div>
 
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Heat Map · Maturité par Objectif × Entreprise</div><div class="card-sub">Score /10 · IBM référence ⭐</div></div><span class="tag tag-blue">HEAT MAP</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="cm_hm_t">Heat Map · Maturité par Objectif × Entreprise</div><div class="card-sub" data-i18n="cm_hm_s">Score /10 · IBM référence ⭐</div></div><span class="tag tag-blue">HEAT MAP</span></div>
   <div style="overflow-x:auto;">
     <table class="mtable" style="min-width:820px;">
       <thead>
@@ -1328,7 +1355,7 @@ canvas { display: block; }
           <th>Google AI</th><th>Microsoft</th><th>Quantinuum</th>
           <th>IonQ</th><th>D-Wave</th><th>Rigetti</th>
           <th>PsiQ.</th><th>Pasqal</th><th>Classiq</th>
-          <th style="min-width:180px;">Gap secteur</th>
+          <th style="min-width:180px;" data-i18n="cm_gap">Gap secteur</th>
         </tr>
       </thead>
       <tbody>
@@ -1347,21 +1374,21 @@ canvas { display: block; }
 
 <div class="g2 mb16">
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Score Communication Global /10</div><div class="card-sub">Positionnement par acteur</div></div><span class="tag tag-blue">SCORES</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="cm_sc_t">Score Communication Global /10</div><div class="card-sub" data-i18n="cm_sc_s">Positionnement par acteur</div></div><span class="tag tag-blue">SCORES</span></div>
     <canvas id="c-comm-scores" height="220"></canvas>
   </div>
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">IBM · Performance par Objectif</div><div class="card-sub">vs Moyenne secteur · 8 dimensions</div></div><span class="tag tag-blue">IBM FOCUS</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="cm_ibm_t">IBM · Performance par Objectif</div><div class="card-sub" data-i18n="cm_ibm_s">vs Moyenne secteur · 8 dimensions</div></div><span class="tag tag-blue">IBM FOCUS</span></div>
     <canvas id="c-ibm-radar" height="220"></canvas>
     <div style="display:flex;gap:14px;margin-top:12px;">
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:var(--blue-600)"></div>IBM Score</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:var(--ink-4)"></div>Moy. Secteur</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:var(--ink-4)"></div><span data-i18n="cm_moy">Moy. Secteur</span></div>
     </div>
   </div>
 </div>
 
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Top 5 Gaps à Combler — Plan d'Action IBM 12 mois</div><div class="card-sub">Initiatives priorisées · KPIs concrets</div></div><span class="tag tag-blue">PLAN IBM</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="cm_pl_t">Top 5 Gaps à Combler — Plan d'Action IBM 12 mois</div><div class="card-sub" data-i18n="cm_pl_s">Initiatives priorisées · KPIs concrets</div></div><span class="tag tag-blue">PLAN IBM</span></div>
   <div class="reco r-red"><div class="reco-num"><div class="reco-p" style="color:var(--red)">01</div><div class="reco-pl">IMMÉDIAT</div></div><div class="reco-content"><div class="reco-title">IBM Quantum ROI Calculator Web</div><div class="reco-body">Outil interactif: industrie + cas d'usage → ROI vs classique. Basé sur HSBC +34%, JPMorgan QKD, $1B cumulé. Target: 50K visites/mois, 5K leads, 200 MQLs enterprise.</div></div><div class="reco-horizon">0–3 MOIS<br>🔴 CRITIQUE</div></div>
   <div class="reco r-red"><div class="reco-num"><div class="reco-p" style="color:var(--red)">02</div><div class="reco-pl">IMMÉDIAT</div></div><div class="reco-content"><div class="reco-title">Amplification NIST PQC — IBM Standard</div><div class="reco-body">Campagne sur le rôle IBM dans 2/4 standards PQC NIST. Landing page IBM Quantum Safe. Webinar avec régulateurs. 500 mentions médias ciblés.</div></div><div class="reco-horizon">0–3 MOIS<br>🔴 EXCLUSIF IBM</div></div>
   <div class="reco"><div class="reco-num"><div class="reco-p">03</div><div class="reco-pl">3–6 MOIS</div></div><div class="reco-content"><div class="reco-title">IBM Quantum Executive Content Series</div><div class="reco-body">Série mensuelle C-Suite: vidéo 3min par industrie, 1-pager avec chiffres réels, "Quantum Readiness Assessment". 30% open rate newsletter CEO/CFO.</div></div><div class="reco-horizon">3–6 MOIS<br>🔵 STRATÉGIQUE</div></div>
@@ -1390,124 +1417,124 @@ canvas { display: block; }
 <!-- Row 1 -->
 <div class="g2 mb16">
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Avez-vous entendu parler du quantum computing?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q1</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q1_t">Avez-vous entendu parler du quantum computing?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q1</span></div>
     <div class="donut-wrap">
       <canvas id="c-s1" width="140" height="140" style="flex-shrink:0;"></canvas>
       <div class="donut-legend">
-        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl">Oui</div><div class="leg-pct">55,3%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div><div class="leg-lbl">Non</div><div class="leg-pct">44,7%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl" data-i18n="svr_q1_yes">Oui</div><div class="leg-pct">55,3%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div><div class="leg-lbl" data-i18n="svr_q1_no">Non</div><div class="leg-pct">44,7%</div></div>
       </div>
     </div>
-    <p class="anno">57 répondants sur 103 connaissent le concept</p>
+    <p class="anno" data-i18n="svr_q1_anno">57 répondants sur 103 connaissent le concept</p>
   </div>
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Avez-vous entendu parler d'IBM Quantum?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-red">Q3</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q3_t">Avez-vous entendu parler d'IBM Quantum?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-red">Q3</span></div>
     <div class="donut-wrap">
       <canvas id="c-s2" width="140" height="140" style="flex-shrink:0;"></canvas>
       <div class="donut-legend">
-        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl">Oui</div><div class="leg-pct">27,2%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div><div class="leg-lbl">Non</div><div class="leg-pct">72,8%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl" data-i18n="svr_q1_yes">Oui</div><div class="leg-pct">27,2%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div><div class="leg-lbl" data-i18n="svr_q1_no">Non</div><div class="leg-pct">72,8%</div></div>
       </div>
     </div>
-    <div class="insight"><div class="insight-title">Gap critique</div><div class="insight-body">IBM est le leader mondial du quantum — mais <strong>72,8% de la prochaine génération Finance ne le sait pas.</strong> C'est le gap le plus actionnable de toute l'étude.</div></div>
+    <div class="insight"><div class="insight-title" data-i18n="svr_gap_t">Gap critique</div><div class="insight-body" data-i18n="svr_gap_b">IBM est le leader mondial du quantum — mais <strong>72,8% de la prochaine génération Finance ne le sait pas.</strong> C'est le gap le plus actionnable de toute l'étude.</div></div>
   </div>
 </div>
 
 <!-- Row 2 -->
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Niveau de connaissance du quantum computing</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q2</span></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Aucune connaissance</div><div class="hbar-track"><div class="hbar-fill rd" style="width:62.1%"></div></div><div class="hbar-pct">62,1%</div><div class="hbar-n">64 rép.</div></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Niveau basique</div><div class="hbar-track"><div class="hbar-fill b2" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Niveau intermédiaire</div><div class="hbar-track"><div class="hbar-fill b3" style="width:9%"></div></div><div class="hbar-pct">~9,0%</div><div class="hbar-n">9 rép.</div></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Niveau avancé</div><div class="hbar-track"><div class="hbar-fill b3" style="width:3%;opacity:0.6;"></div></div><div class="hbar-pct">~3,0%</div><div class="hbar-n">3 rép.</div></div>
-  <div class="insight"><div class="insight-title">Implication stratégique</div><div class="insight-body">84,4% ont une connaissance nulle ou basique — même dans un panel Finance/Business. IBM doit prioriser l'éducation de marché avant la conversion commerciale. <strong>Le contenu introductif sur cas réels est la priorité absolue.</strong></div></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="svr_q2_t">Niveau de connaissance du quantum computing</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q2</span></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q2_n0">Aucune connaissance</div><div class="hbar-track"><div class="hbar-fill rd" style="width:62.1%"></div></div><div class="hbar-pct">62,1%</div><div class="hbar-n">64 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q2_n1">Niveau basique</div><div class="hbar-track"><div class="hbar-fill b2" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q2_n2">Niveau intermédiaire</div><div class="hbar-track"><div class="hbar-fill b3" style="width:9%"></div></div><div class="hbar-pct">~9,0%</div><div class="hbar-n">9 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q2_n3">Niveau avancé</div><div class="hbar-track"><div class="hbar-fill b3" style="width:3%;opacity:0.6;"></div></div><div class="hbar-pct">~3,0%</div><div class="hbar-n">3 rép.</div></div>
+  <div class="insight"><div class="insight-title" data-i18n="svr_q2_it">Implication stratégique</div><div class="insight-body" data-i18n="svr_q2_ib">84,4% ont une connaissance nulle ou basique — même dans un panel Finance/Business. IBM doit prioriser l'éducation de marché avant la conversion commerciale. <strong>Le contenu introductif sur cas réels est la priorité absolue.</strong></div></div>
 </div>
 
 <!-- Row 3 -->
 <div class="g2 mb16">
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Comment percevez-vous le quantum computing?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q4</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q4_t">Comment percevez-vous le quantum computing?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q4</span></div>
     <div class="donut-wrap">
       <canvas id="c-s3" width="140" height="140" style="flex-shrink:0;"></canvas>
       <div class="donut-legend">
-        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl">Trop tôt / surtout théorique</div><div class="leg-pct">8,7%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:#E53935"></div><div class="leg-lbl">Émergent, premiers cas réels</div><div class="leg-pct">46,6%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl">Déjà utile pour l'industrie</div><div class="leg-pct">~6%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl">Je ne sais pas</div><div class="leg-pct">38,8%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-600)"></div><div class="leg-lbl" data-i18n="svr_q4_l1">Trop tôt / surtout théorique</div><div class="leg-pct">8,7%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:#E53935"></div><div class="leg-lbl" data-i18n="svr_q4_l2">Émergent, premiers cas réels</div><div class="leg-pct">46,6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl" data-i18n="svr_q4_l3">Déjà utile pour l'industrie</div><div class="leg-pct">~6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl" data-i18n="svr_q4_l4">Je ne sais pas</div><div class="leg-pct">38,8%</div></div>
       </div>
     </div>
-    <p class="anno">46,6% voient le quantum comme déjà émergent avec des cas réels</p>
+    <p class="anno" data-i18n="svr_q4_anno">46,6% voient le quantum comme déjà émergent avec des cas réels</p>
   </div>
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Le quantum va-t-il transformer la banque?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-green">Q5</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q5_t">Le quantum va-t-il transformer la banque?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-green">Q5</span></div>
     <div class="donut-wrap">
       <canvas id="c-s4" width="140" height="140" style="flex-shrink:0;"></canvas>
       <div class="donut-legend">
-        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-700)"></div><div class="leg-lbl">Oui, significativement</div><div class="leg-pct">31,1%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-400)"></div><div class="leg-lbl">Oui, modérément</div><div class="leg-pct">30,1%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl">Je ne suis pas sûr(e)</div><div class="leg-pct">34,0%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl">Je ne pense pas</div><div class="leg-pct">~5%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-700)"></div><div class="leg-lbl" data-i18n="svr_q5_l1">Oui, significativement</div><div class="leg-pct">31,1%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-400)"></div><div class="leg-lbl" data-i18n="svr_q5_l2">Oui, modérément</div><div class="leg-pct">30,1%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl" data-i18n="svr_q5_l3">Je ne suis pas sûr(e)</div><div class="leg-pct">34,0%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl" data-i18n="svr_q5_l4">Je ne pense pas</div><div class="leg-pct">~5%</div></div>
       </div>
     </div>
-    <div class="insight"><div class="insight-title">Signal fort</div><div class="insight-body"><strong>61,2% croient à une transformation</strong> significative ou modérée. Seulement ~5% sceptiques.</div></div>
+    <div class="insight"><div class="insight-title" data-i18n="svr_q5_it">Signal fort</div><div class="insight-body" data-i18n="svr_q5_ib"><strong>61,2% croient à une transformation</strong> significative ou modérée. Seulement ~5% sceptiques.</div></div>
   </div>
 </div>
 
 <!-- Row 4 -->
 <div class="card mb16">
-  <div class="card-hd"><div><div class="card-title">Quand les banques utiliseront-elles activement le quantum?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-gold">Q6</span></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Dans 3–5 ans</div><div class="hbar-track"><div class="hbar-fill" style="width:35.9%"></div></div><div class="hbar-pct">35,9%</div><div class="hbar-n">37 rép.</div></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Je ne sais pas</div><div class="hbar-track"><div class="hbar-fill gy" style="width:31.1%"></div></div><div class="hbar-pct">31,1%</div><div class="hbar-n">32 rép.</div></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Dans 5–10 ans</div><div class="hbar-track"><div class="hbar-fill b2" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Dans 1–2 ans</div><div class="hbar-track"><div class="hbar-fill b3" style="width:7.8%"></div></div><div class="hbar-pct">7,8%</div><div class="hbar-n">8 rép.</div></div>
-  <div class="hbar-row"><div class="hbar-lbl wide">Déjà utilisé</div><div class="hbar-track"><div class="hbar-fill gr" style="width:3%"></div></div><div class="hbar-pct">~3%</div><div class="hbar-n">3 rép.</div></div>
-  <p class="anno">Aligné avec le consensus experts: adoption bancaire active attendue 2028–2032</p>
+  <div class="card-hd"><div><div class="card-title" data-i18n="svr_q6_t">Quand les banques utiliseront-elles activement le quantum?</div><div class="card-sub">103 répondants</div></div><span class="tag tag-gold">Q6</span></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q6_l1">Dans 3–5 ans</div><div class="hbar-track"><div class="hbar-fill" style="width:35.9%"></div></div><div class="hbar-pct">35,9%</div><div class="hbar-n">37 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q6_l2">Je ne sais pas</div><div class="hbar-track"><div class="hbar-fill gy" style="width:31.1%"></div></div><div class="hbar-pct">31,1%</div><div class="hbar-n">32 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q6_l3">Dans 5–10 ans</div><div class="hbar-track"><div class="hbar-fill b2" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q6_l4">Dans 1–2 ans</div><div class="hbar-track"><div class="hbar-fill b3" style="width:7.8%"></div></div><div class="hbar-pct">7,8%</div><div class="hbar-n">8 rép.</div></div>
+  <div class="hbar-row"><div class="hbar-lbl wide" data-i18n="svr_q6_l5">Déjà utilisé</div><div class="hbar-track"><div class="hbar-fill gr" style="width:3%"></div></div><div class="hbar-pct">~3%</div><div class="hbar-n">3 rép.</div></div>
+  <p class="anno" data-i18n="svr_q6_anno">Aligné avec le consensus experts: adoption bancaire active attendue 2028–2032</p>
 </div>
 
 <!-- Row 5: Trust + Interest -->
 <div class="g2 mb16">
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Confiance envers IBM comme fournisseur quantum</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q8</span></div>
-    <div class="hbar-row"><div class="hbar-lbl">Je ne sais pas</div><div class="hbar-track"><div class="hbar-fill gy" style="width:31.1%"></div></div><div class="hbar-pct">31,1%</div><div class="hbar-n">32 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Haute confiance</div><div class="hbar-track"><div class="hbar-fill gr" style="width:27.2%"></div></div><div class="hbar-pct">27,2%</div><div class="hbar-n">28 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Confiance modérée</div><div class="hbar-track"><div class="hbar-fill b2" style="width:20.4%"></div></div><div class="hbar-pct">20,4%</div><div class="hbar-n">21 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Très haute confiance</div><div class="hbar-track"><div class="hbar-fill" style="width:9.7%;background:#7B1FA2"></div></div><div class="hbar-pct">9,7%</div><div class="hbar-n">10 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Faible confiance</div><div class="hbar-track"><div class="hbar-fill rd" style="width:8.7%"></div></div><div class="hbar-pct">8,7%</div><div class="hbar-n">9 rép.</div></div>
-    <div class="insight"><div class="insight-title">Lecture</div><div class="insight-body">57% ont une confiance haute, très haute ou modérée. Le 31,1% "je ne sais pas" = méconnaissance, non défiance. <strong>Capital de confiance à activer.</strong></div></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q8_t">Confiance envers IBM comme fournisseur quantum</div><div class="card-sub">103 répondants</div></div><span class="tag tag-blue">Q8</span></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q8_l1">Je ne sais pas</div><div class="hbar-track"><div class="hbar-fill gy" style="width:31.1%"></div></div><div class="hbar-pct">31,1%</div><div class="hbar-n">32 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q8_l2">Haute confiance</div><div class="hbar-track"><div class="hbar-fill gr" style="width:27.2%"></div></div><div class="hbar-pct">27,2%</div><div class="hbar-n">28 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q8_l3">Confiance modérée</div><div class="hbar-track"><div class="hbar-fill b2" style="width:20.4%"></div></div><div class="hbar-pct">20,4%</div><div class="hbar-n">21 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q8_l4">Très haute confiance</div><div class="hbar-track"><div class="hbar-fill" style="width:9.7%;background:#7B1FA2"></div></div><div class="hbar-pct">9,7%</div><div class="hbar-n">10 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q8_l5">Faible confiance</div><div class="hbar-track"><div class="hbar-fill rd" style="width:8.7%"></div></div><div class="hbar-pct">8,7%</div><div class="hbar-n">9 rép.</div></div>
+    <div class="insight"><div class="insight-title" data-i18n="svr_q8_it">Lecture</div><div class="insight-body" data-i18n="svr_q8_ib">57% ont une confiance haute, très haute ou modérée. Le 31,1% "je ne sais pas" = méconnaissance, non défiance. <strong>Capital de confiance à activer.</strong></div></div>
   </div>
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Intérêt pour les applications banking du quantum</div><div class="card-sub">103 répondants</div></div><span class="tag tag-green">Q9</span></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q9_t">Intérêt pour les applications banking du quantum</div><div class="card-sub">103 répondants</div></div><span class="tag tag-green">Q9</span></div>
     <div class="donut-wrap" style="margin-bottom:14px;">
       <canvas id="c-s5" width="140" height="140" style="flex-shrink:0;"></canvas>
       <div class="donut-legend">
-        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-700)"></div><div class="leg-lbl">Très intéressé(e)</div><div class="leg-pct">19,4%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-400)"></div><div class="leg-lbl">Assez intéressé(e)</div><div class="leg-pct">47,6%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl">Neutre</div><div class="leg-pct">13,6%</div></div>
-        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl">Peu / pas intéressé(e)</div><div class="leg-pct">~19%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-700)"></div><div class="leg-lbl" data-i18n="svr_q9_l1">Très intéressé(e)</div><div class="leg-pct">19,4%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue-400)"></div><div class="leg-lbl" data-i18n="svr_q9_l2">Assez intéressé(e)</div><div class="leg-pct">47,6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div><div class="leg-lbl" data-i18n="svr_q9_l3">Neutre</div><div class="leg-pct">13,6%</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--ink-4)"></div><div class="leg-lbl" data-i18n="svr_q9_l4">Peu / pas intéressé(e)</div><div class="leg-pct">~19%</div></div>
       </div>
     </div>
-    <div class="insight"><div class="insight-title">Signal fort</div><div class="insight-body"><strong>67% très ou assez intéressés</strong> malgré un faible niveau de connaissance. L'appétit dépasse l'expertise: opportunité pédagogique majeure.</div></div>
+    <div class="insight"><div class="insight-title" data-i18n="svr_q9_it">Signal fort</div><div class="insight-body" data-i18n="svr_q9_ib"><strong>67% très ou assez intéressés</strong> malgré un faible niveau de connaissance. L'appétit dépasse l'expertise: opportunité pédagogique majeure.</div></div>
   </div>
 </div>
 
 <!-- Row 6: Sources + Content -->
 <div class="g2 mb16">
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Sources d'information sur les tech émergentes</div><div class="card-sub">99 répondants · Question multi-choix</div></div><span class="tag tag-gold">Q10</span></div>
-    <div class="hbar-row"><div class="hbar-lbl">Instagram / TikTok</div><div class="hbar-track"><div class="hbar-fill rd" style="width:67.7%"></div></div><div class="hbar-pct">67,7%</div><div class="hbar-n">67 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">YouTube</div><div class="hbar-track"><div class="hbar-fill" style="width:43.4%"></div></div><div class="hbar-pct">43,4%</div><div class="hbar-n">43 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Médias traditionnels</div><div class="hbar-track"><div class="hbar-fill b2" style="width:40.4%"></div></div><div class="hbar-pct">40,4%</div><div class="hbar-n">40 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">LinkedIn</div><div class="hbar-track"><div class="hbar-fill b3" style="width:15.2%"></div></div><div class="hbar-pct">15,2%</div><div class="hbar-n">15 rép.</div></div>
-    <div class="insight"><div class="insight-title">Rupture générationnelle</div><div class="insight-body">Instagram/TikTok écrase LinkedIn (67,7% vs 15,2%). La comm. quantum IBM est calibrée pour LinkedIn — <strong>invisible pour 67% de cette audience.</strong></div></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q10_t">Sources d'information sur les tech émergentes</div><div class="card-sub">99 répondants · Question multi-choix</div></div><span class="tag tag-gold">Q10</span></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q10_l1">Instagram / TikTok</div><div class="hbar-track"><div class="hbar-fill rd" style="width:67.7%"></div></div><div class="hbar-pct">67,7%</div><div class="hbar-n">67 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q10_l2">YouTube</div><div class="hbar-track"><div class="hbar-fill" style="width:43.4%"></div></div><div class="hbar-pct">43,4%</div><div class="hbar-n">43 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q10_l3">Médias traditionnels</div><div class="hbar-track"><div class="hbar-fill b2" style="width:40.4%"></div></div><div class="hbar-pct">40,4%</div><div class="hbar-n">40 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q10_l4">LinkedIn</div><div class="hbar-track"><div class="hbar-fill b3" style="width:15.2%"></div></div><div class="hbar-pct">15,2%</div><div class="hbar-n">15 rép.</div></div>
+    <div class="insight"><div class="insight-title" data-i18n="svr_q10_it">Rupture générationnelle</div><div class="insight-body" data-i18n="svr_q10_ib">Instagram/TikTok écrase LinkedIn (67,7% vs 15,2%). La comm. quantum IBM est calibrée pour LinkedIn — <strong>invisible pour 67% de cette audience.</strong></div></div>
   </div>
   <div class="card">
-    <div class="card-hd"><div><div class="card-title">Quel contenu quantum vous serait le plus utile?</div><div class="card-sub">103 répondants · Question multi-choix</div></div><span class="tag tag-blue">Q11</span></div>
-    <div class="hbar-row"><div class="hbar-lbl">Cas d'usage réels</div><div class="hbar-track"><div class="hbar-fill" style="width:55.3%"></div></div><div class="hbar-pct">55,3%</div><div class="hbar-n">57 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Contenu introductif</div><div class="hbar-track"><div class="hbar-fill b2" style="width:35%"></div></div><div class="hbar-pct">35,0%</div><div class="hbar-n">36 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Contenu technique</div><div class="hbar-track"><div class="hbar-fill b3" style="width:25.2%"></div></div><div class="hbar-pct">25,2%</div><div class="hbar-n">26 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Avis d'experts</div><div class="hbar-track"><div class="hbar-fill b3" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
-    <div class="hbar-row"><div class="hbar-lbl">Non intéressé(e)</div><div class="hbar-track"><div class="hbar-fill gy" style="width:17.5%"></div></div><div class="hbar-pct">17,5%</div><div class="hbar-n">18 rép.</div></div>
-    <div class="insight"><div class="insight-title">Format gagnant</div><div class="insight-body"><strong>Cas d'usage réels dominent (55,3%).</strong> Cette audience veut du concret, du prouvé — HSBC +34%, JPMorgan QKD sont les arguments #1.</div></div>
+    <div class="card-hd"><div><div class="card-title" data-i18n="svr_q11_t">Quel contenu quantum vous serait le plus utile?</div><div class="card-sub">103 répondants · Question multi-choix</div></div><span class="tag tag-blue">Q11</span></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q11_l1">Cas d'usage réels</div><div class="hbar-track"><div class="hbar-fill" style="width:55.3%"></div></div><div class="hbar-pct">55,3%</div><div class="hbar-n">57 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q11_l2">Contenu introductif</div><div class="hbar-track"><div class="hbar-fill b2" style="width:35%"></div></div><div class="hbar-pct">35,0%</div><div class="hbar-n">36 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q11_l3">Contenu technique</div><div class="hbar-track"><div class="hbar-fill b3" style="width:25.2%"></div></div><div class="hbar-pct">25,2%</div><div class="hbar-n">26 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q11_l4">Avis d'experts</div><div class="hbar-track"><div class="hbar-fill b3" style="width:22.3%"></div></div><div class="hbar-pct">22,3%</div><div class="hbar-n">23 rép.</div></div>
+    <div class="hbar-row"><div class="hbar-lbl" data-i18n="svr_q11_l5">Non intéressé(e)</div><div class="hbar-track"><div class="hbar-fill gy" style="width:17.5%"></div></div><div class="hbar-pct">17,5%</div><div class="hbar-n">18 rép.</div></div>
+    <div class="insight"><div class="insight-title" data-i18n="svr_q11_it">Format gagnant</div><div class="insight-body" data-i18n="svr_q11_ib"><strong>Cas d'usage réels dominent (55,3%).</strong> Cette audience veut du concret, du prouvé — HSBC +34%, JPMorgan QKD sont les arguments #1.</div></div>
   </div>
 </div>
 
@@ -1515,21 +1542,21 @@ canvas { display: block; }
 <div class="g3">
   <div style="background:var(--blue-500);color:#fff;padding:22px;">
     <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:var(--blue-100);margin-bottom:8px;">FINDING 01</div>
-    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;">Gap notoriété IBM critique</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;">55,3% connaissent le quantum — seulement 27,2% connaissent IBM Quantum. IBM est le leader mondial, invisible auprès de la prochaine génération Finance.</div>
-    <div style="margin-top:12px;font-size:11px;color:var(--blue-200);font-weight:500;">→ Brand awareness sur TikTok / YouTube / Instagram</div>
+    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;" data-i18n="svr_f1_t">Gap notoriété IBM critique</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;" data-i18n="svr_f1_b">55,3% connaissent le quantum — seulement 27,2% connaissent IBM Quantum. IBM est le leader mondial, invisible auprès de la prochaine génération Finance.</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--blue-200);font-weight:500;" data-i18n="svr_f1_w">→ Brand awareness sur TikTok / YouTube / Instagram</div>
   </div>
   <div style="background:var(--blue-500);color:#fff;padding:22px;">
     <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:var(--blue-200);margin-bottom:8px;">FINDING 02</div>
-    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;">L'intérêt précède la connaissance</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.6;">67% intéressés par le quantum banking malgré 84% de niveau nul/basique. La demande de contenu existe — pas sur les bons canaux.</div>
-    <div style="margin-top:12px;font-size:11px;color:var(--blue-200);font-weight:500;">→ Contenu introductif, cas réels, format court et visuel</div>
+    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;" data-i18n="svr_f2_t">L'intérêt précède la connaissance</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.6;" data-i18n="svr_f2_b">67% intéressés par le quantum banking malgré 84% de niveau nul/basique. La demande de contenu existe — pas sur les bons canaux.</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--blue-200);font-weight:500;" data-i18n="svr_f2_w">→ Contenu introductif, cas réels, format court et visuel</div>
   </div>
   <div style="background:var(--blue-500);color:#fff;padding:22px;">
     <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:var(--blue-100);margin-bottom:8px;">FINDING 03</div>
-    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;">La confiance IBM est latente</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.6;">57% font confiance à IBM — mais 31,1% "je ne sais pas". Méconnaissance, non défiance. Le capital de confiance est là; il faut l'activer.</div>
-    <div style="margin-top:12px;font-size:11px;color:var(--blue-100);font-weight:500;">→ Preuves business concrètes: HSBC, JPM, $1B cumulé</div>
+    <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;" data-i18n="svr_f3_t">La confiance IBM est latente</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.6;" data-i18n="svr_f3_b">57% font confiance à IBM — mais 31,1% "je ne sais pas". Méconnaissance, non défiance. Le capital de confiance est là; il faut l'activer.</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--blue-100);font-weight:500;" data-i18n="svr_f3_w">→ Preuves business concrètes: HSBC, JPM, $1B cumulé</div>
   </div>
 </div>
 
@@ -1545,19 +1572,19 @@ canvas { display: block; }
     </div>
 
 <div class="num-strip mb24">
-  <div class="num-cell"><div class="num-val">+34%</div><div class="num-lbl">Fill rate HSBC bond trading avec IBM Heron 133q</div></div>
-  <div class="num-cell"><div class="num-val">550K+</div><div class="num-lbl">Utilisateurs Qiskit — avantage IBM inégalé</div></div>
-  <div class="num-cell"><div class="num-val">$450B</div><div class="num-lbl">Marché nouveaux produits financiers quantiques 2035</div></div>
-  <div class="num-cell"><div class="num-val">2030</div><div class="num-lbl">Horizon Q-Day — deadline migration PQC absolue</div></div>
+  <div class="num-cell sr"><div class="num-val">+34%</div><div class="num-lbl" data-i18n="in_n1">Fill rate HSBC bond trading avec IBM Heron 133q</div></div>
+  <div class="num-cell sr"><div class="num-val">550K+</div><div class="num-lbl" data-i18n="in_n2">Utilisateurs Qiskit — avantage IBM inégalé</div></div>
+  <div class="num-cell sr"><div class="num-val">$450B</div><div class="num-lbl" data-i18n="in_n3">Marché nouveaux produits financiers quantiques 2035</div></div>
+  <div class="num-cell sr"><div class="num-val">2030</div><div class="num-lbl" data-i18n="in_n4">Horizon Q-Day — deadline migration PQC absolue</div></div>
 </div>
 
 <div class="ki-grid">
-  <div class="ki-card ki-red"><div class="ki-icon">🔴</div><div class="ki-title">Le Q-Day n'est pas hypothétique</div><div class="ki-body">RSA-2048 sera cassable d'ici 2030–2035. Les données chiffrées aujourd'hui sont déjà capturées "Store Now Decrypt Later". Coût de non-action: &gt;$100Bn secteur.</div><div class="ki-what">→ Migration PQC = priorité budgétaire #1, non-négociable avant 2030.</div></div>
-  <div class="ki-card ki-green"><div class="ki-icon">✅</div><div class="ki-title">Le quantum fonctionne déjà</div><div class="ki-body">HSBC +34% fill rate. JPMorgan QKD en production. D-Wave +179% revenue 2025. Ce n'est plus de la recherche — c'est de l'exploitation commerciale partielle.</div><div class="ki-what">→ Les early adopters construisent une avance irattrapable sur 3–5 ans.</div></div>
-  <div class="ki-card"><div class="ki-icon">🔵</div><div class="ki-title">IBM domine l'écosystème</div><div class="ki-body">Qiskit: 550K+ utilisateurs, 25K GitHub stars. 250+ membres Quantum Network. 2/4 standards PQC NIST développés par IBM. Avance structurelle.</div><div class="ki-what">→ IBM est le partenaire par défaut pour toute stratégie quantum bancaire sérieuse.</div></div>
-  <div class="ki-card ki-red"><div class="ki-icon">📊</div><div class="ki-title">Gap de communication massif</div><div class="ki-body">Les acteurs quantum parlent aux développeurs, pas aux CFOs/Boards. Aucun calculateur ROI. Aucun protocole de crise actif lors du crash Jan. 2025.</div><div class="ki-what">→ Premier acteur à combler ce gap capture le cycle de vente C-Suite entier.</div></div>
-  <div class="ki-card ki-gold"><div class="ki-icon">⚡</div><div class="ki-title">L'optimisation portefeuille: killer app</div><div class="ki-body">QAOA réduit NP-Hard à polynomial. BNP Paribas: -40% tracking error. Ratio de Sharpe +15–25%. Premier cas d'usage enterprise déployable maintenant.</div><div class="ki-what">→ Toute banque avec 10K+ actifs a un ROI quantum quantifiable aujourd'hui.</div></div>
-  <div class="ki-card"><div class="ki-icon">🌍</div><div class="ki-title">La souveraineté technologique compte</div><div class="ki-body">BNP → Pasqal (France). Standard Chartered → Fujitsu (Japon). Le quantum est géopolitique: dépendance vs autonomie stratégique.</div><div class="ki-what">→ Les banques européennes doivent définir leur stratégie souveraineté avant 2028.</div></div>
+  <div class="ki-card ki-red sr"><div class="ki-icon">🔴</div><div class="ki-title" data-i18n="ki1_t">Le Q-Day n'est pas hypothétique</div><div class="ki-body" data-i18n="ki1_b">RSA-2048 sera cassable d'ici 2030–2035. Les données chiffrées aujourd'hui sont déjà capturées "Store Now Decrypt Later". Coût de non-action: &gt;$100Bn secteur.</div><div class="ki-what" data-i18n="ki1_w">→ Migration PQC = priorité budgétaire #1, non-négociable avant 2030.</div></div>
+  <div class="ki-card ki-green sr"><div class="ki-icon">✅</div><div class="ki-title" data-i18n="ki2_t">Le quantum fonctionne déjà</div><div class="ki-body" data-i18n="ki2_b">HSBC +34% fill rate. JPMorgan QKD en production. D-Wave +179% revenue 2025. Ce n'est plus de la recherche — c'est de l'exploitation commerciale partielle.</div><div class="ki-what" data-i18n="ki2_w">→ Les early adopters construisent une avance irattrapable sur 3–5 ans.</div></div>
+  <div class="ki-card sr"><div class="ki-icon">🔵</div><div class="ki-title" data-i18n="ki3_t">IBM domine l'écosystème</div><div class="ki-body" data-i18n="ki3_b">Qiskit: 550K+ utilisateurs, 25K GitHub stars. 250+ membres Quantum Network. 2/4 standards PQC NIST développés par IBM. Avance structurelle.</div><div class="ki-what" data-i18n="ki3_w">→ IBM est le partenaire par défaut pour toute stratégie quantum bancaire sérieuse.</div></div>
+  <div class="ki-card ki-red sr"><div class="ki-icon">📊</div><div class="ki-title" data-i18n="ki4_t">Gap de communication massif</div><div class="ki-body" data-i18n="ki4_b">Les acteurs quantum parlent aux développeurs, pas aux CFOs/Boards. Aucun calculateur ROI. Aucun protocole de crise actif lors du crash Jan. 2025.</div><div class="ki-what" data-i18n="ki4_w">→ Premier acteur à combler ce gap capture le cycle de vente C-Suite entier.</div></div>
+  <div class="ki-card ki-gold sr"><div class="ki-icon">⚡</div><div class="ki-title" data-i18n="ki5_t">L'optimisation portefeuille: killer app</div><div class="ki-body" data-i18n="ki5_b">QAOA réduit NP-Hard à polynomial. BNP Paribas: -40% tracking error. Ratio de Sharpe +15–25%. Premier cas d'usage enterprise déployable maintenant.</div><div class="ki-what" data-i18n="ki5_w">→ Toute banque avec 10K+ actifs a un ROI quantum quantifiable aujourd'hui.</div></div>
+  <div class="ki-card sr"><div class="ki-icon">🌍</div><div class="ki-title" data-i18n="ki6_t">La souveraineté technologique compte</div><div class="ki-body" data-i18n="ki6_b">BNP → Pasqal (France). Standard Chartered → Fujitsu (Japon). Le quantum est géopolitique: dépendance vs autonomie stratégique.</div><div class="ki-what" data-i18n="ki6_w">→ Les banques européennes doivent définir leur stratégie souveraineté avant 2028.</div></div>
 </div>
 
   </div>
@@ -1571,18 +1598,18 @@ canvas { display: block; }
       <div class="ph-body" data-i18n="rc_body">5 priorités actionnables · Horizon temporel · Investissements · Partenaires IBM</div>
     </div>
 
-<div class="reco r-red mb16"><div class="reco-num"><div class="reco-p" style="color:var(--red)">P1</div><div class="reco-pl">IMMÉDIAT</div></div><div class="reco-content"><div class="reco-title">Initier la Migration PQC (Cryptographie Post-Quantique)</div><div class="reco-body">Budget $50–500M selon taille. Inventaire données sensibles. Adoption NIST CRYSTALS-Kyber / Dilithium. Délai absolu: avant 2030. Risque de non-action: CATASTROPHIQUE. Partenaire recommandé: IBM Quantum Safe Explorer + Advisor + Remediator (en production).</div></div><div class="reco-horizon">0–12 MOIS<br>🔴 CRITIQUE</div></div>
+<div class="reco r-red mb16 sr"><div class="reco-num"><div class="reco-p" style="color:var(--red)">P1</div><div class="reco-pl" data-i18n="rp1_pl">IMMÉDIAT</div></div><div class="reco-content"><div class="reco-title" data-i18n="rp1_t">Initier la Migration PQC (Cryptographie Post-Quantique)</div><div class="reco-body" data-i18n="rp1_b">Budget $50–500M selon taille. Inventaire données sensibles. Adoption NIST CRYSTALS-Kyber / Dilithium. Délai absolu: avant 2030. Risque de non-action: CATASTROPHIQUE. Partenaire recommandé: IBM Quantum Safe Explorer + Advisor + Remediator (en production).</div></div><div class="reco-horizon" data-i18n="rp1_h">0–12 MOIS<br>🔴 CRITIQUE</div></div>
 
-<div class="reco r-red mb16"><div class="reco-num"><div class="reco-p" style="color:var(--red)">P2</div><div class="reco-pl">12–24 MOIS</div></div><div class="reco-content"><div class="reco-title">Déployer 2–3 Pilotes Quantum avec ROI Rapide</div><div class="reco-body">Priorités: Bond trading RFQ (playbook HSBC +34% fill rate), Optimisation portefeuille QAOA, QRN pour trading stochastique. Partenaires: IBM Quantum Network + Quantinuum. Budget pilote: $5–20M/cas d'usage.</div></div><div class="reco-horizon">12–24 MOIS<br>🟠 HAUTE</div></div>
+<div class="reco r-red mb16 sr"><div class="reco-num"><div class="reco-p" style="color:var(--red)">P2</div><div class="reco-pl" data-i18n="rp2_pl">12–24 MOIS</div></div><div class="reco-content"><div class="reco-title" data-i18n="rp2_t">Déployer 2–3 Pilotes Quantum avec ROI Rapide</div><div class="reco-body" data-i18n="rp2_b">Priorités: Bond trading RFQ (playbook HSBC +34% fill rate), Optimisation portefeuille QAOA, QRN pour trading stochastique. Partenaires: IBM Quantum Network + Quantinuum. Budget pilote: $5–20M/cas d'usage.</div></div><div class="reco-horizon" data-i18n="rp2_h">12–24 MOIS<br>🟠 HAUTE</div></div>
 
-<div class="reco r-gold mb16"><div class="reco-num"><div class="reco-p" style="color:var(--gold)">P3</div><div class="reco-pl">2–4 ANS</div></div><div class="reco-content"><div class="reco-title">Construire le Capital Humain Quantique</div><div class="reco-body">Programme "Quantum Quants" interne. Partnerships universitaires (MIT, École Polytechnique, TU Munich). Recrutement 5–10 PhDs quantum. Budget formation: $5–20M. Rejoindre IBM Quantum Network pour accès ressources et formation.</div></div><div class="reco-horizon">2–4 ANS<br>🟡 IMPORTANTE</div></div>
+<div class="reco r-gold mb16 sr"><div class="reco-num"><div class="reco-p" style="color:var(--gold)">P3</div><div class="reco-pl" data-i18n="rp3_pl">2–4 ANS</div></div><div class="reco-content"><div class="reco-title" data-i18n="rp3_t">Construire le Capital Humain Quantique</div><div class="reco-body" data-i18n="rp3_b">Programme "Quantum Quants" interne. Partnerships universitaires (MIT, École Polytechnique, TU Munich). Recrutement 5–10 PhDs quantum. Budget formation: $5–20M. Rejoindre IBM Quantum Network pour accès ressources et formation.</div></div><div class="reco-horizon" data-i18n="rp3_h">2–4 ANS<br>🟡 IMPORTANTE</div></div>
 
-<div class="reco mb16"><div class="reco-num"><div class="reco-p">P4</div><div class="reco-pl">3–5 ANS</div></div><div class="reco-content"><div class="reco-title">Développer une Quantum Strategy Intégrée</div><div class="reco-body">Création d'un Chief Quantum Officer (CQO). Roadmap 5 ans validée Comité Exécutif. Investissement R&D $30–100M/an. Écosystème de startups (Pasqal, Alice & Bob, PQShield selon profil).</div></div><div class="reco-horizon">3–5 ANS<br>🔵 STRATÉGIQUE</div></div>
+<div class="reco mb16 sr"><div class="reco-num"><div class="reco-p">P4</div><div class="reco-pl" data-i18n="rp4_pl">3–5 ANS</div></div><div class="reco-content"><div class="reco-title" data-i18n="rp4_t">Développer une Quantum Strategy Intégrée</div><div class="reco-body" data-i18n="rp4_b">Création d'un Chief Quantum Officer (CQO). Roadmap 5 ans validée Comité Exécutif. Investissement R&D $30–100M/an. Écosystème de startups (Pasqal, Alice &amp; Bob, PQShield selon profil).</div></div><div class="reco-horizon" data-i18n="rp4_h">3–5 ANS<br>🔵 STRATÉGIQUE</div></div>
 
-<div class="reco mb24"><div class="reco-num"><div class="reco-p">P5</div><div class="reco-pl">5–10 ANS</div></div><div class="reco-content"><div class="reco-title">Préparer les Nouveaux Produits Financiers Quantiques</div><div class="reco-body">Structurer les premières offres Q-ESG et dérivés quantum. Construire les datasets propriétaires pour un avantage compétitif durable. Marché potentiel: $450B d'ici 2035.</div></div><div class="reco-horizon">5–10 ANS<br>🟣 VISION</div></div>
+<div class="reco mb24 sr"><div class="reco-num"><div class="reco-p">P5</div><div class="reco-pl" data-i18n="rp5_pl">5–10 ANS</div></div><div class="reco-content"><div class="reco-title" data-i18n="rp5_t">Préparer les Nouveaux Produits Financiers Quantiques</div><div class="reco-body" data-i18n="rp5_b">Structurer les premières offres Q-ESG et dérivés quantum. Construire les datasets propriétaires pour un avantage compétitif durable. Marché potentiel: $450B d'ici 2035.</div></div><div class="reco-horizon" data-i18n="rp5_h">5–10 ANS<br>🟣 VISION</div></div>
 
 <div class="card">
-  <div class="card-hd"><div><div class="card-title">Impact Quantum par Segment · 2030 vs 2040</div><div class="card-sub">Gagnants et perdants de la révolution quantum</div></div><span class="tag tag-blue">IMPACT</span></div>
+  <div class="card-hd"><div><div class="card-title" data-i18n="rc_tbl_t">Impact Quantum par Segment · 2030 vs 2040</div><div class="card-sub" data-i18n="rc_tbl_s">Gagnants et perdants de la révolution quantum</div></div><span class="tag tag-blue">IMPACT</span></div>
   <table class="mtable">
     <thead><tr><th>Segment</th><th>État actuel</th><th>Impact Quantum 2030</th><th>Impact Quantum 2040</th><th>Gagnants ✅</th><th>Perdants ❌</th></tr></thead>
     <tbody>
@@ -1606,20 +1633,20 @@ canvas { display: block; }
     </div>
 
 <div class="kpi-row mb24">
-  <div class="kpi"><div class="kpi-lbl">Documents</div><div class="kpi-val">7</div><div class="kpi-sub">Fichiers sources + analyses intégrées</div></div>
-  <div class="kpi accent-green"><div class="kpi-lbl">Répondants enquête</div><div class="kpi-val">103</div><div class="kpi-sub">Google Forms · Avril 2026</div></div>
-  <div class="kpi accent-gold"><div class="kpi-lbl">Mise à jour</div><div class="kpi-val">Mars 26</div><div class="kpi-sub">Données consolidées 2024–2026</div></div>
-  <div class="kpi accent-red"><div class="kpi-lbl">Statut</div><div class="kpi-val" style="font-size:18px;">CONFIDENTIEL</div><div class="kpi-sub">Usage académique uniquement</div></div>
+  <div class="kpi"><div class="kpi-lbl" data-i18n="dc_kpi1">Documents</div><div class="kpi-val">7</div><div class="kpi-sub" data-i18n="dc_kpi1s">Fichiers sources + analyses intégrées</div></div>
+  <div class="kpi accent-green"><div class="kpi-lbl" data-i18n="dc_kpi2">Répondants enquête</div><div class="kpi-val">103</div><div class="kpi-sub" data-i18n="dc_kpi2s">Google Forms · Avril 2026</div></div>
+  <div class="kpi accent-gold"><div class="kpi-lbl" data-i18n="dc_kpi3">Mise à jour</div><div class="kpi-val">Mars 26</div><div class="kpi-sub" data-i18n="dc_kpi3s">Données consolidées 2024–2026</div></div>
+  <div class="kpi accent-red"><div class="kpi-lbl" data-i18n="dc_kpi4">Statut</div><div class="kpi-val" style="font-size:18px;">CONFIDENTIEL</div><div class="kpi-sub" data-i18n="dc_kpi4s">Usage académique uniquement</div></div>
 </div>
 
-<div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;">📂 Benchmarks</div>
+<div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;" data-i18n="dc_bm">📂 Benchmarks</div>
 <div class="doc-grid mb24">
-  <div class="doc-card"><div class="doc-icon">📊</div><div class="doc-title">Benchmark Compétitif — Quantum Banking</div><div class="doc-meta">Benchmark_Competitivo_ESP.xlsx · 8 feuilles · Mars 2026</div><div class="doc-tags"><span class="doc-tag">COMPÉTITIF</span><span class="doc-tag">10 BANQUES</span><span class="doc-tag">STRATÉGIQUE</span></div></div>
-  <div class="doc-card"><div class="doc-icon">📡</div><div class="doc-title">Benchmark Communication Digital</div><div class="doc-meta">VRAI_Benchmark_Comunicacion_ESP.xlsx · 5 feuilles</div><div class="doc-tags"><span class="doc-tag">COMMUNICATION</span><span class="doc-tag">10 ACTEURS</span><span class="doc-tag">8 OBJECTIFS</span></div></div>
-  <div class="doc-card"><div class="doc-icon">📋</div><div class="doc-title">Enquête Terrain · 103 Répondants</div><div class="doc-meta">Google Forms · Avril 2026 · 11 questions</div><div class="doc-tags"><span class="doc-tag">PRIMAIRE</span><span class="doc-tag">103 RÉP.</span><span class="doc-tag">QUANT.</span></div></div>
+  <div class="doc-card sr"><div class="doc-icon">📊</div><div class="doc-title" data-i18n="dc_doc1_t">Benchmark Compétitif — Quantum Banking</div><div class="doc-meta" data-i18n="dc_doc1_m">8 feuilles · Mars 2026</div><div class="doc-tags"><span class="doc-tag">COMPÉTITIF</span><span class="doc-tag">10 BANQUES</span><span class="doc-tag">STRATÉGIQUE</span></div></div>
+  <div class="doc-card sr"><div class="doc-icon">📡</div><div class="doc-title" data-i18n="dc_doc2_t">Benchmark Communication Digital</div><div class="doc-meta" data-i18n="dc_doc2_m">5 feuilles</div><div class="doc-tags"><span class="doc-tag">COMMUNICATION</span><span class="doc-tag">10 ACTEURS</span><span class="doc-tag">8 OBJECTIFS</span></div></div>
+  <div class="doc-card sr"><div class="doc-icon">📋</div><div class="doc-title" data-i18n="dc_doc3_t">Enquête Terrain · 103 Répondants</div><div class="doc-meta" data-i18n="dc_doc3_m">Google Forms · Avril 2026 · 11 questions</div><div class="doc-tags"><span class="doc-tag">PRIMAIRE</span><span class="doc-tag">103 RÉP.</span><span class="doc-tag">QUANT.</span></div></div>
 </div>
 
-<div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;">📂 Sources & Références</div>
+<div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;" data-i18n="dc_src">📂 Sources &amp; Références</div>
 <div class="card">
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;font-size:12px;color:var(--ink-2);line-height:2;">
     <div><div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-600);margin-bottom:8px;">Institutions</div>IBM Quantum Network<br>Quantinuum · IonQ · D-Wave<br>Google Quantum AI<br>Microsoft Azure Quantum<br>Pasqal · PQShield · Classiq<br>McKinsey · BCG</div>
@@ -1727,6 +1754,90 @@ const T = {
     pt_thanks_title:'Merci pour votre participation !',
     pt_thanks_body:'Vos réponses ont bien été enregistrées. Elles contribuent à l\'analyse de la perception du quantum computing dans la finance.',
     pt_restart:'Répondre à nouveau',
+    // Overview
+    ov_timeline_title:"Calendrier d'Adoption Quantum", ov_timeline_sub:"Maturité par cas d'usage · 2024–2040",
+    ov_roadmap_title:"Feuille de Route 2026–2045", ov_roadmap_sub:"3 horizons · disruptions · nouveaux rôles",
+    ov_usecase_title:"Maturité des Cas d'Usage · 2026", ov_usecase_sub:"État de déploiement réel par domaine",
+    sf01n:"01 · Contexte", sf01t:"Qu'est-ce que le Quantum?", sf01b:"Superposition, intrication, interférence. Révolution computationnelle qui menace ou transforme la finance.",
+    sf02n:"02 · Marché", sf02t:"Pourquoi les banques investissent?", sf02b:"5 moteurs: vitesse de calcul, risque, cybersécurité post-quantum, nouveaux produits, avantage compétitif.",
+    sf03n:"03 · Acteurs", sf03t:"Qui mène la course?", sf03b:"JPMorgan en production. HSBC +34% fill rate. BNP souveraineté. IBM partenaire de référence.",
+    sf04n:"04 · Action", sf04t:"Que faire maintenant?", sf04b:"5 priorités: PQC immédiat, pilotes ROI, capital humain, stratégie intégrée, produits Q.",
+    tl_h1_ph:"NISQ + Hybride", tl_h1_a:"Bond trading quantum", tl_h1_b:"Migration PQC obligatoire", tl_h1_c:"QRN dans transactions",
+    tl_h2_ph:"Fault-Tolerant", tl_h2_a:"VaR en minutes", tl_h2_b:"Pricing dérivés temps réel", tl_h2_c:"Chief Quantum Officer",
+    tl_h3_ph:"Full Quantum", tl_h3_a:"Refondation cryptographie", tl_h3_b:"Marchés Q natifs", tl_h3_c:"Actifs financiers Q",
+    tl_h4_ph:"Quantum Internet", tl_h4_a:"Fin modèles stochastiques", tl_h4_b:"Marchés auto-régulés IA-Q", tl_h4_c:"Tokens quantiques",
+    // Competitive
+    cp_qscore_t:"Q-Score · Classement Quantum Readiness", cp_qscore_s:"Score global /10 · Données 2026 consolidées",
+    cp_prof_t:"Profils des 10 Banques Leaders", cp_prof_s:"Stratégie · Maturité · Partenaires · Investissement",
+    cp_radar_t:"Radar Compétitif · Top 4 Banques", cp_radar_s:"6 dimensions stratégiques",
+    cp_map_t:"Mapping Concurrentiel 2×2", cp_map_s:"Maturité technique vs Ambition stratégique",
+    pm_lm:"Faible maturité", pm_hm:"Forte maturité", pm_ha:"Haute ambition", pm_la:"Faible ambition",
+    pm_vis:"VISIONAIRES", pm_lead:"LEADERS", pm_fol:"SUIVEURS", pm_exe:"EXÉCUTANTS",
+    cp_swot_t:"Analyse Stratégique — SWOT Quantum", cp_swot_s:"Partie 6 · Forces · Limites · Risques · Opportunités",
+    swot_f:"Forces structurelles", swot_l:"Limites actuelles (NISQ)", swot_r:"Risques stratégiques", swot_o:"Opportunités à saisir",
+    cp_bbp_t:"Matrice Build · Buy · Partner par Profil de Banque", cp_bbp_s:"IBM positionné comme partenaire de référence · Partie 7",
+    // Comms
+    cm_hm_t:"Heat Map · Maturité par Objectif × Entreprise", cm_hm_s:"Score /10 · IBM référence ⭐",
+    cm_gap:"Gap secteur", cm_sc_t:"Score Communication Global /10", cm_sc_s:"Positionnement par acteur",
+    cm_ibm_t:"IBM · Performance par Objectif", cm_ibm_s:"vs Moyenne secteur · 8 dimensions", cm_moy:"Moy. Secteur",
+    cm_pl_t:"Top 5 Gaps à Combler — Plan d'Action IBM 12 mois", cm_pl_s:"Initiatives priorisées · KPIs concrets",
+    // Survey results
+    svr_q1_t:"Avez-vous entendu parler du quantum computing?",
+    svr_q1_yes:"Oui", svr_q1_no:"Non", svr_q1_anno:"57 répondants sur 103 connaissent le concept",
+    svr_q3_t:"Avez-vous entendu parler d'IBM Quantum?",
+    svr_gap_t:"Gap critique", svr_gap_b:"IBM est le leader mondial du quantum — mais <strong>72,8% de la prochaine génération Finance ne le sait pas.</strong> C'est le gap le plus actionnable de toute l'étude.",
+    svr_q2_t:"Niveau de connaissance du quantum computing",
+    svr_q2_n0:"Aucune connaissance", svr_q2_n1:"Niveau basique", svr_q2_n2:"Niveau intermédiaire", svr_q2_n3:"Niveau avancé",
+    svr_q2_it:"Implication stratégique", svr_q2_ib:"84,4% ont une connaissance nulle ou basique — même dans un panel Finance/Business. IBM doit prioriser l'éducation de marché avant la conversion commerciale. <strong>Le contenu introductif sur cas réels est la priorité absolue.</strong>",
+    svr_q4_t:"Comment percevez-vous le quantum computing?",
+    svr_q4_l1:"Trop tôt / surtout théorique", svr_q4_l2:"Émergent, premiers cas réels", svr_q4_l3:"Déjà utile pour l'industrie", svr_q4_l4:"Je ne sais pas",
+    svr_q4_anno:"46,6% voient le quantum comme déjà émergent avec des cas réels",
+    svr_q5_t:"Le quantum va-t-il transformer la banque?",
+    svr_q5_l1:"Oui, significativement", svr_q5_l2:"Oui, modérément", svr_q5_l3:"Je ne suis pas sûr(e)", svr_q5_l4:"Je ne pense pas",
+    svr_q5_it:"Signal fort", svr_q5_ib:"<strong>61,2% croient à une transformation</strong> significative ou modérée. Seulement ~5% sceptiques.",
+    svr_q6_t:"Quand les banques utiliseront-elles activement le quantum?",
+    svr_q6_l1:"Dans 3–5 ans", svr_q6_l2:"Je ne sais pas", svr_q6_l3:"Dans 5–10 ans", svr_q6_l4:"Dans 1–2 ans", svr_q6_l5:"Déjà utilisé",
+    svr_q6_anno:"Aligné avec le consensus experts: adoption bancaire active attendue 2028–2032",
+    svr_q8_t:"Confiance envers IBM comme fournisseur quantum",
+    svr_q8_l1:"Je ne sais pas", svr_q8_l2:"Haute confiance", svr_q8_l3:"Confiance modérée", svr_q8_l4:"Très haute confiance", svr_q8_l5:"Faible confiance",
+    svr_q8_it:"Lecture", svr_q8_ib:"57% ont une confiance haute, très haute ou modérée. Le 31,1% \"je ne sais pas\" = méconnaissance, non défiance. <strong>Capital de confiance à activer.</strong>",
+    svr_q9_t:"Intérêt pour les applications banking du quantum",
+    svr_q9_l1:"Très intéressé(e)", svr_q9_l2:"Assez intéressé(e)", svr_q9_l3:"Neutre", svr_q9_l4:"Peu / pas intéressé(e)",
+    svr_q9_it:"Signal fort", svr_q9_ib:"<strong>67% très ou assez intéressés</strong> malgré un faible niveau de connaissance. L'appétit dépasse l'expertise: opportunité pédagogique majeure.",
+    svr_q10_t:"Sources d'information sur les tech émergentes",
+    svr_q10_l1:"Instagram / TikTok", svr_q10_l2:"YouTube", svr_q10_l3:"Médias traditionnels", svr_q10_l4:"LinkedIn",
+    svr_q10_it:"Rupture générationnelle", svr_q10_ib:"Instagram/TikTok écrase LinkedIn (67,7% vs 15,2%). La comm. quantum IBM est calibrée pour LinkedIn — <strong>invisible pour 67% de cette audience.</strong>",
+    svr_q11_t:"Quel contenu quantum vous serait le plus utile?",
+    svr_q11_l1:"Cas d'usage réels", svr_q11_l2:"Contenu introductif", svr_q11_l3:"Contenu technique", svr_q11_l4:"Avis d'experts", svr_q11_l5:"Non intéressé(e)",
+    svr_q11_it:"Format gagnant", svr_q11_ib:"<strong>Cas d'usage réels dominent (55,3%).</strong> Cette audience veut du concret, du prouvé — HSBC +34%, JPMorgan QKD sont les arguments #1.",
+    svr_f1_t:"Gap notoriété IBM critique", svr_f1_b:"55,3% connaissent le quantum — seulement 27,2% connaissent IBM Quantum. IBM est le leader mondial, invisible auprès de la prochaine génération Finance.", svr_f1_w:"→ Brand awareness sur TikTok / YouTube / Instagram",
+    svr_f2_t:"L'intérêt précède la connaissance", svr_f2_b:"67% intéressés par le quantum banking malgré 84% de niveau nul/basique. La demande de contenu existe — pas sur les bons canaux.", svr_f2_w:"→ Contenu introductif, cas réels, format court et visuel",
+    svr_f3_t:"La confiance IBM est latente", svr_f3_b:"57% font confiance à IBM — mais 31,1% \"je ne sais pas\". Méconnaissance, non défiance. Le capital de confiance est là; il faut l'activer.", svr_f3_w:"→ Preuves business concrètes: HSBC, JPM, $1B cumulé",
+    // Insights
+    in_n1:"Fill rate HSBC bond trading avec IBM Heron 133q", in_n2:"Utilisateurs Qiskit — avantage IBM inégalé",
+    in_n3:"Marché nouveaux produits financiers quantiques 2035", in_n4:"Horizon Q-Day — deadline migration PQC absolue",
+    ki1_t:"Le Q-Day n'est pas hypothétique", ki1_b:"RSA-2048 sera cassable d'ici 2030–2035. Les données chiffrées aujourd'hui sont déjà capturées \"Store Now Decrypt Later\". Coût de non-action: &gt;$100Bn secteur.", ki1_w:"→ Migration PQC = priorité budgétaire #1, non-négociable avant 2030.",
+    ki2_t:"Le quantum fonctionne déjà", ki2_b:"HSBC +34% fill rate. JPMorgan QKD en production. D-Wave +179% revenue 2025. Ce n'est plus de la recherche — c'est de l'exploitation commerciale partielle.", ki2_w:"→ Les early adopters construisent une avance irattrapable sur 3–5 ans.",
+    ki3_t:"IBM domine l'écosystème", ki3_b:"Qiskit: 550K+ utilisateurs, 25K GitHub stars. 250+ membres Quantum Network. 2/4 standards PQC NIST développés par IBM. Avance structurelle.", ki3_w:"→ IBM est le partenaire par défaut pour toute stratégie quantum bancaire sérieuse.",
+    ki4_t:"Gap de communication massif", ki4_b:"Les acteurs quantum parlent aux développeurs, pas aux CFOs/Boards. Aucun calculateur ROI. Aucun protocole de crise actif lors du crash Jan. 2025.", ki4_w:"→ Premier acteur à combler ce gap capture le cycle de vente C-Suite entier.",
+    ki5_t:"L'optimisation portefeuille: killer app", ki5_b:"QAOA réduit NP-Hard à polynomial. BNP Paribas: -40% tracking error. Ratio de Sharpe +15–25%. Premier cas d'usage enterprise déployable maintenant.", ki5_w:"→ Toute banque avec 10K+ actifs a un ROI quantum quantifiable aujourd'hui.",
+    ki6_t:"La souveraineté technologique compte", ki6_b:"BNP → Pasqal (France). Standard Chartered → Fujitsu (Japon). Le quantum est géopolitique: dépendance vs autonomie stratégique.", ki6_w:"→ Les banques européennes doivent définir leur stratégie souveraineté avant 2028.",
+    // Recommendations
+    rp1_pl:"IMMÉDIAT", rp1_t:"Initier la Migration PQC (Cryptographie Post-Quantique)", rp1_b:"Budget $50–500M selon taille. Inventaire données sensibles. Adoption NIST CRYSTALS-Kyber / Dilithium. Délai absolu: avant 2030. Risque de non-action: CATASTROPHIQUE. Partenaire recommandé: IBM Quantum Safe Explorer + Advisor + Remediator (en production).", rp1_h:"0–12 MOIS<br>🔴 CRITIQUE",
+    rp2_pl:"12–24 MOIS", rp2_t:"Déployer 2–3 Pilotes Quantum avec ROI Rapide", rp2_b:"Priorités: Bond trading RFQ (playbook HSBC +34% fill rate), Optimisation portefeuille QAOA, QRN pour trading stochastique. Partenaires: IBM Quantum Network + Quantinuum. Budget pilote: $5–20M/cas d'usage.", rp2_h:"12–24 MOIS<br>🟠 HAUTE",
+    rp3_pl:"2–4 ANS", rp3_t:"Construire le Capital Humain Quantique", rp3_b:"Programme \"Quantum Quants\" interne. Partnerships universitaires (MIT, École Polytechnique, TU Munich). Recrutement 5–10 PhDs quantum. Budget formation: $5–20M. Rejoindre IBM Quantum Network pour accès ressources et formation.", rp3_h:"2–4 ANS<br>🟡 IMPORTANTE",
+    rp4_pl:"3–5 ANS", rp4_t:"Développer une Quantum Strategy Intégrée", rp4_b:"Création d'un Chief Quantum Officer (CQO). Roadmap 5 ans validée Comité Exécutif. Investissement R&D $30–100M/an. Écosystème de startups (Pasqal, Alice &amp; Bob, PQShield selon profil).", rp4_h:"3–5 ANS<br>🔵 STRATÉGIQUE",
+    rp5_pl:"5–10 ANS", rp5_t:"Préparer les Nouveaux Produits Financiers Quantiques", rp5_b:"Structurer les premières offres Q-ESG et dérivés quantum. Construire les datasets propriétaires pour un avantage compétitif durable. Marché potentiel: $450B d'ici 2035.", rp5_h:"5–10 ANS<br>🟣 VISION",
+    rc_tbl_t:"Impact Quantum par Segment · 2030 vs 2040", rc_tbl_s:"Gagnants et perdants de la révolution quantum",
+    // Data Room
+    dc_kpi1:"Documents", dc_kpi1s:"Fichiers sources + analyses intégrées",
+    dc_kpi2:"Répondants enquête", dc_kpi2s:"Google Forms · Avril 2026",
+    dc_kpi3:"Mise à jour", dc_kpi3s:"Données consolidées 2024–2026",
+    dc_kpi4:"Statut", dc_kpi4s:"Usage académique uniquement",
+    dc_bm:"📂 Benchmarks", dc_src:"📂 Sources &amp; Références",
+    dc_doc1_t:"Benchmark Compétitif — Quantum Banking", dc_doc1_m:"8 feuilles · Mars 2026",
+    dc_doc2_t:"Benchmark Communication Digital", dc_doc2_m:"5 feuilles",
+    dc_doc3_t:"Enquête Terrain · 103 Répondants", dc_doc3_m:"Google Forms · Avril 2026 · 11 questions",
   },
   en: {
     nav_navigation:'Navigation', nav_synthese:'Synthesis',
@@ -1776,6 +1887,90 @@ const T = {
     pt_thanks_title:'Thank you for participating!',
     pt_thanks_body:'Your answers have been recorded. They contribute to the analysis of quantum computing perception in finance.',
     pt_restart:'Answer again',
+    // Overview
+    ov_timeline_title:"Quantum Adoption Timeline", ov_timeline_sub:"Maturity by use case · 2024–2040",
+    ov_roadmap_title:"Roadmap 2026–2045", ov_roadmap_sub:"3 horizons · disruptions · new roles",
+    ov_usecase_title:"Use Case Maturity · 2026", ov_usecase_sub:"Real deployment status by domain",
+    sf01n:"01 · Context", sf01t:"What is Quantum?", sf01b:"Superposition, entanglement, interference. Computational revolution that threatens or transforms finance.",
+    sf02n:"02 · Market", sf02t:"Why are banks investing?", sf02b:"5 drivers: computation speed, risk, post-quantum cybersecurity, new products, competitive advantage.",
+    sf03n:"03 · Players", sf03t:"Who's leading the race?", sf03b:"JPMorgan in production. HSBC +34% fill rate. BNP sovereignty. IBM reference partner.",
+    sf04n:"04 · Action", sf04t:"What to do now?", sf04b:"5 priorities: immediate PQC, ROI pilots, human capital, integrated strategy, Q products.",
+    tl_h1_ph:"NISQ + Hybrid", tl_h1_a:"Quantum bond trading", tl_h1_b:"Mandatory PQC migration", tl_h1_c:"QRN in transactions",
+    tl_h2_ph:"Fault-Tolerant", tl_h2_a:"VaR in minutes", tl_h2_b:"Real-time derivatives pricing", tl_h2_c:"Chief Quantum Officer",
+    tl_h3_ph:"Full Quantum", tl_h3_a:"Cryptography overhaul", tl_h3_b:"Native Q markets", tl_h3_c:"Q financial assets",
+    tl_h4_ph:"Quantum Internet", tl_h4_a:"End of stochastic models", tl_h4_b:"AI-Q self-regulated markets", tl_h4_c:"Quantum tokens",
+    // Competitive
+    cp_qscore_t:"Q-Score · Quantum Readiness Ranking", cp_qscore_s:"Global score /10 · Consolidated 2026 data",
+    cp_prof_t:"Profiles of the 10 Leading Banks", cp_prof_s:"Strategy · Maturity · Partners · Investment",
+    cp_radar_t:"Competitive Radar · Top 4 Banks", cp_radar_s:"6 strategic dimensions",
+    cp_map_t:"2×2 Competitive Mapping", cp_map_s:"Technical maturity vs Strategic ambition",
+    pm_lm:"Low maturity", pm_hm:"High maturity", pm_ha:"High ambition", pm_la:"Low ambition",
+    pm_vis:"VISIONARIES", pm_lead:"LEADERS", pm_fol:"FOLLOWERS", pm_exe:"EXECUTORS",
+    cp_swot_t:"Strategic Analysis — Quantum SWOT", cp_swot_s:"Part 6 · Strengths · Limits · Risks · Opportunities",
+    swot_f:"Structural Strengths", swot_l:"Current Limitations (NISQ)", swot_r:"Strategic Risks", swot_o:"Opportunities to Seize",
+    cp_bbp_t:"Build · Buy · Partner Matrix by Bank Profile", cp_bbp_s:"IBM positioned as reference partner · Part 7",
+    // Comms
+    cm_hm_t:"Heat Map · Maturity by Objective × Company", cm_hm_s:"Score /10 · IBM reference ⭐",
+    cm_gap:"Sector gap", cm_sc_t:"Global Communication Score /10", cm_sc_s:"Positioning by player",
+    cm_ibm_t:"IBM · Performance by Objective", cm_ibm_s:"vs Sector average · 8 dimensions", cm_moy:"Avg. Sector",
+    cm_pl_t:"Top 5 Gaps to Fill — IBM 12-Month Action Plan", cm_pl_s:"Prioritized initiatives · Concrete KPIs",
+    // Survey results
+    svr_q1_t:"Have you heard of quantum computing?",
+    svr_q1_yes:"Yes", svr_q1_no:"No", svr_q1_anno:"57 out of 103 respondents know the concept",
+    svr_q3_t:"Have you heard of IBM Quantum?",
+    svr_gap_t:"Critical gap", svr_gap_b:"IBM is the world leader in quantum — but <strong>72.8% of the next Finance generation doesn't know it.</strong> This is the most actionable gap in the entire study.",
+    svr_q2_t:"Level of knowledge of quantum computing",
+    svr_q2_n0:"No knowledge", svr_q2_n1:"Basic level", svr_q2_n2:"Intermediate level", svr_q2_n3:"Advanced level",
+    svr_q2_it:"Strategic implication", svr_q2_ib:"84.4% have zero or basic knowledge — even in a Finance/Business panel. IBM must prioritize market education before commercial conversion. <strong>Introductory content on real use cases is the absolute priority.</strong>",
+    svr_q4_t:"How do you perceive quantum computing?",
+    svr_q4_l1:"Too early / mostly theoretical", svr_q4_l2:"Emerging, first real cases", svr_q4_l3:"Already useful for industry", svr_q4_l4:"Don't know",
+    svr_q4_anno:"46.6% see quantum as already emerging with real use cases",
+    svr_q5_t:"Will quantum transform banking?",
+    svr_q5_l1:"Yes, significantly", svr_q5_l2:"Yes, moderately", svr_q5_l3:"I'm not sure", svr_q5_l4:"I don't think so",
+    svr_q5_it:"Strong signal", svr_q5_ib:"<strong>61.2% believe in a transformation</strong> significant or moderate. Only ~5% skeptical.",
+    svr_q6_t:"When will banks actively use quantum?",
+    svr_q6_l1:"Within 3–5 years", svr_q6_l2:"I don't know", svr_q6_l3:"Within 5–10 years", svr_q6_l4:"Within 1–2 years", svr_q6_l5:"Already in use",
+    svr_q6_anno:"Aligned with expert consensus: active banking adoption expected 2028–2032",
+    svr_q8_t:"Trust in IBM as a quantum provider",
+    svr_q8_l1:"I don't know", svr_q8_l2:"High trust", svr_q8_l3:"Moderate trust", svr_q8_l4:"Very high trust", svr_q8_l5:"Low trust",
+    svr_q8_it:"Reading", svr_q8_ib:"57% have high, very high or moderate trust. The 31.1% \"don't know\" = ignorance, not distrust. <strong>Trust capital to activate.</strong>",
+    svr_q9_t:"Interest in quantum banking applications",
+    svr_q9_l1:"Very interested", svr_q9_l2:"Fairly interested", svr_q9_l3:"Neutral", svr_q9_l4:"Little / not interested",
+    svr_q9_it:"Strong signal", svr_q9_ib:"<strong>67% very or fairly interested</strong> despite a low level of knowledge. Appetite exceeds expertise: major pedagogical opportunity.",
+    svr_q10_t:"Information sources on emerging technologies",
+    svr_q10_l1:"Instagram / TikTok", svr_q10_l2:"YouTube", svr_q10_l3:"Traditional media", svr_q10_l4:"LinkedIn",
+    svr_q10_it:"Generational gap", svr_q10_ib:"Instagram/TikTok crushes LinkedIn (67.7% vs 15.2%). IBM's quantum communication is calibrated for LinkedIn — <strong>invisible to 67% of this audience.</strong>",
+    svr_q11_t:"What quantum content would be most useful to you?",
+    svr_q11_l1:"Real use cases", svr_q11_l2:"Introductory content", svr_q11_l3:"Technical content", svr_q11_l4:"Expert opinions", svr_q11_l5:"Not interested",
+    svr_q11_it:"Winning format", svr_q11_ib:"<strong>Real use cases dominate (55.3%).</strong> This audience wants concrete, proven content — HSBC +34%, JPMorgan QKD are the #1 arguments.",
+    svr_f1_t:"Critical IBM awareness gap", svr_f1_b:"55.3% know quantum — only 27.2% know IBM Quantum. IBM is the world leader, invisible to the next Finance generation.", svr_f1_w:"→ Brand awareness on TikTok / YouTube / Instagram",
+    svr_f2_t:"Interest precedes knowledge", svr_f2_b:"67% interested in quantum banking despite 84% having zero/basic level. Content demand exists — not on the right channels.", svr_f2_w:"→ Introductory content, real use cases, short visual format",
+    svr_f3_t:"IBM trust is latent", svr_f3_b:"57% trust IBM — but 31.1% \"don't know\". Ignorance, not distrust. The trust capital is there; it needs to be activated.", svr_f3_w:"→ Concrete business proof: HSBC, JPM, $1B cumulated",
+    // Insights
+    in_n1:"Fill rate HSBC bond trading with IBM Heron 133q", in_n2:"Qiskit users — unmatched IBM advantage",
+    in_n3:"New quantum financial products market 2035", in_n4:"Q-Day horizon — absolute PQC migration deadline",
+    ki1_t:"Q-Day is not hypothetical", ki1_b:"RSA-2048 will be breakable by 2030–2035. Encrypted data today is already captured \"Store Now Decrypt Later\". Cost of inaction: &gt;$100Bn sector.", ki1_w:"→ PQC migration = budget priority #1, non-negotiable before 2030.",
+    ki2_t:"Quantum already works", ki2_b:"HSBC +34% fill rate. JPMorgan QKD in production. D-Wave +179% revenue 2025. This is no longer research — it's partial commercial exploitation.", ki2_w:"→ Early adopters are building an irreversible lead over 3–5 years.",
+    ki3_t:"IBM dominates the ecosystem", ki3_b:"Qiskit: 550K+ users, 25K GitHub stars. 250+ Quantum Network members. 2/4 PQC NIST standards developed by IBM. Structural lead.", ki3_w:"→ IBM is the default partner for any serious quantum banking strategy.",
+    ki4_t:"Massive communication gap", ki4_b:"Quantum players talk to developers, not CFOs/Boards. No ROI calculator. No active crisis protocol during the Jan. 2025 crash.", ki4_w:"→ First actor to fill this gap captures the entire C-Suite sales cycle.",
+    ki5_t:"Portfolio optimization: killer app", ki5_b:"QAOA reduces NP-Hard to polynomial. BNP Paribas: -40% tracking error. Sharpe ratio +15–25%. First deployable enterprise use case now.", ki5_w:"→ Any bank with 10K+ assets has a quantifiable quantum ROI today.",
+    ki6_t:"Technological sovereignty matters", ki6_b:"BNP → Pasqal (France). Standard Chartered → Fujitsu (Japan). Quantum is geopolitical: dependency vs strategic autonomy.", ki6_w:"→ European banks must define their sovereignty strategy before 2028.",
+    // Recommendations
+    rp1_pl:"IMMEDIATE", rp1_t:"Initiate PQC Migration (Post-Quantum Cryptography)", rp1_b:"Budget $50–500M depending on size. Inventory of sensitive data. Adoption of NIST CRYSTALS-Kyber / Dilithium. Absolute deadline: before 2030. Non-action risk: CATASTROPHIC. Recommended partner: IBM Quantum Safe Explorer + Advisor + Remediator (in production).", rp1_h:"0–12 MONTHS<br>🔴 CRITICAL",
+    rp2_pl:"12–24 MONTHS", rp2_t:"Deploy 2–3 Quantum Pilots with Fast ROI", rp2_b:"Priorities: Bond trading RFQ (HSBC +34% fill rate playbook), QAOA portfolio optimization, QRN for stochastic trading. Partners: IBM Quantum Network + Quantinuum. Pilot budget: $5–20M/use case.", rp2_h:"12–24 MONTHS<br>🟠 HIGH",
+    rp3_pl:"2–4 YEARS", rp3_t:"Build Quantum Human Capital", rp3_b:"Internal \"Quantum Quants\" program. University partnerships (MIT, École Polytechnique, TU Munich). Recruitment of 5–10 quantum PhDs. Training budget: $5–20M. Join IBM Quantum Network for access to resources and training.", rp3_h:"2–4 YEARS<br>🟡 IMPORTANT",
+    rp4_pl:"3–5 YEARS", rp4_t:"Develop an Integrated Quantum Strategy", rp4_b:"Creation of a Chief Quantum Officer (CQO). 5-year roadmap validated by Executive Committee. R&D investment $30–100M/year. Startup ecosystem (Pasqal, Alice &amp; Bob, PQShield depending on profile).", rp4_h:"3–5 YEARS<br>🔵 STRATEGIC",
+    rp5_pl:"5–10 YEARS", rp5_t:"Prepare New Quantum Financial Products", rp5_b:"Structure first Q-ESG offerings and quantum derivatives. Build proprietary datasets for lasting competitive advantage. Potential market: $450B by 2035.", rp5_h:"5–10 YEARS<br>🟣 VISION",
+    rc_tbl_t:"Quantum Impact by Segment · 2030 vs 2040", rc_tbl_s:"Winners and losers of the quantum revolution",
+    // Data Room
+    dc_kpi1:"Documents", dc_kpi1s:"Source files + integrated analyses",
+    dc_kpi2:"Survey respondents", dc_kpi2s:"Google Forms · April 2026",
+    dc_kpi3:"Last update", dc_kpi3s:"Consolidated data 2024–2026",
+    dc_kpi4:"Status", dc_kpi4s:"Academic use only",
+    dc_bm:"📂 Benchmarks", dc_src:"📂 Sources &amp; References",
+    dc_doc1_t:"Competitive Benchmark — Quantum Banking", dc_doc1_m:"8 sheets · March 2026",
+    dc_doc2_t:"Digital Communication Benchmark", dc_doc2_m:"5 sheets",
+    dc_doc3_t:"Field Survey · 103 Respondents", dc_doc3_m:"Google Forms · April 2026 · 11 questions",
   },
   es: {
     nav_navigation:'Navegación', nav_synthese:'Síntesis',
@@ -1825,6 +2020,90 @@ const T = {
     pt_thanks_title:'¡Gracias por tu participación!',
     pt_thanks_body:'Tus respuestas han sido registradas. Contribuyen al análisis de la percepción de la computación cuántica en las finanzas.',
     pt_restart:'Responder de nuevo',
+    // Overview
+    ov_timeline_title:"Calendario de Adopción Quantum", ov_timeline_sub:"Madurez por caso de uso · 2024–2040",
+    ov_roadmap_title:"Hoja de Ruta 2026–2045", ov_roadmap_sub:"3 horizontes · disrupciones · nuevos roles",
+    ov_usecase_title:"Madurez de Casos de Uso · 2026", ov_usecase_sub:"Estado de despliegue real por dominio",
+    sf01n:"01 · Contexto", sf01t:"¿Qué es el Quantum?", sf01b:"Superposición, entrelazamiento, interferencia. Revolución computacional que amenaza o transforma las finanzas.",
+    sf02n:"02 · Mercado", sf02t:"¿Por qué invierten los bancos?", sf02b:"5 motores: velocidad de cálculo, riesgo, ciberseguridad post-quantum, nuevos productos, ventaja competitiva.",
+    sf03n:"03 · Actores", sf03t:"¿Quién lidera la carrera?", sf03b:"JPMorgan en producción. HSBC +34% fill rate. BNP soberanía. IBM socio de referencia.",
+    sf04n:"04 · Acción", sf04t:"¿Qué hacer ahora?", sf04b:"5 prioridades: PQC inmediato, pilotos ROI, capital humano, estrategia integrada, productos Q.",
+    tl_h1_ph:"NISQ + Híbrido", tl_h1_a:"Trading de bonos quantum", tl_h1_b:"Migración PQC obligatoria", tl_h1_c:"QRN en transacciones",
+    tl_h2_ph:"Tolerante a Fallos", tl_h2_a:"VaR en minutos", tl_h2_b:"Pricing de derivados en tiempo real", tl_h2_c:"Chief Quantum Officer",
+    tl_h3_ph:"Full Quantum", tl_h3_a:"Refundación criptografía", tl_h3_b:"Mercados Q nativos", tl_h3_c:"Activos financieros Q",
+    tl_h4_ph:"Quantum Internet", tl_h4_a:"Fin modelos estocásticos", tl_h4_b:"Mercados autorregulados IA-Q", tl_h4_c:"Tokens cuánticos",
+    // Competitive
+    cp_qscore_t:"Q-Score · Ranking Quantum Readiness", cp_qscore_s:"Puntuación global /10 · Datos 2026 consolidados",
+    cp_prof_t:"Perfiles de los 10 Bancos Líderes", cp_prof_s:"Estrategia · Madurez · Socios · Inversión",
+    cp_radar_t:"Radar Competitivo · Top 4 Bancos", cp_radar_s:"6 dimensiones estratégicas",
+    cp_map_t:"Mapa Competitivo 2×2", cp_map_s:"Madurez técnica vs Ambición estratégica",
+    pm_lm:"Baja madurez", pm_hm:"Alta madurez", pm_ha:"Alta ambición", pm_la:"Baja ambición",
+    pm_vis:"VISIONARIOS", pm_lead:"LÍDERES", pm_fol:"SEGUIDORES", pm_exe:"EJECUTANTES",
+    cp_swot_t:"Análisis Estratégico — SWOT Quantum", cp_swot_s:"Parte 6 · Fortalezas · Límites · Riesgos · Oportunidades",
+    swot_f:"Fortalezas estructurales", swot_l:"Limitaciones actuales (NISQ)", swot_r:"Riesgos estratégicos", swot_o:"Oportunidades a aprovechar",
+    cp_bbp_t:"Matriz Build · Buy · Partner por Perfil de Banco", cp_bbp_s:"IBM posicionado como socio de referencia · Parte 7",
+    // Comms
+    cm_hm_t:"Mapa de Calor · Madurez por Objetivo × Empresa", cm_hm_s:"Puntuación /10 · IBM referencia ⭐",
+    cm_gap:"Brecha sectorial", cm_sc_t:"Puntuación de Comunicación Global /10", cm_sc_s:"Posicionamiento por actor",
+    cm_ibm_t:"IBM · Rendimiento por Objetivo", cm_ibm_s:"vs Promedio sectorial · 8 dimensiones", cm_moy:"Prom. Sector",
+    cm_pl_t:"Top 5 Brechas a Cerrar — Plan de Acción IBM 12 meses", cm_pl_s:"Iniciativas priorizadas · KPIs concretos",
+    // Survey results
+    svr_q1_t:"¿Has escuchado hablar de la computación cuántica?",
+    svr_q1_yes:"Sí", svr_q1_no:"No", svr_q1_anno:"57 de 103 encuestados conocen el concepto",
+    svr_q3_t:"¿Has escuchado hablar de IBM Quantum?",
+    svr_gap_t:"Brecha crítica", svr_gap_b:"IBM es el líder mundial en quantum — pero <strong>el 72,8% de la próxima generación de Finanzas no lo sabe.</strong> Es la brecha más accionable de todo el estudio.",
+    svr_q2_t:"Nivel de conocimiento de la computación cuántica",
+    svr_q2_n0:"Ningún conocimiento", svr_q2_n1:"Nivel básico", svr_q2_n2:"Nivel intermedio", svr_q2_n3:"Nivel avanzado",
+    svr_q2_it:"Implicación estratégica", svr_q2_ib:"El 84,4% tiene conocimiento nulo o básico — incluso en un panel de Finanzas/Negocios. IBM debe priorizar la educación del mercado antes de la conversión comercial. <strong>El contenido introductorio sobre casos reales es la prioridad absoluta.</strong>",
+    svr_q4_t:"¿Cómo percibes la computación cuántica?",
+    svr_q4_l1:"Demasiado pronto / teórico", svr_q4_l2:"Emergente, primeros casos reales", svr_q4_l3:"Ya útil para la industria", svr_q4_l4:"No lo sé",
+    svr_q4_anno:"El 46,6% ve el quantum como ya emergente con casos reales",
+    svr_q5_t:"¿El quantum va a transformar la banca?",
+    svr_q5_l1:"Sí, significativamente", svr_q5_l2:"Sí, moderadamente", svr_q5_l3:"No estoy seguro/a", svr_q5_l4:"No lo creo",
+    svr_q5_it:"Señal fuerte", svr_q5_ib:"<strong>El 61,2% cree en una transformación</strong> significativa o moderada. Solo ~5% escépticos.",
+    svr_q6_t:"¿Cuándo utilizarán activamente el quantum los bancos?",
+    svr_q6_l1:"En 3–5 años", svr_q6_l2:"No lo sé", svr_q6_l3:"En 5–10 años", svr_q6_l4:"En 1–2 años", svr_q6_l5:"Ya utilizado",
+    svr_q6_anno:"Alineado con el consenso de expertos: adopción bancaria activa esperada 2028–2032",
+    svr_q8_t:"Confianza en IBM como proveedor quantum",
+    svr_q8_l1:"No lo sé", svr_q8_l2:"Alta confianza", svr_q8_l3:"Confianza moderada", svr_q8_l4:"Muy alta confianza", svr_q8_l5:"Baja confianza",
+    svr_q8_it:"Lectura", svr_q8_ib:"El 57% tiene confianza alta, muy alta o moderada. El 31,1% 'no lo sé' = desconocimiento, no desconfianza. <strong>Capital de confianza a activar.</strong>",
+    svr_q9_t:"Interés por las aplicaciones bancarias del quantum",
+    svr_q9_l1:"Muy interesado/a", svr_q9_l2:"Bastante interesado/a", svr_q9_l3:"Neutral", svr_q9_l4:"Poco / nada interesado/a",
+    svr_q9_it:"Señal fuerte", svr_q9_ib:"<strong>67% muy o bastante interesados</strong> a pesar de un bajo nivel de conocimiento. El apetito supera la experiencia: gran oportunidad pedagógica.",
+    svr_q10_t:"Fuentes de información sobre tecnologías emergentes",
+    svr_q10_l1:"Instagram / TikTok", svr_q10_l2:"YouTube", svr_q10_l3:"Medios tradicionales", svr_q10_l4:"LinkedIn",
+    svr_q10_it:"Ruptura generacional", svr_q10_ib:"Instagram/TikTok aplasta a LinkedIn (67,7% vs 15,2%). La comunicación quantum de IBM está calibrada para LinkedIn — <strong>invisible para el 67% de esta audiencia.</strong>",
+    svr_q11_t:"¿Qué contenido quantum te sería más útil?",
+    svr_q11_l1:"Casos de uso reales", svr_q11_l2:"Contenido introductorio", svr_q11_l3:"Contenido técnico", svr_q11_l4:"Opiniones de expertos", svr_q11_l5:"No me interesa",
+    svr_q11_it:"Formato ganador", svr_q11_ib:"<strong>Los casos de uso reales dominan (55,3%).</strong> Esta audiencia quiere contenido concreto y probado — HSBC +34%, JPMorgan QKD son los argumentos #1.",
+    svr_f1_t:"Brecha crítica de notoriedad IBM", svr_f1_b:"El 55,3% conoce el quantum — solo el 27,2% conoce IBM Quantum. IBM es el líder mundial, invisible para la próxima generación de Finanzas.", svr_f1_w:"→ Brand awareness en TikTok / YouTube / Instagram",
+    svr_f2_t:"El interés precede al conocimiento", svr_f2_b:"67% interesados en el quantum banking a pesar del 84% con nivel nulo/básico. La demanda de contenido existe — no en los canales correctos.", svr_f2_w:"→ Contenido introductorio, casos reales, formato corto y visual",
+    svr_f3_t:"La confianza en IBM es latente", svr_f3_b:"El 57% confía en IBM — pero el 31,1% 'no lo sé'. Desconocimiento, no desconfianza. El capital de confianza está ahí; hay que activarlo.", svr_f3_w:"→ Pruebas de negocio concretas: HSBC, JPM, $1B acumulado",
+    // Insights
+    in_n1:"Fill rate de HSBC bond trading con IBM Heron 133q", in_n2:"Usuarios de Qiskit — ventaja IBM inigualable",
+    in_n3:"Mercado de nuevos productos financieros cuánticos 2035", in_n4:"Horizonte Q-Day — deadline absoluto de migración PQC",
+    ki1_t:"El Q-Day no es hipotético", ki1_b:"RSA-2048 será descifrable antes de 2030–2035. Los datos cifrados hoy ya se capturan con 'Store Now Decrypt Later'. Coste de la inacción: &gt;$100Bn en el sector.", ki1_w:"→ Migración PQC = prioridad presupuestaria #1, no negociable antes de 2030.",
+    ki2_t:"El quantum ya funciona", ki2_b:"HSBC +34% fill rate. JPMorgan QKD en producción. D-Wave +179% de ingresos en 2025. Ya no es investigación — es explotación comercial parcial.", ki2_w:"→ Los early adopters construyen una ventaja irreversible de 3–5 años.",
+    ki3_t:"IBM domina el ecosistema", ki3_b:"Qiskit: 550K+ usuarios, 25K GitHub stars. 250+ miembros de Quantum Network. 2/4 estándares PQC NIST desarrollados por IBM. Ventaja estructural.", ki3_w:"→ IBM es el socio por defecto para cualquier estrategia quantum bancaria seria.",
+    ki4_t:"Brecha de comunicación masiva", ki4_b:"Los actores quantum hablan a desarrolladores, no a CFOs/Boards. Sin calculadora ROI. Sin protocolo de crisis activo durante el crash de enero 2025.", ki4_w:"→ El primer actor que cierre esta brecha captura todo el ciclo de ventas C-Suite.",
+    ki5_t:"Optimización de cartera: killer app", ki5_b:"QAOA reduce NP-Hard a polinomial. BNP Paribas: -40% de tracking error. Ratio de Sharpe +15–25%. Primer caso de uso enterprise desplegable ahora.", ki5_w:"→ Cualquier banco con más de 10K activos tiene un ROI quantum cuantificable hoy.",
+    ki6_t:"La soberanía tecnológica importa", ki6_b:"BNP → Pasqal (Francia). Standard Chartered → Fujitsu (Japón). El quantum es geopolítico: dependencia vs autonomía estratégica.", ki6_w:"→ Los bancos europeos deben definir su estrategia de soberanía antes de 2028.",
+    // Recommendations
+    rp1_pl:"INMEDIATO", rp1_t:"Iniciar la Migración PQC (Criptografía Post-Cuántica)", rp1_b:"Presupuesto $50–500M según tamaño. Inventario de datos sensibles. Adopción de NIST CRYSTALS-Kyber / Dilithium. Plazo absoluto: antes de 2030. Riesgo de inacción: CATASTRÓFICO. Socio recomendado: IBM Quantum Safe Explorer + Advisor + Remediator (en producción).", rp1_h:"0–12 MESES<br>🔴 CRÍTICO",
+    rp2_pl:"12–24 MESES", rp2_t:"Desplegar 2–3 Pilotos Quantum con ROI Rápido", rp2_b:"Prioridades: Bond trading RFQ (playbook HSBC +34% fill rate), Optimización de cartera QAOA, QRN para trading estocástico. Socios: IBM Quantum Network + Quantinuum. Presupuesto piloto: $5–20M/caso de uso.", rp2_h:"12–24 MESES<br>🟠 ALTA",
+    rp3_pl:"2–4 AÑOS", rp3_t:"Construir el Capital Humano Cuántico", rp3_b:"Programa interno 'Quantum Quants'. Asociaciones universitarias (MIT, École Polytechnique, TU Múnich). Contratación de 5–10 PhDs en quantum. Presupuesto de formación: $5–20M. Unirse a IBM Quantum Network para acceder a recursos y formación.", rp3_h:"2–4 AÑOS<br>🟡 IMPORTANTE",
+    rp4_pl:"3–5 AÑOS", rp4_t:"Desarrollar una Estrategia Quantum Integrada", rp4_b:"Creación de un Chief Quantum Officer (CQO). Hoja de ruta de 5 años validada por el Comité Ejecutivo. Inversión en I+D $30–100M/año. Ecosistema de startups (Pasqal, Alice &amp; Bob, PQShield según perfil).", rp4_h:"3–5 AÑOS<br>🔵 ESTRATÉGICO",
+    rp5_pl:"5–10 AÑOS", rp5_t:"Preparar los Nuevos Productos Financieros Cuánticos", rp5_b:"Estructurar las primeras ofertas Q-ESG y derivados quantum. Construir datasets propietarios para una ventaja competitiva duradera. Mercado potencial: $450B para 2035.", rp5_h:"5–10 AÑOS<br>🟣 VISIÓN",
+    rc_tbl_t:"Impacto Quantum por Segmento · 2030 vs 2040", rc_tbl_s:"Ganadores y perdedores de la revolución quantum",
+    // Data Room
+    dc_kpi1:"Documentos", dc_kpi1s:"Archivos fuente + análisis integrados",
+    dc_kpi2:"Encuestados", dc_kpi2s:"Google Forms · Abril 2026",
+    dc_kpi3:"Actualización", dc_kpi3s:"Datos consolidados 2024–2026",
+    dc_kpi4:"Estado", dc_kpi4s:"Uso académico únicamente",
+    dc_bm:"📂 Benchmarks", dc_src:"📂 Fuentes y Referencias",
+    dc_doc1_t:"Benchmark Competitivo — Quantum Banking", dc_doc1_m:"8 hojas · Marzo 2026",
+    dc_doc2_t:"Benchmark de Comunicación Digital", dc_doc2_m:"5 hojas",
+    dc_doc3_t:"Encuesta de Campo · 103 Encuestados", dc_doc3_m:"Google Forms · Abril 2026 · 11 preguntas",
   }
 };
 
@@ -1912,12 +2191,14 @@ function setLang(lang) {
   const crumbMap = { overview:t.nav_overview, competitive:t.nav_competitive, comms:t.nav_comms, survey:t.nav_survey, participate:t.nav_participate, insights:t.nav_insights, recos:t.nav_recos, docs:t.nav_docs };
   if (active) document.getElementById('crumb').innerHTML = crumbMap[active] || active;
   renderQuestionnaire();
+  updateCharts(lang);
 }
 
 function go(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+  const page = document.getElementById('page-' + id);
+  page.classList.add('active');
   document.querySelectorAll('.sb-item').forEach(n => {
     if (n.getAttribute('onclick')?.includes("'"+id+"'")) n.classList.add('active');
   });
@@ -1927,6 +2208,8 @@ function go(id) {
   window.scrollTo(0, 0);
   if (id === 'participate') renderQuestionnaire();
   closeSidebar();
+  // Trigger scroll-reveal animations for the new page
+  animatePage(page);
 }
 
 // ── INIT ──
@@ -1934,19 +2217,43 @@ const _savedCount = localStorage.getItem('qbip_count');
 if (_savedCount) document.getElementById('qpart-count').textContent = _savedCount;
 renderQuestionnaire();
 
-// ── NAVIGATION (legacy crumbs kept for reference) ──
-const crumbs = { overview:'Overview', competitive:'Benchmark Compétitif', comms:'Benchmark Communication', survey:'Enquête · 103 rép.', insights:'Key Insights', recos:'Recommandations', docs:'Data Room' };
-
-function go(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('.sb-item').forEach(n => {
-    if (n.getAttribute('onclick')?.includes("'" + id + "'")) n.classList.add('active');
-  });
-  document.getElementById('crumb').textContent = crumbs[id] || id;
-  window.scrollTo(0, 0);
-}
+// ── CHART LABELS PER LANGUAGE ──
+const CHART_LABELS = {
+  fr: {
+    usecases:['QKD / Sécurité','Bond Trading RFQ','Portfolio Optim.','Stress Testing','Fraude Détection','Monte Carlo Q','Credit Scoring','AML Graphes'],
+    usecases_ds:'Maturité 2026',
+    radar:['Maturité Tech.','Investissement','Partenariats','Production Réelle','Talent Q','Stratégie 2030'],
+    ibmradar:['Brand Awareness','Lead Gen.','Éducation','Partners','Talent','Régulateurs','Dev. Community','Hype Mgmt'],
+    ibm_moy:'Moy. Secteur',
+    s1:['Oui','Non'], s2:['Oui — IBM Quantum','Non'],
+    s3:['Trop tôt','Émergent','Déjà utile','Je ne sais pas'],
+    s4:['Oui, significativement','Oui, modérément','Pas sûr(e)','Je ne pense pas'],
+    s5:['Très intéressé(e)','Assez intéressé(e)','Neutre','Peu/pas intéressé(e)'],
+  },
+  en: {
+    usecases:['QKD / Security','Bond Trading RFQ','Portfolio Optim.','Stress Testing','Fraud Detection','Monte Carlo Q','Credit Scoring','AML Graphs'],
+    usecases_ds:'Maturity 2026',
+    radar:['Tech Maturity','Investment','Partnerships','Real Production','Q Talent','Strategy 2030'],
+    ibmradar:['Brand Awareness','Lead Gen.','Education','Partners','Talent','Regulators','Dev. Community','Hype Mgmt'],
+    ibm_moy:'Avg. Sector',
+    s1:['Yes','No'], s2:['Yes — IBM Quantum','No'],
+    s3:['Too early','Emerging','Already useful','Don\'t know'],
+    s4:['Yes, significantly','Yes, moderately','Not sure','Don\'t think so'],
+    s5:['Very interested','Fairly interested','Neutral','Not interested'],
+  },
+  es: {
+    usecases:['QKD / Seguridad','Bond Trading RFQ','Optim. Portafolio','Pruebas de Estrés','Detección Fraude','Monte Carlo Q','Credit Scoring','Grafos AML'],
+    usecases_ds:'Madurez 2026',
+    radar:['Madurez Tec.','Inversión','Asociaciones','Producción Real','Talento Q','Estrategia 2030'],
+    ibmradar:['Brand Awareness','Lead Gen.','Educación','Partners','Talento','Reguladores','Dev. Community','Hype Mgmt'],
+    ibm_moy:'Prom. Sector',
+    s1:['Sí','No'], s2:['Sí — IBM Quantum','No'],
+    s3:['Demasiado pronto','Emergente','Ya útil','No lo sé'],
+    s4:['Sí, significativamente','Sí, moderadamente','No estoy seguro/a','No lo creo'],
+    s5:['Muy interesado/a','Bastante interesado/a','Neutral','Poco/nada interesado/a'],
+  }
+};
+const charts = {};
 
 // ── CHART DEFAULTS ──
 Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
@@ -1977,7 +2284,7 @@ function donut(id, labels, data, colors) {
 }
 
 // ── OVERVIEW CHARTS ──
-new Chart(document.getElementById('c-timeline'), {
+charts.timeline = new Chart(document.getElementById('c-timeline'), {
   type: 'line',
   data: {
     labels: ['2024','2025','2026','2027','2028','2029','2030','2032','2035','2040'],
@@ -1995,11 +2302,11 @@ new Chart(document.getElementById('c-timeline'), {
   }
 });
 
-new Chart(document.getElementById('c-usecases'), {
+charts.usecases = new Chart(document.getElementById('c-usecases'), {
   type: 'bar',
   data: {
-    labels: ['QKD / Sécurité','Bond Trading RFQ','Portfolio Optim.','Stress Testing','Fraude Détection','Monte Carlo Q','Credit Scoring','AML Graphes'],
-    datasets: [{ label:'Maturité 2026', data:[85,72,65,55,48,35,30,15], backgroundColor: [RD,GR,B5,B4,GD,B3,B2,GY], borderRadius:2 }]
+    labels: CHART_LABELS.fr.usecases,
+    datasets: [{ label:CHART_LABELS.fr.usecases_ds, data:[85,72,65,55,48,35,30,15], backgroundColor: [RD,GR,B5,B4,GD,B3,B2,GY], borderRadius:2 }]
   },
   options: {
     responsive:true, indexAxis:'y',
@@ -2009,7 +2316,7 @@ new Chart(document.getElementById('c-usecases'), {
 });
 
 // ── COMPETITIVE CHARTS ──
-new Chart(document.getElementById('c-qscore'), {
+charts.qscore = new Chart(document.getElementById('c-qscore'), {
   type: 'bar',
   data: {
     labels: ['JPMorgan','HSBC','Goldman','BNP Paribas','Citigroup','Deutsche','Std. Chartered','Wells Fargo','BBVA','Intesa SP.'],
@@ -2022,10 +2329,10 @@ new Chart(document.getElementById('c-qscore'), {
   }
 });
 
-new Chart(document.getElementById('c-radar'), {
+charts.radar = new Chart(document.getElementById('c-radar'), {
   type: 'radar',
   data: {
-    labels: ['Maturité Tech.','Investissement','Partenariats','Production Réelle','Talent Q','Stratégie 2030'],
+    labels: CHART_LABELS.fr.radar,
     datasets: [
       { label:'JPMorgan', data:[9.5,9,9,9.5,8,9.5], borderColor:B9, backgroundColor:'rgba(6,26,58,0.08)', borderWidth:2, pointRadius:3, pointBackgroundColor:B9 },
       { label:'HSBC',     data:[8,7.5,8.5,8,7,8],   borderColor:GR, backgroundColor:'rgba(27,122,69,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GR },
@@ -2041,7 +2348,7 @@ new Chart(document.getElementById('c-radar'), {
 });
 
 // ── COMMS CHARTS ──
-new Chart(document.getElementById('c-comm-scores'), {
+charts.commScores = new Chart(document.getElementById('c-comm-scores'), {
   type: 'bar',
   data: {
     labels: ['IBM','Google AI','Microsoft','Quantinuum','D-Wave','IonQ','Classiq','Pasqal','Rigetti','PsiQuantum'],
@@ -2054,13 +2361,13 @@ new Chart(document.getElementById('c-comm-scores'), {
   }
 });
 
-new Chart(document.getElementById('c-ibm-radar'), {
+charts.ibmRadar = new Chart(document.getElementById('c-ibm-radar'), {
   type: 'radar',
   data: {
-    labels: ['Brand Awareness','Lead Gen.','Éducation','Partners','Talent','Régulateurs','Dev. Community','Hype Mgmt'],
+    labels: CHART_LABELS.fr.ibmradar,
     datasets: [
       { label:'IBM', data:[9,7,10,8,8,9,10,7], borderColor:B5, backgroundColor:'rgba(21,101,192,0.1)', borderWidth:2, pointRadius:3, pointBackgroundColor:B5 },
-      { label:'Moy. Secteur', data:[6.9,6.2,6.7,6.2,7.3,5.4,6.8,5.5], borderColor:GY, backgroundColor:'rgba(148,168,192,0.05)', borderWidth:1.5, borderDash:[4,4], pointRadius:2 }
+      { label:CHART_LABELS.fr.ibm_moy, data:[6.9,6.2,6.7,6.2,7.3,5.4,6.8,5.5], borderColor:GY, backgroundColor:'rgba(148,168,192,0.05)', borderWidth:1.5, borderDash:[4,4], pointRadius:2 }
     ]
   },
   options: {
@@ -2070,11 +2377,80 @@ new Chart(document.getElementById('c-ibm-radar'), {
 });
 
 // ── SURVEY DONUTS ──
-donut('c-s1', ['Oui','Non'], [55.3,44.7], [B5, RD]);
-donut('c-s2', ['Oui — IBM Quantum','Non'], [27.2,72.8], [B5, RD]);
-donut('c-s3', ['Trop tôt','Émergent','Déjà utile','Je ne sais pas'], [8.7,46.6,5.9,38.8], [B5,'#E53935',GD,GY]);
-donut('c-s4', ['Oui, significativement','Oui, modérément','Pas sûr(e)','Je ne pense pas'], [31.1,30.1,34,4.8], [B9,B4,GD,GY]);
-donut('c-s5', ['Très intéressé(e)','Assez intéressé(e)','Neutre','Peu/pas intéressé(e)'], [19.4,47.6,13.6,19.4], [B9,B4,GD,GY]);
+function donutRef(id, labels, data, colors) {
+  return new Chart(document.getElementById(id), {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: WH, borderWidth: 3, hoverOffset: 5 }] },
+    options: { responsive: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } } }, cutout: '60%' }
+  });
+}
+const cl0 = CHART_LABELS.fr;
+charts.s1 = donutRef('c-s1', cl0.s1, [55.3,44.7], [B5, RD]);
+charts.s2 = donutRef('c-s2', cl0.s2, [27.2,72.8], [B5, RD]);
+charts.s3 = donutRef('c-s3', cl0.s3, [8.7,46.6,5.9,38.8], [B5,'#E53935',GD,GY]);
+charts.s4 = donutRef('c-s4', cl0.s4, [31.1,30.1,34,4.8], [B9,B4,GD,GY]);
+charts.s5 = donutRef('c-s5', cl0.s5, [19.4,47.6,13.6,19.4], [B9,B4,GD,GY]);
+
+// ── UPDATE CHART LABELS ON LANGUAGE CHANGE ──
+function updateCharts(lang) {
+  const cl = CHART_LABELS[lang] || CHART_LABELS.fr;
+  if (charts.usecases) {
+    charts.usecases.data.labels = cl.usecases;
+    charts.usecases.data.datasets[0].label = cl.usecases_ds;
+    charts.usecases.update();
+  }
+  if (charts.radar) { charts.radar.data.labels = cl.radar; charts.radar.update(); }
+  if (charts.ibmRadar) {
+    charts.ibmRadar.data.labels = cl.ibmradar;
+    charts.ibmRadar.data.datasets[1].label = cl.ibm_moy;
+    charts.ibmRadar.update();
+  }
+  if (charts.s1) { charts.s1.data.labels = cl.s1; charts.s1.update(); }
+  if (charts.s2) { charts.s2.data.labels = cl.s2; charts.s2.update(); }
+  if (charts.s3) { charts.s3.data.labels = cl.s3; charts.s3.update(); }
+  if (charts.s4) { charts.s4.data.labels = cl.s4; charts.s4.update(); }
+  if (charts.s5) { charts.s5.data.labels = cl.s5; charts.s5.update(); }
+}
+
+// ── SCROLL PROGRESS BAR ──
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', function() {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  scrollBar.style.width = Math.min(pct, 100) + '%';
+}, { passive: true });
+
+// ── INTERSECTION OBSERVER (scroll reveal) ──
+const srObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); srObserver.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+function observePage(page) {
+  page.querySelectorAll('.sr').forEach(el => {
+    el.classList.remove('visible');
+    srObserver.observe(el);
+  });
+}
+
+function animatePage(page) {
+  // Staggered entry for cards, KPIs, etc.
+  const els = page.querySelectorAll('.card, .kpi, .actor-card, .doc-card, .reco, .ki-card, .num-cell, .story-step, .tl-cell, .swot-cell, .bbp-cell');
+  els.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'none';
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        el.style.transition = `opacity 0.38s ease ${i * 0.04}s, transform 0.38s ease ${i * 0.04}s`;
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 10);
+    });
+  });
+  observePage(page);
+}
+
+// ── INIT: animate overview on load ──
+animatePage(document.getElementById('page-overview'));
 </script>
 
 </body>
