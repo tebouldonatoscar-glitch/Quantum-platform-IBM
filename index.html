@@ -2454,7 +2454,14 @@ window.addEventListener('scroll', function() {
 
 // ── INTERSECTION OBSERVER (scroll reveal) ──
 const srObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); srObserver.unobserve(e.target); } });
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Animate any counters inside sr elements (e.g. .num-val in .num-cell.sr)
+      e.target.querySelectorAll('.num-val').forEach(el => animateCounter(el));
+      srObserver.unobserve(e.target);
+    }
+  });
 }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
 function observePage(page) {
@@ -2476,6 +2483,11 @@ function animatePage(page) {
         el.style.transition = `opacity 0.38s ease ${i * 0.04}s, transform 0.38s ease ${i * 0.04}s`;
         el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
+        // Start counters once the element has faded in (after transition duration)
+        const counterDelay = 380 + i * 40;
+        el.querySelectorAll('.kpi-val, .actor-score').forEach(counter => {
+          setTimeout(() => animateCounter(counter), counterDelay);
+        });
       }, 10);
     });
   });
@@ -2484,7 +2496,10 @@ function animatePage(page) {
 
 // ── COUNTER ANIMATION ──
 // Parses values like "$2.5B", "50K", "+34%", "9.5" and counts up from 0.
+// Triggered by animatePage (for .kpi-val / .actor-score) and srObserver (for .num-val).
 function animateCounter(el) {
+  if (el.dataset.counted) return; // prevent double-run
+  el.dataset.counted = '1';
   const raw = el.textContent.trim();
   const match = raw.match(/^([^0-9]*)(\d+\.?\d*)(.*)$/);
   if (!match) return;
@@ -2501,14 +2516,6 @@ function animateCounter(el) {
   }
   requestAnimationFrame(tick);
 }
-
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { animateCounter(e.target); counterObserver.unobserve(e.target); }
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('.kpi-val, .num-val, .actor-score').forEach(el => counterObserver.observe(el));
 
 // ── PROGRESS BAR ANIMATION ──
 // Capture each bar's target width, reset to 0, then animate on scroll.
