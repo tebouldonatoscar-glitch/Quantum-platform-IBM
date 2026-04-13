@@ -319,10 +319,10 @@ body {
   background: var(--white);
   border: 1px solid var(--rule);
   padding: 24px;
-  transition: border-color 0.12s;
+  transition: border-color 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover { border-color: var(--blue-400); }
+.card:hover { border-color: var(--blue-400); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(15,98,254,0.09); }
 
 .card-hd {
   display: flex;
@@ -535,12 +535,13 @@ vertical-align: middle;
   background: var(--white);
   border: 1px solid var(--rule);
   padding: 16px;
-  transition: border-color 0.12s, box-shadow 0.12s;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s ease;
 }
 
 .actor-card:hover {
   border-color: var(--blue-400);
-  box-shadow: 0 2px 12px rgba(15,98,254,0.08);
+  box-shadow: 0 6px 18px rgba(15,98,254,0.10);
+  transform: translateY(-2px);
 }
 
 .actor-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -553,7 +554,7 @@ vertical-align: middle;
 .prog-wrap { margin-top: 6px; }
 .prog-lbl { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-4); margin-bottom: 4px; }
 .prog-track { height: 3px; background: var(--rule-2); }
-.prog-fill { height: 100%; background: linear-gradient(to right, var(--blue-600), var(--blue-400)); }
+.prog-fill { height: 100%; background: linear-gradient(to right, var(--blue-600), var(--blue-400)); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 
 /* ─── POSITIONING MAP ─── */
 .pos-map {
@@ -2480,6 +2481,52 @@ function animatePage(page) {
   });
   observePage(page);
 }
+
+// ── COUNTER ANIMATION ──
+// Parses values like "$2.5B", "50K", "+34%", "9.5" and counts up from 0.
+function animateCounter(el) {
+  const raw = el.textContent.trim();
+  const match = raw.match(/^([^0-9]*)(\d+\.?\d*)(.*)$/);
+  if (!match) return;
+  const [, prefix, numStr, suffix] = match;
+  const target = parseFloat(numStr);
+  const decimals = numStr.includes('.') ? (numStr.split('.')[1]?.length || 1) : 0;
+  const duration = 1600;
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3); // easeOutCubic
+    el.textContent = prefix + (decimals ? (ease * target).toFixed(decimals) : Math.round(ease * target)) + suffix;
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { animateCounter(e.target); counterObserver.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.kpi-val, .num-val, .actor-score').forEach(el => counterObserver.observe(el));
+
+// ── PROGRESS BAR ANIMATION ──
+// Capture each bar's target width, reset to 0, then animate on scroll.
+document.querySelectorAll('.prog-fill').forEach(bar => {
+  bar.dataset.progTarget = bar.style.width;
+  bar.style.width = '0';
+});
+
+const progObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.width = e.target.dataset.progTarget;
+      progObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.prog-fill').forEach(bar => progObserver.observe(bar));
 
 // ── INIT: animate overview on load ──
 animatePage(document.getElementById('page-overview'));
