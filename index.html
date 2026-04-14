@@ -181,8 +181,11 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--white);
-  border-bottom: 1px solid var(--rule);
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(224,224,224,0.7);
+  box-shadow: 0 1px 0 rgba(224,224,224,0.5), 0 4px 16px rgba(15,98,254,0.04);
   display: flex;
   align-items: center;
   justify-content: space-between;
