@@ -169,23 +169,6 @@ body {
   font-size: 10px;
   color: var(--ink-4);
   line-height: 1.65;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.sb-foot-avatar {
-  width: 28px; height: 28px;
-  background: var(--blue-700);
-  color: #fff;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
 }
 
 .sb-foot strong { color: var(--ink-2); font-weight: 600; font-size: 11px; display: block; margin-bottom: 2px; }
@@ -1257,7 +1240,6 @@ canvas { display: block; }
   </nav>
 
   <div class="sb-foot">
-    <div class="sb-foot-avatar">PSL</div>
     <div>
       <strong data-i18n="sb_org">Sciences des Organisations</strong>
       <span data-i18n="sb_school">Paris-Dauphine PSL · Madrid</span><br>
@@ -2672,6 +2654,7 @@ function go(id) {
   document.getElementById('crumb').innerHTML = crumbMap[id] || id;
   window.scrollTo(0, 0);
   if (id === 'participate') renderQuestionnaire();
+  if (id === 'admin') loadAdminDashboard();
   closeSidebar();
   // Trigger scroll-reveal animations for the new page
   animatePage(page);
@@ -3048,13 +3031,6 @@ function loadAdminDashboard() {
     html += '</div>';
   });
   document.getElementById('admin-questions').innerHTML = html;
-}
-
-// Load admin dashboard when page is navigated to
-const _origGo = go;
-function go(id) {
-  _origGo(id);
-  if (id === 'admin') loadAdminDashboard();
 }
 
 // ─── Q-SCORE FILTER ───
