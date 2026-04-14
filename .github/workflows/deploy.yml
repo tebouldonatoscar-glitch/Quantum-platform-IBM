@@ -1,0 +1,76 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ── Validation ──────────────────────────────────────────────────────────────
+  validate:
+    name: Validate HTML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check index.html exists
+        run: |
+          if [ ! -f index.html ]; then
+            echo "❌ index.html not found"
+            exit 1
+          fi
+          echo "✅ index.html found ($(wc -l < index.html) lines)"
+
+      - name: Check for broken script tags
+        run: |
+          OPENS=$(grep -c '<script' index.html)
+          CLOSES=$(grep -c '</script>' index.html)
+          if [ "$OPENS" != "$CLOSES" ]; then
+            echo "❌ Mismatched <script> tags: $OPENS open, $CLOSES close"
+            exit 1
+          fi
+          echo "✅ Script tags balanced ($OPENS pairs)"
+
+      - name: Check Chart.js CDN reference
+        run: |
+          if ! grep -q 'chart.umd.min.js' index.html; then
+            echo "❌ Chart.js CDN reference missing"
+            exit 1
+          fi
+          echo "✅ Chart.js CDN reference found"
+
+  # ── Deploy ──────────────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

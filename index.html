@@ -1059,6 +1059,116 @@ canvas { display: block; }
   transition: width 0.1s linear;
   pointer-events: none;
 }
+
+/* ─── FILTER BAR ─── */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 12px 16px;
+  background: var(--rule-2);
+  border: 1px solid var(--rule);
+  border-bottom: none;
+}
+.filter-lbl {
+  font-size: 9px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--ink-4);
+  align-self: center; margin-right: 6px;
+}
+.filter-btn {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 10px; font-weight: 500;
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  background: var(--white);
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.12s;
+  letter-spacing: 0.3px;
+}
+.filter-btn:hover { border-color: var(--blue-400); color: var(--blue-600); }
+.filter-btn.active { background: var(--blue-700); border-color: var(--blue-700); color: #fff; }
+
+/* ─── SOURCES PAGE ─── */
+.src-category {
+  margin-bottom: 28px;
+}
+.src-cat-title {
+  font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--blue-600);
+  border-bottom: 1px solid var(--blue-200);
+  padding-bottom: 8px; margin-bottom: 14px;
+}
+.src-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.src-item {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--blue-300);
+  padding: 12px 14px;
+}
+.src-item.src-primary { border-left-color: var(--blue-600); }
+.src-item.src-secondary { border-left-color: var(--gold); }
+.src-item.src-market { border-left-color: var(--green); }
+.src-item.src-std { border-left-color: var(--red); }
+.src-title { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.src-meta { font-size: 10px; color: var(--ink-4); margin-bottom: 6px; }
+.src-desc { font-size: 11px; color: var(--ink-2); line-height: 1.5; }
+.src-tag { display:inline-block; font-size:9px; font-weight:600; letter-spacing:0.5px; padding:2px 6px; background:var(--blue-100); color:var(--blue-600); border:1px solid var(--blue-200); margin-top:6px; margin-right:4px; }
+
+/* ─── ADMIN DASHBOARD ─── */
+.admin-header {
+  background: var(--blue-900);
+  color: #fff;
+  padding: 20px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-title { font-family: 'IBM Plex Serif', serif; font-size: 20px; font-weight: 600; }
+.admin-badge { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(255,255,255,0.12); padding: 4px 10px; color: var(--blue-200); }
+.admin-section { margin-bottom: 28px; }
+.admin-section-title {
+  font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--blue-600);
+  border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin-bottom: 14px;
+}
+.admin-stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-bottom: 16px; }
+.admin-stat {
+  background: var(--white); padding: 16px 18px;
+  border-top: 3px solid var(--blue-600);
+}
+.admin-stat-val { font-family: 'IBM Plex Serif', serif; font-size: 28px; font-weight: 700; color: var(--blue-600); line-height: 1; }
+.admin-stat-lbl { font-size: 10px; color: var(--ink-4); margin-top: 4px; }
+.admin-q { background: var(--white); border: 1px solid var(--rule); padding: 16px; margin-bottom: 10px; }
+.admin-q-title { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.admin-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.admin-bar-lbl { font-size: 11px; color: var(--ink-2); width: 220px; flex-shrink: 0; }
+.admin-bar-track { flex: 1; height: 8px; background: var(--rule-2); border: 1px solid var(--rule); border-radius: 1px; overflow: hidden; }
+.admin-bar-fill { height: 100%; background: var(--blue-600); border-radius: 1px; transition: width 0.6s ease; }
+.admin-bar-pct { font-size: 10px; color: var(--ink-3); width: 40px; text-align: right; flex-shrink: 0; }
+.admin-bar-n { font-size: 10px; color: var(--ink-4); width: 50px; flex-shrink: 0; }
+.admin-reset-btn {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 11px; font-weight: 500;
+  padding: 8px 16px; border: 1px solid var(--red);
+  background: var(--white); color: var(--red);
+  cursor: pointer; transition: all 0.12s; margin-top: 8px;
+}
+.admin-reset-btn:hover { background: var(--red); color: #fff; }
+.sb-item.admin-link {
+  border-top: 1px solid var(--rule);
+  margin-top: 4px;
+  color: var(--ink-4);
+  font-size: 11px;
+}
+
+@media (max-width: 768px) {
+  .src-grid { grid-template-columns: 1fr; }
+  .admin-stat-row { grid-template-columns: 1fr 1fr; }
+  .admin-bar-lbl { width: 140px; }
+}
 </style>
 
 </head>
@@ -1087,6 +1197,8 @@ canvas { display: block; }
     <div class="sb-item" onclick="go('insights')"><span class="sb-icon">★</span> <span data-i18n="nav_insights">Key Insights</span></div>
     <div class="sb-item" onclick="go('recos')"><span class="sb-icon">⬡</span> <span data-i18n="nav_recos">Recommandations</span></div>
     <div class="sb-item" onclick="go('docs')"><span class="sb-icon">⊡</span> <span data-i18n="nav_docs">Data Room</span></div>
+    <div class="sb-item" onclick="go('sources')"><span class="sb-icon">◐</span> <span data-i18n="nav_sources">Sources</span></div>
+    <div class="sb-item admin-link" onclick="go('admin')" title="Dashboard Admin"><span class="sb-icon">⚙</span> <span>Admin</span></div>
   </nav>
 
   <div class="sb-foot">
@@ -1230,6 +1342,16 @@ canvas { display: block; }
 
 <div class="card mb16">
   <div class="card-hd"><div><div class="card-title" data-i18n="cp_qscore_t">Q-Score · Classement Quantum Readiness</div><div class="card-sub" data-i18n="cp_qscore_s">Score global /10 · Données 2026 consolidées</div></div><span class="tag tag-blue">SCORECARD</span></div>
+  <div class="filter-bar">
+    <span class="filter-lbl">Région :</span>
+    <button class="filter-btn active" onclick="filterQScore('all','region',this)">Tous</button>
+    <button class="filter-btn" onclick="filterQScore('americas','region',this)">Amériques</button>
+    <button class="filter-btn" onclick="filterQScore('europe','region',this)">Europe</button>
+    <span class="filter-lbl" style="margin-left:12px;">Tier :</span>
+    <button class="filter-btn" onclick="filterQScore('tier1','tier',this)">Tier 1 ≥8.0</button>
+    <button class="filter-btn" onclick="filterQScore('tier2','tier',this)">Tier 2 6–8</button>
+    <button class="filter-btn" onclick="filterQScore('tier3','tier',this)">Tier 3 &lt;6</button>
+  </div>
   <canvas id="c-qscore" height="200"></canvas>
 </div>
 
@@ -1250,6 +1372,13 @@ canvas { display: block; }
 <div class="g2 mb16">
   <div class="card">
     <div class="card-hd"><div><div class="card-title" data-i18n="cp_radar_t">Radar Compétitif · Top 4 Banques</div><div class="card-sub" data-i18n="cp_radar_s">6 dimensions stratégiques</div></div><span class="tag tag-blue">RADAR</span></div>
+    <div class="filter-bar">
+      <span class="filter-lbl">Banques :</span>
+      <button class="filter-btn active" data-bank="jpmorgan" onclick="toggleRadarBank('jpmorgan',this)" style="border-left:3px solid #1565C0">JPMorgan</button>
+      <button class="filter-btn active" data-bank="hsbc" onclick="toggleRadarBank('hsbc',this)" style="border-left:3px solid #198038">HSBC</button>
+      <button class="filter-btn active" data-bank="goldman" onclick="toggleRadarBank('goldman',this)" style="border-left:3px solid #A0720A">Goldman</button>
+      <button class="filter-btn active" data-bank="bnp" onclick="toggleRadarBank('bnp',this)" style="border-left:3px solid #C0392B">BNP</button>
+    </div>
     <canvas id="c-radar" height="240"></canvas>
     <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;">
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-2)"><div style="width:8px;height:8px;border-radius:50%;background:#1565C0"></div>JPMorgan</div>
@@ -1656,6 +1785,272 @@ canvas { display: block; }
   </div>
 </div>
 
+  </div>
+
+  <!-- ═══ SOURCES ═══ -->
+
+  <div class="page" id="page-sources">
+    <div class="ph">
+      <div class="ph-eye">Sources &amp; Références</div>
+      <div class="ph-title">Bibliographie<br>de la Plateforme</div>
+      <div class="ph-body">Toutes les sources primaires et secondaires utilisées dans cette analyse · Données 2024–2026 · Usage académique</div>
+    </div>
+
+    <div class="kpi-row mb24">
+      <div class="kpi"><div class="kpi-lbl">Sources primaires</div><div class="kpi-val">12</div><div class="kpi-sub">Données directes institutions</div></div>
+      <div class="kpi accent-green"><div class="kpi-lbl">Publications académiques</div><div class="kpi-val">8</div><div class="kpi-sub">Revues &amp; conférences scientifiques</div></div>
+      <div class="kpi accent-gold"><div class="kpi-lbl">Rapports marché</div><div class="kpi-val">7</div><div class="kpi-sub">McKinsey, BCG, analystes</div></div>
+      <div class="kpi accent-red"><div class="kpi-lbl">Standards réglementaires</div><div class="kpi-val">4</div><div class="kpi-sub">NIST, EuroQCI, DARPA</div></div>
+    </div>
+
+    <!-- Institutions & Acteurs quantiques -->
+    <div class="card mb16 sr">
+      <div class="card-hd"><div><div class="card-title">Institutions &amp; Acteurs Quantiques</div><div class="card-sub">Sources directes — données officielles</div></div><span class="tag tag-blue">PRIMAIRES</span></div>
+      <div class="src-grid">
+        <div class="src-item src-primary">
+          <div class="src-title">IBM Quantum Network</div>
+          <div class="src-meta">IBM Research · 2024–2026</div>
+          <div class="src-desc">250+ membres, roadmap matérielle (Osprey 433q, Condor 1121q, Heron 133q), Qiskit 550K+ utilisateurs, 25K GitHub stars. Standards PQC NIST : CRYSTALS-Kyber et CRYSTALS-Dilithium co-développés par IBM.</div>
+          <span class="src-tag">Q-SCORE 9.0/10</span><span class="src-tag">ECOSYSTÈME</span>
+        </div>
+        <div class="src-item src-primary">
+          <div class="src-title">HSBC Quantum Results 2024</div>
+          <div class="src-meta">HSBC Global Banking · IBM Heron 133q</div>
+          <div class="src-desc">Bond trading RFQ avec IBM Heron 133q : +34% de fill rate mesuré en production. Premier cas bancaire documenté d'avantage quantique réel sur un marché financier actif.</div>
+          <span class="src-tag">+34% FILL RATE</span><span class="src-tag">PRODUCTION</span>
+        </div>
+        <div class="src-item src-primary">
+          <div class="src-title">JPMorgan Chase Annual Report 2025</div>
+          <div class="src-meta">JPMorgan Research · Communications officielles</div>
+          <div class="src-desc">QKD (Quantum Key Distribution) déployé en production réseau. Investissement $100M+/an en quantum computing. Programme interne 200+ chercheurs quantum. Score Q-Readiness : 9.5/10.</div>
+          <span class="src-tag">QKD PROD.</span><span class="src-tag">$100M+/AN</span>
+        </div>
+        <div class="src-item src-primary">
+          <div class="src-title">IonQ Financial Results 2025</div>
+          <div class="src-meta">IonQ Inc. · Nasdaq: IONQ</div>
+          <div class="src-desc">Revenue $130M en 2025. Partenariats AWS Braket et Azure Quantum. Technologie piégeage ionique — leader en fidélité de qubits. Forte présence Goldman Sachs et services financiers.</div>
+          <span class="src-tag">$130M REVENUE</span><span class="src-tag">ION TRAP</span>
+        </div>
+        <div class="src-item src-primary">
+          <div class="src-title">D-Wave Systems Revenue 2025</div>
+          <div class="src-meta">D-Wave Quantum Inc. · NYSE: QBTS</div>
+          <div class="src-desc">+179% de croissance de revenus en 2025. Spécialiste optimisation combinatoire (recuit quantique). Applications logistique et finance. Premier fournisseur commercial quantum en 2007.</div>
+          <span class="src-tag">+179% REVENUE</span><span class="src-tag">ANNEALING</span>
+        </div>
+        <div class="src-item src-primary">
+          <div class="src-title">BNP Paribas Quantum Portfolio</div>
+          <div class="src-meta">BNP Paribas CIB · Pasqal · Alice &amp; Bob</div>
+          <div class="src-desc">QAOA appliqué à la gestion de portefeuille : -40% de tracking error, Sharpe ratio +15–25%. Partenariats Pasqal (France) et Alice &amp; Bob. Stratégie souveraineté quantique européenne.</div>
+          <span class="src-tag">-40% TRACKING ERR.</span><span class="src-tag">QAOA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rapports stratégiques & marché -->
+    <div class="card mb16 sr">
+      <div class="card-hd"><div><div class="card-title">Rapports Stratégiques &amp; Analyses Marché</div><div class="card-sub">Cabinets conseil, analystes, think tanks</div></div><span class="tag tag-gold">MARCHÉ</span></div>
+      <div class="src-grid">
+        <div class="src-item src-market">
+          <div class="src-title">McKinsey Global Institute — Quantum Technology</div>
+          <div class="src-meta">McKinsey &amp; Company · 2024</div>
+          <div class="src-desc">Projection marché quantum $1T+ d'ici 2035 dans la finance. Analyse des secteurs à valeur ajoutée : optimisation, simulation, cryptographie. Identification des cas d'usage à ROI rapide.</div>
+          <span class="src-tag">$1T MARCHÉ 2035</span>
+        </div>
+        <div class="src-item src-market">
+          <div class="src-title">BCG — Quantum Computing in Financial Services</div>
+          <div class="src-meta">Boston Consulting Group · 2025</div>
+          <div class="src-desc">Investissement secteur bancaire $2.5B en 2025 (+68% vs 2023). Analyse build/buy/partner selon profil institutionnel. Benchmark compétitif 10 acteurs mondiaux.</div>
+          <span class="src-tag">$2.5B INVEST.</span><span class="src-tag">+68% VS 2023</span>
+        </div>
+        <div class="src-item src-market">
+          <div class="src-title">Quantum Computing Report</div>
+          <div class="src-meta">Doug Finke · Newsletter trimestrielle · 2026</div>
+          <div class="src-desc">Veille exhaustive des annonces hardware, funding rounds, partenariats commerciaux. Données IonQ, D-Wave, Rigetti, PsiQuantum. Référence de l'industrie pour les métriques de maturité.</div>
+          <span class="src-tag">VEILLE SECTOR.</span>
+        </div>
+        <div class="src-item src-market">
+          <div class="src-title">The Quantum Insider — Market Data 2026</div>
+          <div class="src-meta">The Quantum Insider · Yearly report</div>
+          <div class="src-desc">Q-Score methodology, classements des acteurs bancaires, adoption timelines par use case. Source principale pour le scoring benchmark de cette plateforme.</div>
+          <span class="src-tag">Q-SCORE METHODO.</span>
+        </div>
+        <div class="src-item src-market">
+          <div class="src-title">Constellation Research — Quantum in Banking</div>
+          <div class="src-meta">Constellation Research · 2025</div>
+          <div class="src-desc">Analyse de la communication digitale quantum B2B : 10 acteurs × 8 objectifs. Benchmark brand awareness, lead generation, éducation marché. Méthodologie heat map adoptée dans cette étude.</div>
+          <span class="src-tag">COMM. BENCHMARK</span>
+        </div>
+        <div class="src-item src-market">
+          <div class="src-title">Goldman Sachs QAE Research</div>
+          <div class="src-meta">Goldman Sachs Global Investment Research · AWS Braket</div>
+          <div class="src-desc">Quantum Amplitude Estimation pour le pricing d'options. Collaboration IonQ et AWS Braket. Speedup quadratique Monte Carlo projeté pour 2027–2030. Budget R&D quantum estimé $50M+/an.</div>
+          <span class="src-tag">QAE RESEARCH</span><span class="src-tag">MONTE CARLO</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Publications scientifiques -->
+    <div class="card mb16 sr">
+      <div class="card-hd"><div><div class="card-title">Publications Scientifiques &amp; Académiques</div><div class="card-sub">Revues à comité de lecture · Conférences</div></div><span class="tag tag-blue">ACADÉMIQUE</span></div>
+      <div class="src-grid">
+        <div class="src-item">
+          <div class="src-title">Nature — Quantum Supremacy (Google, 2019)</div>
+          <div class="src-meta">Nature 574, 505–510 · Oct. 2019 · Arute et al.</div>
+          <div class="src-desc">Premier démonstration de suprématie quantique : 200 secondes vs 10 000 ans classique. Référence fondatrice du champ. Point de départ de la course hardware entre IBM, Google, Quantinuum.</div>
+          <span class="src-tag">NATURE</span><span class="src-tag">SUPREMACY</span>
+        </div>
+        <div class="src-item">
+          <div class="src-title">IEEE Quantum Week — Financial Applications</div>
+          <div class="src-meta">IEEE QCE · 2023–2025 · Proceedings</div>
+          <div class="src-desc">Actes de conférence sur les applications quantiques en finance : QAOA portfolio, Quantum Monte Carlo, QML fraud detection. Données de maturité par cas d'usage utilisées dans le radar Overview.</div>
+          <span class="src-tag">IEEE</span><span class="src-tag">CONFÉRENCE</span>
+        </div>
+        <div class="src-item">
+          <div class="src-title">Quantum Amplitude Estimation — Brassard et al.</div>
+          <div class="src-meta">arXiv:quant-ph/0005055 · Algorithme QAE</div>
+          <div class="src-desc">Algorithme fondateur du speedup quadratique Monte Carlo. Base théorique pour Goldman Sachs, JPMorgan et BNP Paribas dans le pricing de dérivés et le calcul de VaR quantique.</div>
+          <span class="src-tag">ARXIV</span><span class="src-tag">ALGORITHME</span>
+        </div>
+        <div class="src-item">
+          <div class="src-title">QAOA — Farhi, Goldstone, Gutmann (2014)</div>
+          <div class="src-meta">arXiv:1411.4028 · Quantum Approximate Optimization</div>
+          <div class="src-desc">Algorithme d'optimisation quantique approchée. Base théorique de l'optimisation de portefeuille BNP Paribas (-40% tracking error). Applicable aux problèmes NP-difficiles en finance.</div>
+          <span class="src-tag">ARXIV</span><span class="src-tag">OPTIMISATION</span>
+        </div>
+        <div class="src-item">
+          <div class="src-title">Quantum Key Distribution — BB84 Protocol</div>
+          <div class="src-meta">Bennett &amp; Brassard · IEEE 1984 · Production JPMorgan</div>
+          <div class="src-desc">Protocole fondateur de la cryptographie quantique. Implémenté par JPMorgan Chase en production réseau. Base de la sécurisation quantique des transactions financières.</div>
+          <span class="src-tag">QKD</span><span class="src-tag">CRYPTOGRAPHIE</span>
+        </div>
+        <div class="src-item">
+          <div class="src-title">Quantum Machine Learning — Biamonte et al.</div>
+          <div class="src-meta">Nature 549, 195–202 · Sept. 2017</div>
+          <div class="src-desc">Revue fondatrice du Quantum Machine Learning. Applications détection fraude, credit scoring, AML. Horizon de maturité 2030–2035 pour les applications bancaires avancées.</div>
+          <span class="src-tag">NATURE</span><span class="src-tag">QML</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Standards & Réglementaire -->
+    <div class="card mb24 sr">
+      <div class="card-hd"><div><div class="card-title">Standards &amp; Cadre Réglementaire</div><div class="card-sub">NIST · EuroQCI · DARPA · Institutions officielles</div></div><span class="tag" style="background:var(--red-bg);color:var(--red);border:1px solid var(--red)">RÉGLEMENTAIRE</span></div>
+      <div class="src-grid">
+        <div class="src-item src-std">
+          <div class="src-title">NIST PQC Standards 2024</div>
+          <div class="src-meta">NIST FIPS 203, 204, 205 · Août 2024</div>
+          <div class="src-desc">4 standards post-quantiques finalisés : CRYSTALS-Kyber (FIPS 203), CRYSTALS-Dilithium (FIPS 204), SPHINCS+ (FIPS 205). IBM co-développeur de 2 sur 4. Deadline migration bancaire : avant 2030.</div>
+          <span class="src-tag">FIPS 203–205</span><span class="src-tag">IBM CO-DEV.</span>
+        </div>
+        <div class="src-item src-std">
+          <div class="src-title">EuroQCI — European Quantum Communication Initiative</div>
+          <div class="src-meta">Commission Européenne · 2023–2027</div>
+          <div class="src-desc">Infrastructure quantique européenne sécurisée reliant 27 États membres. Contexte de souveraineté pour BNP Paribas (Pasqal) et Standard Chartered (Fujitsu). Budget €1B+ sur 5 ans.</div>
+          <span class="src-tag">EU</span><span class="src-tag">SOUVERAINETÉ</span>
+        </div>
+        <div class="src-item src-std">
+          <div class="src-title">DARPA Quantum Benchmarking Program</div>
+          <div class="src-meta">Defense Advanced Research Projects Agency · US DoD</div>
+          <div class="src-desc">Programme de benchmarking hardware quantique pour identifier l'avantage quantique réel. Données utilisées pour les projections de maturité 2027–2030 du calendrier d'adoption.</div>
+          <span class="src-tag">DARPA</span><span class="src-tag">HARDWARE</span>
+        </div>
+        <div class="src-item src-std">
+          <div class="src-title">Store Now Decrypt Later — NSA Advisory</div>
+          <div class="src-meta">NSA · CISA · 2023–2024</div>
+          <div class="src-desc">Avertissement officiel sur la collecte de données chiffrées aujourd'hui pour déchiffrement quantique futur. Risque Q-Day estimé avant 2035. Justifie l'urgence migration PQC recommandation P1.</div>
+          <span class="src-tag">NSA</span><span class="src-tag">Q-DAY 2030–35</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ ADMIN DASHBOARD ═══ -->
+
+  <div class="page" id="page-admin">
+    <div class="admin-header">
+      <div>
+        <div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:6px;">TABLEAU DE BORD</div>
+        <div class="admin-title">Dashboard Admin · Enquête Live</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="admin-badge">ACADÉMIQUE · CONFIDENTIEL</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:8px;" id="admin-last-update">Dernière mise à jour : —</div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="admin-section">
+      <div class="admin-section-title">Métriques globales</div>
+      <div class="admin-stat-row">
+        <div class="admin-stat">
+          <div class="admin-stat-val" id="adm-total">—</div>
+          <div class="admin-stat-lbl">Total répondants (depuis 103)</div>
+        </div>
+        <div class="admin-stat" style="border-top-color:var(--green)">
+          <div class="admin-stat-val" id="adm-new" style="color:var(--green)">—</div>
+          <div class="admin-stat-lbl">Nouveaux répondants enregistrés</div>
+        </div>
+        <div class="admin-stat" style="border-top-color:var(--gold)">
+          <div class="admin-stat-val" id="adm-today" style="color:var(--gold)">—</div>
+          <div class="admin-stat-lbl">Répondants aujourd'hui</div>
+        </div>
+        <div class="admin-stat" style="border-top-color:var(--red)">
+          <div class="admin-stat-val" id="adm-completion" style="color:var(--red)">—</div>
+          <div class="admin-stat-lbl">Taux de complétion (réponses complètes)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results by question -->
+    <div class="admin-section">
+      <div class="admin-section-title">Résultats par question · Répondants enregistrés</div>
+      <div id="admin-questions">
+        <div style="padding:32px;text-align:center;color:var(--ink-4);border:1px dashed var(--rule);font-size:12px;">
+          Aucun répondant enregistré depuis l'ouverture de la plateforme.<br>
+          Les données apparaîtront ici après les premières soumissions via la page <em>Participer</em>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Snapshot 103 répondants (référence) -->
+    <div class="admin-section">
+      <div class="admin-section-title">Snapshot de référence · 103 répondants initiaux (Google Forms · Avril 2026)</div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q1 — Avez-vous entendu parler du quantum computing ?</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:55.3%;"></div></div><div class="admin-bar-pct">55.3%</div><div class="admin-bar-n">57 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Non</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:44.7%;background:var(--red)"></div></div><div class="admin-bar-pct">44.7%</div><div class="admin-bar-n">46 rép.</div></div>
+      </div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q2 — Niveau de connaissance du quantum computing</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Aucune connaissance</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:62.1%;background:var(--red)"></div></div><div class="admin-bar-pct">62.1%</div><div class="admin-bar-n">64 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Niveau basique</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:22.3%;"></div></div><div class="admin-bar-pct">22.3%</div><div class="admin-bar-n">23 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Niveau intermédiaire</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:9%;background:var(--blue-400)"></div></div><div class="admin-bar-pct">9.0%</div><div class="admin-bar-n">9 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Niveau avancé</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:3%;background:var(--green)"></div></div><div class="admin-bar-pct">3.0%</div><div class="admin-bar-n">3 rép.</div></div>
+      </div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q3 — Avez-vous entendu parler d'IBM Quantum ?</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:27.2%;"></div></div><div class="admin-bar-pct">27.2%</div><div class="admin-bar-n">28 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Non</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:72.8%;background:var(--red)"></div></div><div class="admin-bar-pct">72.8%</div><div class="admin-bar-n">75 rép.</div></div>
+      </div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q5 — Le quantum va-t-il transformer la banque ?</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui, significativement</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:31.1%;background:var(--green)"></div></div><div class="admin-bar-pct">31.1%</div><div class="admin-bar-n">32 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui, modérément</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:30.1%;"></div></div><div class="admin-bar-pct">30.1%</div><div class="admin-bar-n">31 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Je ne suis pas sûr(e)</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:34%;background:var(--gold)"></div></div><div class="admin-bar-pct">34.0%</div><div class="admin-bar-n">35 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Je ne pense pas</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:4.8%;background:var(--red)"></div></div><div class="admin-bar-pct">4.8%</div><div class="admin-bar-n">5 rép.</div></div>
+      </div>
+    </div>
+
+    <!-- Reset -->
+    <div class="admin-section">
+      <div class="admin-section-title">Gestion des données</div>
+      <div style="background:var(--red-bg);border:1px solid var(--red);padding:16px 20px;">
+        <div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:6px;">Zone de réinitialisation</div>
+        <div style="font-size:11px;color:var(--ink-2);margin-bottom:12px;">Efface toutes les réponses enregistrées dans le navigateur (localStorage). Le compte revient à 103. Cette action est irréversible.</div>
+        <button class="admin-reset-btn" onclick="adminReset()">Réinitialiser toutes les données locales</button>
+      </div>
+    </div>
   </div>
 
   <!-- ═══ PARTICIPER ═══ -->
@@ -2159,6 +2554,17 @@ function submitQuestionnaire(e) {
   const count = parseInt(localStorage.getItem('qbip_count') || '103') + 1;
   localStorage.setItem('qbip_count', count);
   document.getElementById('qpart-count').textContent = count;
+  // Save individual answers for admin dashboard
+  const form = document.getElementById('qform');
+  const qs = QUESTIONS[currentLang] || QUESTIONS.fr;
+  const answers = {};
+  qs.forEach(q => {
+    const checked = form.querySelector(`input[name="${q.id}"]:checked`);
+    if (checked) answers[q.id] = checked.value;
+  });
+  const stored = JSON.parse(localStorage.getItem('qbip_answers') || '[]');
+  stored.push({ ts: Date.now(), lang: currentLang, ...answers });
+  localStorage.setItem('qbip_answers', JSON.stringify(stored));
 }
 
 function resetQuestionnaire() {
@@ -2189,7 +2595,7 @@ function setLang(lang) {
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
   const active = document.querySelector('.page.active')?.id?.replace('page-','');
-  const crumbMap = { overview:t.nav_overview, competitive:t.nav_competitive, comms:t.nav_comms, survey:t.nav_survey, participate:t.nav_participate, insights:t.nav_insights, recos:t.nav_recos, docs:t.nav_docs };
+  const crumbMap = { overview:t.nav_overview, competitive:t.nav_competitive, comms:t.nav_comms, survey:t.nav_survey, participate:t.nav_participate, insights:t.nav_insights, recos:t.nav_recos, docs:t.nav_docs, sources:'Sources', admin:'Admin Dashboard' };
   if (active) document.getElementById('crumb').innerHTML = crumbMap[active] || active;
   renderQuestionnaire();
   updateCharts(lang);
@@ -2204,7 +2610,7 @@ function go(id) {
     if (n.getAttribute('onclick')?.includes("'"+id+"'")) n.classList.add('active');
   });
   const t = T[currentLang] || T.fr;
-  const crumbMap = { overview:t.nav_overview, competitive:t.nav_competitive, comms:t.nav_comms, survey:t.nav_survey, participate:t.nav_participate, insights:t.nav_insights, recos:t.nav_recos, docs:t.nav_docs };
+  const crumbMap = { overview:t.nav_overview, competitive:t.nav_competitive, comms:t.nav_comms, survey:t.nav_survey, participate:t.nav_participate, insights:t.nav_insights, recos:t.nav_recos, docs:t.nav_docs, sources:'Sources', admin:'Admin Dashboard' };
   document.getElementById('crumb').innerHTML = crumbMap[id] || id;
   window.scrollTo(0, 0);
   if (id === 'participate') renderQuestionnaire();
@@ -2537,6 +2943,114 @@ document.querySelectorAll('.prog-fill').forEach(bar => progObserver.observe(bar)
 
 // ── INIT: animate overview on load ──
 animatePage(document.getElementById('page-overview'));
+
+// ─── ADMIN DASHBOARD ───
+function adminReset() {
+  if (!confirm('Réinitialiser toutes les données locales ? Cette action est irréversible.')) return;
+  localStorage.removeItem('qbip_count');
+  localStorage.removeItem('qbip_answers');
+  document.getElementById('qpart-count').textContent = '103';
+  loadAdminDashboard();
+}
+
+function loadAdminDashboard() {
+  const count = parseInt(localStorage.getItem('qbip_count') || '103');
+  const answers = JSON.parse(localStorage.getItem('qbip_answers') || '[]');
+  const newCount = answers.length;
+  const today = new Date().toDateString();
+  const todayCount = answers.filter(a => new Date(a.ts).toDateString() === today).length;
+  const completion = newCount === 0 ? '—' : Math.round((answers.filter(a => a.q6).length / newCount) * 100) + '%';
+
+  document.getElementById('adm-total').textContent = count;
+  document.getElementById('adm-new').textContent = newCount;
+  document.getElementById('adm-today').textContent = todayCount;
+  document.getElementById('adm-completion').textContent = completion;
+  document.getElementById('admin-last-update').textContent = 'Dernière mise à jour : ' + new Date().toLocaleString('fr-FR');
+
+  if (newCount === 0) return;
+
+  // Build results per question
+  const qs = QUESTIONS.fr;
+  let html = '';
+  qs.forEach(q => {
+    const tally = {};
+    q.options.forEach(o => tally[o] = 0);
+    answers.forEach(a => { if (a[q.id] && tally[a[q.id]] !== undefined) tally[a[q.id]]++; });
+    html += `<div class="admin-q"><div class="admin-q-title">${q.label}</div>`;
+    q.options.forEach(opt => {
+      const n = tally[opt] || 0;
+      const pct = newCount > 0 ? Math.round(n / newCount * 100) : 0;
+      html += `<div class="admin-bar">
+        <div class="admin-bar-lbl">${opt}</div>
+        <div class="admin-bar-track"><div class="admin-bar-fill" style="width:${pct}%"></div></div>
+        <div class="admin-bar-pct">${pct}%</div>
+        <div class="admin-bar-n">${n} rép.</div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('admin-questions').innerHTML = html;
+}
+
+// Load admin dashboard when page is navigated to
+const _origGo = go;
+function go(id) {
+  _origGo(id);
+  if (id === 'admin') loadAdminDashboard();
+}
+
+// ─── Q-SCORE FILTER ───
+const QSCORE_DATA = {
+  labels:  ['JPMorgan','HSBC','Goldman','BNP Paribas','Citigroup','Deutsche','Std. Chartered','Wells Fargo','BBVA','Intesa SP.'],
+  scores:  [9.5, 8.5, 8.0, 7.5, 7.0, 6.5, 5.5, 5.0, 4.5, 4.0],
+  regions: ['americas','americas','americas','europe','americas','europe','europe','americas','europe','europe'],
+  colors:  [B9, B7, B6, B5, B4, B3, B2, B1, GY, GY+'88']
+};
+
+function filterQScore(value, type, btn) {
+  // Update button active state within the same group (region or tier)
+  const bar = document.getElementById('qscore-filters');
+  if (type === 'region') {
+    bar.querySelectorAll('.filter-btn').forEach((b,i) => { if(i < 4) b.classList.remove('active'); });
+  } else {
+    bar.querySelectorAll('.filter-btn').forEach((b,i) => { if(i >= 4) b.classList.remove('active'); });
+  }
+  btn.classList.add('active');
+
+  const d = QSCORE_DATA;
+  let filtered = d.labels.map((l, i) => ({ label: l, score: d.scores[i], region: d.regions[i], color: d.colors[i] }));
+
+  if (value === 'americas') filtered = filtered.filter(x => x.region === 'americas');
+  else if (value === 'europe') filtered = filtered.filter(x => x.region === 'europe');
+  else if (value === 'tier1') filtered = filtered.filter(x => x.score >= 8.0);
+  else if (value === 'tier2') filtered = filtered.filter(x => x.score >= 6.0 && x.score < 8.0);
+  else if (value === 'tier3') filtered = filtered.filter(x => x.score < 6.0);
+
+  if (charts.qscore) {
+    charts.qscore.data.labels = filtered.map(x => x.label);
+    charts.qscore.data.datasets[0].data = filtered.map(x => x.score);
+    charts.qscore.data.datasets[0].backgroundColor = filtered.map(x => x.color);
+    charts.qscore.update();
+  }
+}
+
+// ─── RADAR BANK TOGGLE ───
+const RADAR_DATASETS_ALL = [
+  { label:'JPMorgan', key:'jpmorgan', data:[9.5,9,9,9.5,8,9.5], borderColor:B9, backgroundColor:'rgba(6,26,58,0.08)', borderWidth:2, pointRadius:3, pointBackgroundColor:B9 },
+  { label:'HSBC',     key:'hsbc',     data:[8,7.5,8.5,8,7,8],   borderColor:GR, backgroundColor:'rgba(27,122,69,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GR },
+  { label:'Goldman',  key:'goldman',  data:[7.5,8,7,6,8,8.5],   borderColor:GD, backgroundColor:'rgba(160,114,10,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GD },
+  { label:'BNP',      key:'bnp',      data:[7,7,8,6,7.5,7.5],   borderColor:RD, backgroundColor:'rgba(192,57,43,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:RD }
+];
+const radarVisible = { jpmorgan:true, hsbc:true, goldman:true, bnp:true };
+
+function toggleRadarBank(key, btn) {
+  radarVisible[key] = !radarVisible[key];
+  btn.classList.toggle('active', radarVisible[key]);
+  if (charts.radar) {
+    charts.radar.data.datasets = RADAR_DATASETS_ALL.filter(ds => radarVisible[ds.key]);
+    charts.radar.update();
+  }
+}
 </script>
 
 </body>
