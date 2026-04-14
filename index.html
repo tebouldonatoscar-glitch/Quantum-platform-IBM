@@ -157,14 +157,31 @@ body {
 }
 
 .sb-foot {
-  padding: 16px 24px;
+  padding: 14px 24px;
   border-top: 1px solid var(--rule);
   font-size: 10px;
   color: var(--ink-4);
-  line-height: 1.7;
+  line-height: 1.65;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-.sb-foot strong { color: var(--ink-3); font-weight: 500; }
+.sb-foot-avatar {
+  width: 28px; height: 28px;
+  background: var(--blue-700);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.sb-foot strong { color: var(--ink-2); font-weight: 600; font-size: 11px; display: block; margin-bottom: 2px; }
 
 /* ─── MAIN ─── */
 .main {
@@ -1233,9 +1250,12 @@ canvas { display: block; }
   </nav>
 
   <div class="sb-foot">
-    <strong data-i18n="sb_org">Sciences des Organisations</strong><br>
-    <span data-i18n="sb_school">Paris-Dauphine PSL · Madrid</span><br>
-    <span data-i18n="sb_date">Mars 2026</span>
+    <div class="sb-foot-avatar">PSL</div>
+    <div>
+      <strong data-i18n="sb_org">Sciences des Organisations</strong>
+      <span data-i18n="sb_school">Paris-Dauphine PSL · Madrid</span><br>
+      <span data-i18n="sb_date">Mars 2026</span>
+    </div>
   </div>
 </aside>
 
