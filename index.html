@@ -323,10 +323,10 @@ body {
   background: var(--white);
   border: 1px solid var(--rule);
   padding: 24px;
-  transition: border-color 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
 
-.card:hover { border-color: var(--blue-400); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(15,98,254,0.09); }
+.card:hover { border-color: var(--blue-300); box-shadow: 0 2px 12px rgba(15,98,254,0.07), 0 0 0 1px var(--blue-200); }
 
 .card-hd {
   display: flex;
@@ -810,7 +810,7 @@ vertical-align: middle;
   transition: all 0.12s;
 }
 
-.doc-card:hover { border-color: var(--blue-400); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(15,98,254,0.1); }
+.doc-card:hover { border-color: var(--blue-400); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,98,254,0.12); cursor: pointer; }
 .doc-icon { font-size: 26px; margin-bottom: 12px; }
 .doc-title { font-family: ‘IBM Plex Serif’, serif; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
 .doc-meta { font-size: 10px; color: var(--ink-4); font-weight: 400; letter-spacing: 0.3px; margin-bottom: 10px; }
