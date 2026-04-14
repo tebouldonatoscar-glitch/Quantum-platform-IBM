@@ -42,6 +42,13 @@
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 
+/* Global focus ring — visible only on keyboard nav, hidden on mouse click */
+:focus-visible {
+  outline: 2px solid var(--blue-600);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
 html { scroll-behavior: smooth; }
 
 body {
