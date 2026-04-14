@@ -498,12 +498,13 @@ body {
   padding: 10px 12px;
   border-bottom: 1px solid var(--rule-2);
   border-right: 1px solid var(--rule-2);
-vertical-align: middle;
+  vertical-align: middle;
 }
 
+.mtable tbody tr:nth-child(even) td { background: #f8fafd; }
 .mtable td:last-child { border-right: none; }
 .mtable tr:last-child td { border-bottom: none; }
-.mtable tr:hover td { background: var(--blue-100); }
+.mtable tr:hover td { background: var(--blue-100) !important; transition: background 0.12s; }
 
 .mtable .section-row td {
   background: var(--blue-100);
