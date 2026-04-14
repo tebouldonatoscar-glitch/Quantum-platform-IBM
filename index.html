@@ -2844,6 +2844,59 @@ document.querySelectorAll('.prog-fill').forEach(bar => progObserver.observe(bar)
 
 // ── INIT: animate overview on load ──
 animatePage(document.getElementById('page-overview'));
+
+// ─── Q-SCORE FILTER ───
+const QSCORE_DATA = {
+  labels:  ['JPMorgan','HSBC','Goldman','BNP Paribas','Citigroup','Deutsche','Std. Chartered','Wells Fargo','BBVA','Intesa SP.'],
+  scores:  [9.5, 8.5, 8.0, 7.5, 7.0, 6.5, 5.5, 5.0, 4.5, 4.0],
+  regions: ['americas','americas','americas','europe','americas','europe','europe','americas','europe','europe'],
+  colors:  [B9, B7, B6, B5, B4, B3, B2, B1, GY, GY+'88']
+};
+
+function filterQScore(value, type, btn) {
+  // Update button active state within the same group (region or tier)
+  const bar = document.getElementById('qscore-filters');
+  if (type === 'region') {
+    bar.querySelectorAll('.filter-btn').forEach((b,i) => { if(i < 4) b.classList.remove('active'); });
+  } else {
+    bar.querySelectorAll('.filter-btn').forEach((b,i) => { if(i >= 4) b.classList.remove('active'); });
+  }
+  btn.classList.add('active');
+
+  const d = QSCORE_DATA;
+  let filtered = d.labels.map((l, i) => ({ label: l, score: d.scores[i], region: d.regions[i], color: d.colors[i] }));
+
+  if (value === 'americas') filtered = filtered.filter(x => x.region === 'americas');
+  else if (value === 'europe') filtered = filtered.filter(x => x.region === 'europe');
+  else if (value === 'tier1') filtered = filtered.filter(x => x.score >= 8.0);
+  else if (value === 'tier2') filtered = filtered.filter(x => x.score >= 6.0 && x.score < 8.0);
+  else if (value === 'tier3') filtered = filtered.filter(x => x.score < 6.0);
+
+  if (charts.qscore) {
+    charts.qscore.data.labels = filtered.map(x => x.label);
+    charts.qscore.data.datasets[0].data = filtered.map(x => x.score);
+    charts.qscore.data.datasets[0].backgroundColor = filtered.map(x => x.color);
+    charts.qscore.update();
+  }
+}
+
+// ─── RADAR BANK TOGGLE ───
+const RADAR_DATASETS_ALL = [
+  { label:'JPMorgan', key:'jpmorgan', data:[9.5,9,9,9.5,8,9.5], borderColor:B9, backgroundColor:'rgba(6,26,58,0.08)', borderWidth:2, pointRadius:3, pointBackgroundColor:B9 },
+  { label:'HSBC',     key:'hsbc',     data:[8,7.5,8.5,8,7,8],   borderColor:GR, backgroundColor:'rgba(27,122,69,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GR },
+  { label:'Goldman',  key:'goldman',  data:[7.5,8,7,6,8,8.5],   borderColor:GD, backgroundColor:'rgba(160,114,10,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:GD },
+  { label:'BNP',      key:'bnp',      data:[7,7,8,6,7.5,7.5],   borderColor:RD, backgroundColor:'rgba(192,57,43,0.06)', borderWidth:2, pointRadius:3, pointBackgroundColor:RD }
+];
+const radarVisible = { jpmorgan:true, hsbc:true, goldman:true, bnp:true };
+
+function toggleRadarBank(key, btn) {
+  radarVisible[key] = !radarVisible[key];
+  btn.classList.toggle('active', radarVisible[key]);
+  if (charts.radar) {
+    charts.radar.data.datasets = RADAR_DATASETS_ALL.filter(ds => radarVisible[ds.key]);
+    charts.radar.update();
+  }
+}
 </script>
 
 </body>
