@@ -239,19 +239,26 @@ body {
 /* ─── PAGE HEADER ─── */
 .ph { margin-bottom: 36px; }
 
+.ph {
+  margin-bottom: 36px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--rule);
+}
+
 .ph-eye {
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--blue-600);
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.ph-eye::after { content: ‘’; width: 48px; height: 1px; background: var(--blue-500); }
+.ph-eye::before { content: ‘’; width: 24px; height: 2px; background: var(--blue-600); border-radius: 1px; flex-shrink: 0; }
+.ph-eye::after  { content: ‘’; flex: 1; height: 1px; background: linear-gradient(to right, var(--blue-200), transparent); }
 
 .ph-title {
   font-family: ‘IBM Plex Serif’, serif;
@@ -259,7 +266,7 @@ body {
   font-weight: 600;
   color: var(--ink);
   line-height: 1.1;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   letter-spacing: -0.5px;
 }
 
