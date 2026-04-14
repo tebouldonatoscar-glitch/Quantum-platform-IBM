@@ -1965,6 +1965,94 @@ canvas { display: block; }
 
   </div>
 
+  <!-- ═══ ADMIN DASHBOARD ═══ -->
+
+  <div class="page" id="page-admin">
+    <div class="admin-header">
+      <div>
+        <div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:6px;">TABLEAU DE BORD</div>
+        <div class="admin-title">Dashboard Admin · Enquête Live</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="admin-badge">ACADÉMIQUE · CONFIDENTIEL</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:8px;" id="admin-last-update">Dernière mise à jour : —</div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="admin-section">
+      <div class="admin-section-title">Métriques globales</div>
+      <div class="admin-stat-row">
+        <div class="admin-stat">
+          <div class="admin-stat-val" id="adm-total">—</div>
+          <div class="admin-stat-lbl">Total répondants (depuis 103)</div>
+        </div>
+        <div class="admin-stat" style="border-top-color:var(--green)">
+          <div class="admin-stat-val" id="adm-new" style="color:var(--green)">—</div>
+          <div class="admin-stat-lbl">Nouveaux répondants enregistrés</div>
+        </div>
+        <div class="admin-stat" style="border-top-color:var(--gold)">
+          <div class="admin-stat-val" id="adm-today" style="color:var(--gold)">—</div>
+          <div class="admin-stat-lbl">Répondants aujourd'hui</div>
+        </div>
+        <div class="admin-stat" style="border-top-color:var(--red)">
+          <div class="admin-stat-val" id="adm-completion" style="color:var(--red)">—</div>
+          <div class="admin-stat-lbl">Taux de complétion (réponses complètes)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results by question -->
+    <div class="admin-section">
+      <div class="admin-section-title">Résultats par question · Répondants enregistrés</div>
+      <div id="admin-questions">
+        <div style="padding:32px;text-align:center;color:var(--ink-4);border:1px dashed var(--rule);font-size:12px;">
+          Aucun répondant enregistré depuis l'ouverture de la plateforme.<br>
+          Les données apparaîtront ici après les premières soumissions via la page <em>Participer</em>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Snapshot 103 répondants (référence) -->
+    <div class="admin-section">
+      <div class="admin-section-title">Snapshot de référence · 103 répondants initiaux (Google Forms · Avril 2026)</div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q1 — Avez-vous entendu parler du quantum computing ?</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:55.3%;"></div></div><div class="admin-bar-pct">55.3%</div><div class="admin-bar-n">57 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Non</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:44.7%;background:var(--red)"></div></div><div class="admin-bar-pct">44.7%</div><div class="admin-bar-n">46 rép.</div></div>
+      </div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q2 — Niveau de connaissance du quantum computing</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Aucune connaissance</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:62.1%;background:var(--red)"></div></div><div class="admin-bar-pct">62.1%</div><div class="admin-bar-n">64 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Niveau basique</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:22.3%;"></div></div><div class="admin-bar-pct">22.3%</div><div class="admin-bar-n">23 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Niveau intermédiaire</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:9%;background:var(--blue-400)"></div></div><div class="admin-bar-pct">9.0%</div><div class="admin-bar-n">9 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Niveau avancé</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:3%;background:var(--green)"></div></div><div class="admin-bar-pct">3.0%</div><div class="admin-bar-n">3 rép.</div></div>
+      </div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q3 — Avez-vous entendu parler d'IBM Quantum ?</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:27.2%;"></div></div><div class="admin-bar-pct">27.2%</div><div class="admin-bar-n">28 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Non</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:72.8%;background:var(--red)"></div></div><div class="admin-bar-pct">72.8%</div><div class="admin-bar-n">75 rép.</div></div>
+      </div>
+      <div class="admin-q">
+        <div class="admin-q-title">Q5 — Le quantum va-t-il transformer la banque ?</div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui, significativement</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:31.1%;background:var(--green)"></div></div><div class="admin-bar-pct">31.1%</div><div class="admin-bar-n">32 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Oui, modérément</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:30.1%;"></div></div><div class="admin-bar-pct">30.1%</div><div class="admin-bar-n">31 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Je ne suis pas sûr(e)</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:34%;background:var(--gold)"></div></div><div class="admin-bar-pct">34.0%</div><div class="admin-bar-n">35 rép.</div></div>
+        <div class="admin-bar"><div class="admin-bar-lbl">Je ne pense pas</div><div class="admin-bar-track"><div class="admin-bar-fill" style="width:4.8%;background:var(--red)"></div></div><div class="admin-bar-pct">4.8%</div><div class="admin-bar-n">5 rép.</div></div>
+      </div>
+    </div>
+
+    <!-- Reset -->
+    <div class="admin-section">
+      <div class="admin-section-title">Gestion des données</div>
+      <div style="background:var(--red-bg);border:1px solid var(--red);padding:16px 20px;">
+        <div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:6px;">Zone de réinitialisation</div>
+        <div style="font-size:11px;color:var(--ink-2);margin-bottom:12px;">Efface toutes les réponses enregistrées dans le navigateur (localStorage). Le compte revient à 103. Cette action est irréversible.</div>
+        <button class="admin-reset-btn" onclick="adminReset()">Réinitialiser toutes les données locales</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ PARTICIPER ═══ -->
 
   <div class="page" id="page-participate">
@@ -2466,6 +2554,17 @@ function submitQuestionnaire(e) {
   const count = parseInt(localStorage.getItem('qbip_count') || '103') + 1;
   localStorage.setItem('qbip_count', count);
   document.getElementById('qpart-count').textContent = count;
+  // Save individual answers for admin dashboard
+  const form = document.getElementById('qform');
+  const qs = QUESTIONS[currentLang] || QUESTIONS.fr;
+  const answers = {};
+  qs.forEach(q => {
+    const checked = form.querySelector(`input[name="${q.id}"]:checked`);
+    if (checked) answers[q.id] = checked.value;
+  });
+  const stored = JSON.parse(localStorage.getItem('qbip_answers') || '[]');
+  stored.push({ ts: Date.now(), lang: currentLang, ...answers });
+  localStorage.setItem('qbip_answers', JSON.stringify(stored));
 }
 
 function resetQuestionnaire() {
@@ -2844,6 +2943,61 @@ document.querySelectorAll('.prog-fill').forEach(bar => progObserver.observe(bar)
 
 // ── INIT: animate overview on load ──
 animatePage(document.getElementById('page-overview'));
+
+// ─── ADMIN DASHBOARD ───
+function adminReset() {
+  if (!confirm('Réinitialiser toutes les données locales ? Cette action est irréversible.')) return;
+  localStorage.removeItem('qbip_count');
+  localStorage.removeItem('qbip_answers');
+  document.getElementById('qpart-count').textContent = '103';
+  loadAdminDashboard();
+}
+
+function loadAdminDashboard() {
+  const count = parseInt(localStorage.getItem('qbip_count') || '103');
+  const answers = JSON.parse(localStorage.getItem('qbip_answers') || '[]');
+  const newCount = answers.length;
+  const today = new Date().toDateString();
+  const todayCount = answers.filter(a => new Date(a.ts).toDateString() === today).length;
+  const completion = newCount === 0 ? '—' : Math.round((answers.filter(a => a.q6).length / newCount) * 100) + '%';
+
+  document.getElementById('adm-total').textContent = count;
+  document.getElementById('adm-new').textContent = newCount;
+  document.getElementById('adm-today').textContent = todayCount;
+  document.getElementById('adm-completion').textContent = completion;
+  document.getElementById('admin-last-update').textContent = 'Dernière mise à jour : ' + new Date().toLocaleString('fr-FR');
+
+  if (newCount === 0) return;
+
+  // Build results per question
+  const qs = QUESTIONS.fr;
+  let html = '';
+  qs.forEach(q => {
+    const tally = {};
+    q.options.forEach(o => tally[o] = 0);
+    answers.forEach(a => { if (a[q.id] && tally[a[q.id]] !== undefined) tally[a[q.id]]++; });
+    html += `<div class="admin-q"><div class="admin-q-title">${q.label}</div>`;
+    q.options.forEach(opt => {
+      const n = tally[opt] || 0;
+      const pct = newCount > 0 ? Math.round(n / newCount * 100) : 0;
+      html += `<div class="admin-bar">
+        <div class="admin-bar-lbl">${opt}</div>
+        <div class="admin-bar-track"><div class="admin-bar-fill" style="width:${pct}%"></div></div>
+        <div class="admin-bar-pct">${pct}%</div>
+        <div class="admin-bar-n">${n} rép.</div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('admin-questions').innerHTML = html;
+}
+
+// Load admin dashboard when page is navigated to
+const _origGo = go;
+function go(id) {
+  _origGo(id);
+  if (id === 'admin') loadAdminDashboard();
+}
 
 // ─── Q-SCORE FILTER ───
 const QSCORE_DATA = {
