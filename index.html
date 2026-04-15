@@ -244,8 +244,6 @@ body {
 }
 
 /* ─── PAGE HEADER ─── */
-.ph { margin-bottom: 36px; }
-
 .ph {
   margin-bottom: 36px;
   padding-bottom: 28px;
@@ -2642,22 +2640,39 @@ function setLang(lang) {
 }
 
 function go(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
-  const page = document.getElementById('page-' + id);
-  page.classList.add('active');
-  document.querySelectorAll('.sb-item').forEach(n => {
-    if (n.getAttribute('onclick')?.includes("'"+id+"'")) n.classList.add('active');
+  // 1. Hide every page (class + inline style for maximum robustness)
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = 'none';
   });
+  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
+
+  // 2. Show the target page
+  const page = document.getElementById('page-' + id);
+  if (!page) { console.error('[go] Page not found: page-' + id); return; }
+  page.style.display = 'block';
+  page.classList.add('active');
+
+  // 3. Highlight the matching sidebar item
+  document.querySelectorAll('.sb-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes("'" + id + "'")) n.classList.add('active');
+  });
+
+  // 4. Update breadcrumb
   const t = T[currentLang] || T.fr;
   const crumbMap = { overview:t.nav_overview, competitive:t.nav_competitive, comms:t.nav_comms, survey:t.nav_survey, participate:t.nav_participate, insights:t.nav_insights, recos:t.nav_recos, docs:t.nav_docs, sources:'Sources', admin:'Admin Dashboard' };
   document.getElementById('crumb').innerHTML = crumbMap[id] || id;
+
+  // 5. Scroll to top and close mobile menu
   window.scrollTo(0, 0);
+  closeSidebar();
+
+  // 6. Page-specific initialisation
   if (id === 'participate') renderQuestionnaire();
   if (id === 'admin') loadAdminDashboard();
-  closeSidebar();
-  // Trigger scroll-reveal animations for the new page
-  animatePage(page);
+
+  // 7. Entry animation — wrapped in try/catch so animation errors never hide the page
+  try { animatePage(page); } catch (e) { console.warn('[go] animatePage error:', e); }
 }
 
 // ── INIT ──
@@ -2938,7 +2953,7 @@ function animatePage(page) {
       }, 10);
     });
   });
-  observePage(page);
+  try { observePage(page); } catch (e) {}
 }
 
 // ── COUNTER ANIMATION ──
